@@ -1,0 +1,50 @@
+{
+  "title": "Studio API: Data Access for Agile Research Studios",
+  "name": "studio-api",
+  "version": "0.0.1",
+  "private": true,
+  "homepage": "http://dtr.northwestern.edu/",
+  "bugs": {
+    "url": "https://github.com/NUDelta/hal9001",
+    "email": "kapil1garg@gmail.com"
+  },
+  "license": "MIT",
+  "author": "Kapil Garg",
+  "contributors": [
+    "Kapil Garg (https://kgarg.com/)"
+  ],
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev": "concurrently \"nodemon -r dotenv/config ./bin/www\" \"mongod\"",
+    "test": "mocha",
+    "lines": "cloc --exclude-dir=node_modules,.idea --exclude-ext=json ."
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "bootstrap": "^4.1.3",
+    "cookie-parser": "~1.4.3",
+    "debug": "~4.1.0",
+    "ejs": "~2.6.1",
+    "express": "~4.16.4",
+    "google-spreadsheet": "^2.0.6",
+    "googleapis": "^36.0.0",
+    "http-errors": "~1.7.1",
+    "jquery": "^3.3.1",
+    "lodash": "^4.17.11",
+    "moment": "^2.23.0",
+    "mongoose": "^5.3.16",
+    "morgan": "~1.9.1",
+    "node-sass-middleware": "0.11.0",
+    "node-schedule": "^1.3.1",
+    "popper.js": "^1.14.6",
+    "serve-favicon": "^2.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "cloc": "^2.3.4",
+    "concurrently": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.8"
+  }
+}
