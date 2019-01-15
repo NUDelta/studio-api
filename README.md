@@ -14,3 +14,14 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
 ## Development
 1. Run `npm install` to download the necessary packages.
 2. Run `npm run dev` to start (1) the node app; and (2) the local mongodb.  
+
+## Data Sources
+_Check mark indicates API support for the data source._ 
+- [ ] Sprint Logs
+- [ ] Research Canvases
+- [ ] Design Log
+- [ ] Git Repo
+- [ ] The Weekly
+- [ ] IDP/LIP
+- [ ] Self-Assessment
+- [ ] Pair Research
