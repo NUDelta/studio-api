@@ -5,7 +5,7 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
 1. Create a `.env` file as follows:
     ```
     DEBUG=studioapi:server
-    NODE_END=development
+    NODE_ENV=development
     PORT=4000
     REFRESH_DB=true
     ```
@@ -13,10 +13,13 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
 
 ## Development
 1. Run `npm install` to download the necessary packages.
-2. Run `npm run dev` to start (1) the node app; and (2) the local mongodb.  
+2. Run `npm run dev` to start the local Node.js application.  
 
 ## Data Sources
-_Check mark indicates API support for the data source._ 
+_Check mark indicates API support for the data source._
+- [ ] Venues
+- [ ] People
+- [ ] Events
 - [ ] Sprint Logs
 - [ ] Research Canvases
 - [ ] Design Log
@@ -25,3 +28,6 @@ _Check mark indicates API support for the data source._
 - [ ] IDP/LIP
 - [ ] Self-Assessment
 - [ ] Pair Research
+
+## API Documentation
+Coming soon...
