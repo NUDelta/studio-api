@@ -7,10 +7,12 @@ import bodyParser from "body-parser";
 // routes
 import { userRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
+import { projectRouter } from "./routes/projects.routes.js";
 
 // fixtures for development
 import { createPeopleFixtures } from "./models/fixtures/peopleFixtures.js";
 import { createVenueFixtures } from "./models/fixtures/venueFixtures.js";
+import { createProjectFixtures } from "./models/fixtures/projectFixtures.js";
 
 // setup application
 const app = express();
@@ -39,6 +41,7 @@ try {
     // TODO: populate DB with fixtures here
     await createPeopleFixtures();
     await createVenueFixtures();
+    await createProjectFixtures();
   }
 }
 
@@ -51,6 +54,7 @@ mongoose.connection.on('error', err => {
 app.use(bodyParser.json(), cors());
 app.use('/users', userRouter);
 app.use('/venues', venueRouter);
+app.use('/projects', projectRouter);
 
 
 // catch any undefined routes

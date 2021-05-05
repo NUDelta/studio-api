@@ -24,7 +24,7 @@ const createFaculty = async () => {
 const createPhDStudents = async () => {
   // get mentors
   let hq = await Faculty.findOne({ name: "Haoqi Zhang" });
-  let nell = await Faculty.findOne({ name: "Nell O'Rourke" }).exec();
+  let nell = await Faculty.findOne({ name: "Nell O'Rourke" });
 
   // get faculty mentor ids
   let hqId = hq._id;
