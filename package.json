@@ -1,6 +1,6 @@
 {
-  "title": "Studio API: Data Access for Agile Research Studios",
   "name": "studio-api",
+  "description": "Studio API: Data Access for Agile Research Studios",
   "version": "0.0.1",
   "private": true,
   "homepage": "http://dtr.northwestern.edu/",

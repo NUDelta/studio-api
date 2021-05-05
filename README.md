@@ -4,10 +4,13 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
 ## Setup
 1. Create a `.env` file as follows:
     ```
-    DEBUG=studioapi:server
     NODE_ENV=development
-    PORT=4000
-    REFRESH_DB=true
+   PORT=3000
+   DEBUG=true
+   API_URL=http://localhost:3000
+   CORS_ORIGINS=http://localhost:8080
+   MONGODB_URI=mongodb://localhost/studio-api
+   POOL_SIZE=25
     ```
 2. Create your [Google Service Account Credientials](https://github.com/theoephraim/node-google-spreadsheet#service-account-recommended-method) and deposit the credentials at the root of this directory as `google-credentials.json`.
 
