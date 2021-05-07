@@ -11,8 +11,8 @@ const createStudio = async () => {
     name: "Studio meeting",
     description: "Weekly studio meeting with all members of the community.",
     day_of_week: "Friday",
-    start_time: DateTime.fromISO("2000-01-01T12:00:00-05:00", { setZone: true }),
-    end_time: DateTime.fromISO("2000-01-01T15:00:00-05:00", { setZone: true })
+    start_time: DateTime.fromISO("2000-01-01T12:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T15:00:00", { zone: "America/Chicago" })
   });
   await studioMeeting.save();
 };
@@ -34,11 +34,11 @@ const createSIGs = async () => {
 
   // create ARS sig
   let arsSIG = new SIG({
-    name: "ARS SIG Meeting",
+    name: "Agile Research Studios SIG",
     description: "Weekly SIG meeting for ARS SIG",
     day_of_week: "Wednesday",
-    start_time: DateTime.fromISO("2000-01-01T09:00:00-05:00", { setZone: true }),
-    end_time: DateTime.fromISO("2000-01-01T10:00:00-05:00", { setZone: true }),
+    start_time: DateTime.fromISO("2000-01-01T09:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T10:00:00", { zone: "America/Chicago" }),
     sig_head: leesha._id,
     sig_members: [aimee._id, ariella._id, neha._id, molly._id]
   });
@@ -46,11 +46,11 @@ const createSIGs = async () => {
 
   // create NOT sig
   let notSIG = new SIG({
-    name: "NOT SIG Meeting",
+    name: "Networked Orchestration Technologies SIG",
     description: "Weekly NOT meeting for ARS SIG",
     day_of_week: "Wednesday",
-    start_time: DateTime.fromISO("2000-01-01T11:00:00-05:00", { setZone: true }),
-    end_time: DateTime.fromISO("2000-01-01T12:00:00-05:00", { setZone: true }),
+    start_time: DateTime.fromISO("2000-01-01T11:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T12:00:00", { zone: "America/Chicago" }),
     sig_head: kapil._id,
     sig_members: [jason._id, hang._id, charlotte._id]
   });
