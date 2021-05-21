@@ -24,7 +24,9 @@ const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/studio-api";
 const POOL_SIZE = process.env.POOL_SIZE || 25;
 const NODE_ENV = process.env.NODE_ENV || "development";
 
-// setup options for mongodb connection
+/*
+  Setup options for mongodb connection
+ */
 const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -34,6 +36,7 @@ const mongooseOptions = {
 // attempt to connect to mongodb, and detect any connection errors
 try {
   await mongoose.connect(MONGODB_URI, mongooseOptions);
+  console.log(`Connected to MongoDB: ${ MONGODB_URI } with options ${ mongooseOptions }`);
 } catch (error) {
   console.error(`Error with connecting to MongoDB: ${ error }`);
 } finally {
@@ -50,7 +53,17 @@ mongoose.connection.on('error', err => {
   console.error(`MongoDB connection error: ${ err }`);
 });
 
-// setup routes
+/*
+  Setup Google Spreadsheets/Google Drive APIs
+ */
+export const googleServiceAccountAuth = {
+  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  private_key: process.env.GOOGLE_PRIVATE_KEY
+};
+
+/*
+ Setup routes
+ */
 app.use(bodyParser.json(), cors());
 app.use('/users', userRouter);
 app.use('/venues', venueRouter);
@@ -63,7 +76,9 @@ app.all('*', (request, response) => {
   return response.sendStatus(404);
 });
 
-// start application
+/*
+ Start application
+ */
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -77,3 +92,12 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${ PORT }`)
 });
+
+/*
+ TESTING ONLY
+ */
+import { SprintLog } from "./controllers/sprintLogParser.js";
+let testingSprintLog = await new SprintLog("https://docs.google.com/spreadsheets/d/162yKb5WZsjJz7mL3pIwUyAtEE2B6XdvV3kw0PnS18Xw/edit#gid=0");
+import util from 'util';
+console.log(util.inspect(testingSprintLog, false, null, true ));
+console.log(JSON.stringify(testingSprintLog))

@@ -781,3 +781,6 @@ FodyWeavers.xsd
 *.tlog
 
 # End of https://www.toptal.com/developers/gitignore/api/osx,windows,linux,vim,emacs,visualstudio,visualstudiocode,webstorm+all,sublimetext,node,react,sass
+
+### User Added
+google-creds.json
