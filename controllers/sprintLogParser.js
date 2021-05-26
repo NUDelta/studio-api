@@ -3,6 +3,53 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 /**
  * This class handles the parsing of a Google Sheet Sprint Log document.
+ *
+ * Data model for Sprint Log:
+ * SprintLog {
+ *   people: [String]                         // student names
+ *   sprints: [                               // list of SprintPlans for each sprint in the qtr
+ *     SprintPlan {
+ *       name: "String",                      // name of sprint (e.g., "Sprint 0")
+ *       points: [                            // summary of points for the sprint for each student
+ *          name: "String",                   // name of specific student
+ *          points_available: Number,         // number of points student has (for ugrads, typically 8)
+ *          points_committed: {               // number of points committed
+ *              total: Number,
+ *              design: Number,
+ *              technology: Number,
+ *              research: Number
+ *          },
+ *          hours_spent: {                     // number of hours spent
+ *              total: Number,
+ *              design: Number,
+ *              technology: Number,
+ *              research: Number
+ *          }
+ *       ],
+ *       stories: [                            // list of SprintStories for the SprintPlan
+ *         SprintStory {
+ *          description: "String",             // description of the story (typically, the risk in project)
+ *          purpose: "String",                 // purpose of the story (typically, why the risk is important to address)
+ *          deliverables: "String",            // description of the deliverable
+ *          totalPointsRequired: Number,       // number of points allocated to this story
+ *          totalPointsSpent: Number,          // number of points spend so far on this story
+ *          tasks = [                          // list of SprintTasks for each SprintStory
+ *           SprintTask {
+ *              description: "String",         // description of the task
+ *              expectedRoadblocks: "String",  // expected roadblocks for the task (if any)
+ *              pointsAllocated: Number,       // number of points allocated for the task
+ *              taskCategory: "String",        // category the task is of (D/T/R)
+ *              assignee: "String",            // student assigned to the task
+ *              taskStatus: "String"           // current status of task (blank, in-progress, backlogged, done)
+ *              pointsSpent: Number,           // number of points spent on the task
+ *              helpfulLinks: "String",        // helpful links added by user for that task
+ *            }
+ *          ];
+ *         }
+ *       ]
+ *     }
+ *   ]
+ * }
  */
 export class SprintLog {
   // sprintLogDoc; // GoogleSpreadsheet object for the Sprint Log to parse
@@ -60,7 +107,7 @@ export class SprintLog {
 
   async #parseSprints(worksheet) {
     // create a new Sprint object for each sprint worksheet
-    let sprintObj = new Sprint(worksheet.title.split(":")[0], this.people);
+    let sprintObj = new SprintPlan(worksheet.title.split(":")[0], this.people);
 
     // get summary about points planned/spend for the current sprint
     sprintObj = await this.#parsePointSummaryForSprint(worksheet, sprintObj);
@@ -294,7 +341,7 @@ export class SprintLog {
 /**
  * This class is a data model for each Sprint that contains a summary of point allocations, and the current stories in the sprint.
  */
-export class Sprint {
+export class SprintPlan {
   name = ""; // str name of sprint (e.g., Sprint 1)
   points = []; // list of objs where each key is a person and values are points available, points committed (total/D/T/R splits), and hours spent (total/D/T/R splits)
   stories = []; // list of SprintStories associated with this specific sprint

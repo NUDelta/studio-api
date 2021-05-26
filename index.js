@@ -8,11 +8,13 @@ import bodyParser from "body-parser";
 import { userRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
 import { projectRouter } from "./routes/projects.routes.js";
+import { sprintRouter } from "./routes/sprints.routes.js";
 
 // fixtures for development
 import { createPeopleFixtures } from "./models/fixtures/peopleFixtures.js";
 import { createVenueFixtures } from "./models/fixtures/venueFixtures.js";
 import { createProjectFixtures } from "./models/fixtures/projectFixtures.js";
+import { createProcessFixtures } from "./models/fixtures/processFixtures.js";
 
 // setup application
 const app = express();
@@ -45,6 +47,7 @@ try {
     await createPeopleFixtures();
     await createVenueFixtures();
     await createProjectFixtures();
+    await createProcessFixtures();
   }
 }
 
@@ -68,6 +71,7 @@ app.use(bodyParser.json(), cors());
 app.use('/users', userRouter);
 app.use('/venues', venueRouter);
 app.use('/projects', projectRouter);
+app.use('/sprints', sprintRouter);
 
 
 // catch any undefined routes
