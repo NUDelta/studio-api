@@ -254,7 +254,7 @@ export class SprintLog {
                 pointsSpent = currCellValue;
                 break;
               case 12:
-                helpfulLinks = worksheet.getCell(rowIndex, colIndex).hyperlink;
+                helpfulLinks = worksheet.getCell(rowIndex, colIndex).hyperlink; // TODO: check if just text or hyperlink (and really, capture both in an object)
                 break;
               default:
                 break;
@@ -389,12 +389,12 @@ export class SprintTask {
   constructor(taskDescription, taskExpectedRoadblocks, taskPointsAllocated, taskTaskCategory,
               taskAssignee, taskTaskStatus, taskPointsSpent, taskHelpfulLinks) {
     this.description = taskDescription;
-    this.expectedRoadblocks = taskExpectedRoadblocks;
-    this.pointsAllocated = taskPointsAllocated;
+    this.expectedRoadblocks = (taskExpectedRoadblocks === null) ? "" : taskExpectedRoadblocks;
+    this.pointsAllocated = (taskPointsAllocated === null) ? 0 : taskPointsAllocated;
     this.taskCategory = taskTaskCategory;
     this.assignee = taskAssignee;
     this.taskStatus = taskTaskStatus;
-    this.pointsSpent = taskPointsSpent;
+    this.pointsSpent = (taskPointsSpent === null) ? 0 : taskPointsSpent;
     this.helpfulLinks = taskHelpfulLinks;
   }
 }

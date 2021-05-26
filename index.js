@@ -92,12 +92,3 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${ PORT }`)
 });
-
-/*
- TESTING ONLY
- */
-import { SprintLog } from "./controllers/sprintLogParser.js";
-let testingSprintLog = await new SprintLog("https://docs.google.com/spreadsheets/d/162yKb5WZsjJz7mL3pIwUyAtEE2B6XdvV3kw0PnS18Xw/edit#gid=0");
-import util from 'util';
-console.log(util.inspect(testingSprintLog, false, null, true ));
-console.log(JSON.stringify(testingSprintLog))
