@@ -1,4 +1,4 @@
-import { googleServiceAccountAuth } from "../index.js";
+import { googleServiceAccountAuth } from "../../index.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 /**
@@ -217,6 +217,7 @@ export class SprintLog {
       // row can be two cases
       // (1) a story row that is indicated by a non-null value in column 0
       // (2) a task row that is a task for the current story if column 1 is not null
+
       // case (1): we've found a new story
       if (currCellValue !== null) {
         // if we have a story already, then add it to the sprint object
@@ -339,7 +340,8 @@ export class SprintLog {
 }
 
 /**
- * This class is a data model for each Sprint that contains a summary of point allocations, and the current stories in the sprint.
+ * This class is a data model for each Sprint that contains a summary of point allocations,
+ * and the current stories in the sprint.
  */
 export class SprintPlan {
   name = ""; // str name of sprint (e.g., Sprint 1)
@@ -387,7 +389,8 @@ export class SprintPlan {
 }
 
 /**
- * This class is a data model for each story in a sprint that contains a description of the story, the goal of the story, its deliverables, and associated tasks.
+ * This class is a data model for each story in a sprint that contains a description of the story,
+ * the goal of the story, its deliverables, and associated tasks.
  */
 export class SprintStory {
   description = ""; // str what the current story is about
@@ -421,7 +424,9 @@ export class SprintStory {
 }
 
 /**
- * This class is a data model for each task in a sprint story that contains a description of the task, any expected roadblocks, task category, assignee, points allocated, points spent, story status, and helpful links.
+ * This class is a data model for each task in a sprint story that contains a description of the
+ * task, any expected roadblocks, task category, assignee, points allocated, points spent,
+ * story status, and helpful links.
  */
 export class SprintTask {
   description = ""; // str description of the task
