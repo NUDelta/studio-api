@@ -4,6 +4,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import bodyParser from "body-parser";
 
+import path from "path";
+import fs from 'fs';
+import { google } from 'googleapis';
+import http from 'http';
+import url from 'url';
+import opn from 'open';
+import destroyer from 'server-destroy';
+
 // routes
 import { userRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
@@ -23,16 +31,15 @@ const router = express.Router();
 // fetch env variables
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/studio-api";
-const POOL_SIZE = process.env.POOL_SIZE || 25;
 const NODE_ENV = process.env.NODE_ENV || "development";
+const APP_URL = process.env.APP_URL || `http://localhost:${ PORT }`;
 
 /*
   Setup options for mongodb connection
  */
 const mongooseOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
-  poolSize: POOL_SIZE
+  useUnifiedTopology: true
 }
 
 // attempt to connect to mongodb, and detect any connection errors
@@ -57,12 +64,74 @@ mongoose.connection.on('error', err => {
 });
 
 /*
-  Setup Google Spreadsheets/Google Drive APIs
+  Authenticate google spreadsheets
  */
 export const googleServiceAccountAuth = {
   client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
   private_key: process.env.GOOGLE_PRIVATE_KEY
 };
+
+/*
+  Authenticate google drive
+ */
+console.log(process.env.GOOGLE_REDIRECT_URI)
+const oauth2Client = new google.auth.OAuth2(
+  process.env.GOOGLE_CLIENT_ID,
+  process.env.GOOGLE_CLIENT_SECRET,
+  process.env.GOOGLE_REDIRECT_URI
+);
+
+google.options({ auth: oauth2Client });
+
+async function authenticate(scopes) {
+  return new Promise((resolve, reject) => {
+    // grab the url that will be used for authorization
+    const authorizeUrl = oauth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: scopes.join(' '),
+    });
+    const server = http
+      .createServer(async (req, res) => {
+        try {
+          if (req.url.indexOf('/oauth2callback') > -1) {
+            const qs = new url.URL(req.url, APP_URL)
+              .searchParams;
+            res.end('Authentication successful! Please return to the console.');
+            server.destroy();
+            const {tokens} = await oauth2Client.getToken(qs.get('code'));
+            oauth2Client.credentials = tokens;
+            resolve(oauth2Client);
+          }
+        } catch (e) {
+          reject(e);
+        }
+      })
+      .listen(PORT, () => {
+        // open the browser to the authorize url to start the workflow
+        opn(authorizeUrl, {wait: false}).then(cp => cp.unref());
+      });
+    destroyer(server);
+  });
+}
+
+const scopes =[
+  'https://www.googleapis.com/auth/drive',
+  'https://www.googleapis.com/auth/drive.file',
+  'https://www.googleapis.com/auth/drive.appdata',
+  'https://www.googleapis.com/auth/drive.metadata'
+];
+
+try {
+  await authenticate(scopes);
+  console.log(`Authenticated Google Drive APIs`);
+} catch (error) {
+  console.error(`Error with authenticated Google Drive APIs to MongoDB: ${ error }`);
+}
+
+export const googleDrive = google.drive({
+  version: 'v3',
+  auth: oauth2Client
+});
 
 /*
  Setup routes
