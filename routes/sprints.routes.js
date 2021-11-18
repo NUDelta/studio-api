@@ -6,6 +6,7 @@ import { Sprint } from "../models/processes/sprints.js";
 
 export const sprintRouter = new Router();
 
+// TODO: may need to rename this module or put it in a subfolder. this is really about the sprint PROCESS, nto the actual sprints themselves
 
 // get all sprints
 sprintRouter.get("/", async (req, res) => {
@@ -47,10 +48,12 @@ sprintRouter.get("/currentSprint", async (req, res) => {
     let dateString = req.query.timestamp;
     let dateObj;
 
+    // TODO: fix this...i dont think it's working rn
     // try to parse a DateTime from the string; otherwise, get the current date/time
-    if (typeof dateString === "string") {
+    try {
       dateObj = DateTime.fromISO(dateString);
-    } else {
+    } catch (error) {
+      console.error(`Error in parsing date for /currentSprint: ${ error }`);
       dateObj = DateTime.now();
     }
 
@@ -71,6 +74,6 @@ sprintRouter.get("/currentSprint", async (req, res) => {
     // return sprint if found
     res.json(relevantSprint);
   } catch (error) {
-    res.send(`Error when fetching current sprint: ${ error }`);
+    res.json(`Error when fetching current sprint: ${ error }`);
   }
 });

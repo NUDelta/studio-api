@@ -73,8 +73,11 @@ export const googleServiceAccountAuth = {
 
 /*
   Authenticate google drive
+  TODO: look at alt version of auth, such as with a service account
+  https://stackoverflow.com/questions/45492703/google-drive-api-oauth-and-service-account
+  Closer: https://developers.google.com/identity/protocols/oauth2/service-account#python
  */
-console.log(process.env.GOOGLE_REDIRECT_URI)
+// TODO: check if already authenticated
 const oauth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
@@ -94,8 +97,7 @@ async function authenticate(scopes) {
       .createServer(async (req, res) => {
         try {
           if (req.url.indexOf('/oauth2callback') > -1) {
-            const qs = new url.URL(req.url, APP_URL)
-              .searchParams;
+            const qs = new url.URL(req.url, APP_URL).searchParams;
             res.end('Authentication successful! Please return to the console.');
             server.destroy();
             const {tokens} = await oauth2Client.getToken(qs.get('code'));
@@ -128,6 +130,7 @@ try {
   console.error(`Error with authenticated Google Drive APIs to MongoDB: ${ error }`);
 }
 
+// TODO: might not be needed since line 86 already adds the oauth client
 export const googleDrive = google.drive({
   version: 'v3',
   auth: oauth2Client

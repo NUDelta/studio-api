@@ -37,3 +37,5 @@ projectRouter.get("/fetchSprintLogForProject", async (req, res) => {
     res.send(`Error when fetching sprint log for project: ${ error }`);
   }
 });
+
+// TODO: be able to search by project name

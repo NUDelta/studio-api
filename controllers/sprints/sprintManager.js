@@ -55,6 +55,7 @@ const getSprintLogForProject = async (project) => {
   // get sprint url from project and last edit timestamp
   let sprintUrl = project['sprint_log'];
   let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
+  console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
 
   // check cache first for the sprint log
   let cachedSprintLog = await getCachedSprintLog(project);

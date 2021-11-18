@@ -36,3 +36,5 @@ venueRouter.get("/sig", async (req, res) => {
     res.send(`Error when fetching sig meetings: ${ error }`);
   }
 });
+
+// TODO: implement a generic venue route that returns whatever venue is asked for
