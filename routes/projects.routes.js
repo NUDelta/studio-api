@@ -38,4 +38,56 @@ projectRouter.get("/fetchSprintLogForProject", async (req, res) => {
   }
 });
 
+projectRouter.get("/peopleOnProject", async (req, res) => {
+  try {
+    // fetch the project's name from the query that we want the sprint log for, and check if valid
+    let projectName = req.query.projectName;
+    if (projectName === undefined) {
+      throw new Error("projectname parameter not specified.");
+    }
+
+    // get project
+    let relevantProject = await Project.findOne( { name: projectName })
+      .populate('students')
+      .populate('sig_head')
+      .populate('faculty_mentor');
+    if (relevantProject === null) {
+      throw new Error(`no project found for ${ projectName }`);
+    }
+
+    // create an output of the current people on the project
+    let output = {
+      students: relevantProject["students"].map(currStudent => currStudent.name),
+      sig_head: [relevantProject["sig_head"]["name"]],
+      faculty_mentor: [relevantProject["faculty_mentor"]["name"]]
+    };
+
+    // return json of sprint log
+    res.json(output);
+  } catch (error) {
+    res.send(`Error when fetching people on project for project: ${ error }`);
+  }
+});
+
+projectRouter.get("/slackChannelForProject", async (req, res) => {
+  try {
+    // fetch the project's name from the query that we want the slack channel for
+    let projectName = req.query.projectName;
+    if (projectName === undefined) {
+      throw new Error("projectname parameter not specified.");
+    }
+
+    // get project
+    let relevantProject = await Project.findOne( { name: projectName })
+    if (relevantProject === null) {
+      throw new Error(`no project found for ${ projectName }`);
+    }
+
+    // return json of slack channel for project
+    res.json(relevantProject["slack_channel"]);
+  } catch (error) {
+    res.send(`Error when fetching slack channel for project: ${ error }`);
+  }
+});
+
 // TODO: be able to search by project name

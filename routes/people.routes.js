@@ -7,6 +7,7 @@ import { PhdStudent } from "../models/people/phdstudent.js";
 import { NonPhdStudent } from "../models/people/nonphdstudent.js";
 
 import { getSprintLogForPerson } from "../controllers/sprints/sprintManager.js";
+import { Project } from "../models/project/project.js";
 
 export const userRouter = new Router();
 
@@ -67,5 +68,26 @@ userRouter.get("/fetchSprintLogForPerson", async (req, res) => {
   } catch (error) {
     console.error(error)
     res.send(`Error when fetching sprint log for person: ${ error }`);
+  }
+});
+
+userRouter.get("/slackIdForPerson", async (req, res) => {
+  try {
+    // fetch the person's name from the query that we want the slack channel for
+    let personName = req.query.personName;
+    if (personName === undefined) {
+      throw new Error("personName parameter not specified.");
+    }
+
+    // get person
+    let relevantPerson = await Person.findOne( { name: personName })
+    if (relevantPerson === null) {
+      throw new Error(`no person found for ${ personName }`);
+    }
+
+    // return json of slack channel for project
+    res.json(relevantPerson["slack_id"]);
+  } catch (error) {
+    res.send(`Error when fetching slack Id for person: ${ error }`);
   }
 });

@@ -8,6 +8,7 @@ const createFaculty = async () => {
   let haoqi = new Faculty({
     name: "Haoqi Zhang",
     email: "haoqi@northwestern.edu",
+    slack_id: "haoqi-zhang",
     sig_lead: "BBQ"
   });
   await haoqi.save();
@@ -16,6 +17,7 @@ const createFaculty = async () => {
   let nell = new Faculty({
     name: "Nell O'Rourke",
     email: "nell@northwestern.edu",
+    slack_id: "nell-orourke",
     sig_lead: "BEACH"
   });
   await nell.save();
@@ -34,6 +36,7 @@ const createPhDStudents = async () => {
   let leesha = new PhdStudent({
     name: "Leesha Maliakal",
     email: "leesha@northwestern.edu",
+    slack_id: "leesha-maliakal",
     sig_lead: "ARS",
     sig_member: "BBQ",
     faculty_mentor: hqId
@@ -44,6 +47,7 @@ const createPhDStudents = async () => {
   let gobi = new PhdStudent({
     name: "Gobi Dasu",
     email: "gobi@northwestern.edu",
+    slack_id: "gobi-dasu",
     sig_lead: "RALE",
     sig_member: "BBQ",
     faculty_mentor: hqId
@@ -54,6 +58,7 @@ const createPhDStudents = async () => {
   let ryan = new PhdStudent({
     name: "Ryan Louie",
     email: "ryan@northwestern.edu",
+    slack_id: "ryan-louie",
     sig_lead: "CE",
     sig_member: "BBQ",
     faculty_mentor: hqId
@@ -64,6 +69,7 @@ const createPhDStudents = async () => {
   let kapil = new PhdStudent({
     name: "Kapil Garg",
     email: "kapil@northwestern.edu",
+    slack_id: "kapil-garg",
     sig_lead: "NOT",
     sig_member: "BBQ",
     faculty_mentor: hqId
@@ -74,6 +80,7 @@ const createPhDStudents = async () => {
   let harrison = new PhdStudent({
     name: "Harrison Kwik",
     email: "harrison@northwestern.edu",
+    slack_id: "harrison-kwik",
     sig_member: "BBQ",
     faculty_mentor: nellId
   });
@@ -98,6 +105,7 @@ const createNonPhDStudents = async () => {
   let aimee = new NonPhdStudent({
     name: "Aimee van den Berg",
     email: "aimee@northwestern.edu",
+    slack_id: "aimee-van-den-berg",
     sig_member: "Agile Research Studios",
     sig_head: leeshaId
   });
@@ -107,6 +115,7 @@ const createNonPhDStudents = async () => {
   let ariella = new NonPhdStudent({
     name: "Ariella Silver",
     email: "ariella@northwestern.edu",
+    slack_id: "ariella-silver",
     sig_member: "Agile Research Studios",
     sig_head: leeshaId
   });
@@ -116,6 +125,7 @@ const createNonPhDStudents = async () => {
   let neha = new NonPhdStudent({
     name: "Neha Sharma",
     email: "neha@northwestern.edu",
+    slack_id: "neha-sharma",
     sig_member: "Agile Research Studios",
     sig_head: leeshaId
   });
@@ -125,6 +135,7 @@ const createNonPhDStudents = async () => {
   let molly = new NonPhdStudent({
     name: "Molly Pribble",
     email: "molly@northwestern.edu",
+    slack_id: "molly-pribble",
     sig_member: "Networked Orchestration Technologies",
     sig_head: leeshaId
   });
@@ -135,6 +146,7 @@ const createNonPhDStudents = async () => {
   let jason = new NonPhdStudent({
     name: "Jason Friedman",
     email: "jason@northwestern.edu",
+    slack_id: "jason-friedman",
     sig_member: "Networked Orchestration Technologies",
     sig_head: kapilId
   });
@@ -144,6 +156,7 @@ const createNonPhDStudents = async () => {
   let hang = new NonPhdStudent({
     name: "Hang Yin",
     email: "hang@northwestern.edu",
+    slack_id: "hang-yin",
     sig_member: "Networked Orchestration Technologies",
     sig_head: kapilId
   });
@@ -153,11 +166,13 @@ const createNonPhDStudents = async () => {
   let charlotte = new NonPhdStudent({
     name: "Charlotte Jones",
     email: "charlotte@northwestern.edu",
+    slack_id: "charlotte-jones",
     sig_member: "Networked Orchestration Technologies",
     sig_head: kapilId
   });
   await charlotte.save();
 };
+
 
 export const createPeopleFixtures = async () => {
   // start by clearing out the People collection

@@ -33,6 +33,7 @@ const createProjects = async () => {
     sig_head: leesha._id,
     faculty_mentor: hq._id,
     sprint_log: "https://docs.google.com/spreadsheets/d/1IiNI6fisTZKpgg44lUWSpV7KROf_MCvlID9JgZZ3CUY",
+    slack_channel: "#proj-skill-growth",
     status_update_date: DateTime.fromISO("2021-04-30T12:00:00-05:00", { setZone: true })
   });
   await skillTrackingProj.save();
@@ -44,6 +45,7 @@ const createProjects = async () => {
     sig_head: leesha._id,
     faculty_mentor: hq._id,
     sprint_log: "https://docs.google.com/spreadsheets/d/1QCAMuWS_eWnkwsBidzZ5dqnpSCl5PP1Rt7u1JUvWfAM",
+    slack_channel: "#proj-mcr",
     status_update_date: DateTime.fromISO("2021-05-07T12:00:00-05:00", { setZone: true })
   });
   await metacognitiveReflectionProj.save();
@@ -56,6 +58,7 @@ const createProjects = async () => {
     sig_head: kapil._id,
     faculty_mentor: hq._id,
     sprint_log: "https://docs.google.com/spreadsheets/d/162yKb5WZsjJz7mL3pIwUyAtEE2B6XdvV3kw0PnS18Xw",
+    slack_channel: "#proj-os",
     status_update_date: DateTime.fromISO("2021-04-09T12:00:00-05:00", { setZone: true })
   });
   await osEnvProj.save();
@@ -67,6 +70,7 @@ const createProjects = async () => {
     sig_head: kapil._id,
     faculty_mentor: hq._id,
     sprint_log: "https://docs.google.com/spreadsheets/d/1tnuLymq9V9foosTMc0A8dyp74xPlSE-UmTTs5sHSSFA",
+    slack_channel: "#proj-soap",
     status_update_date: DateTime.fromISO("2021-05-21T12:00:00-05:00", { setZone: true })
   });
   await soapProj.save();
