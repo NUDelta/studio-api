@@ -3,6 +3,7 @@ import { DateTime } from 'luxon';
 import { Venue } from "../venues/venue.js";
 import { SIG } from "../venues/sig.js";
 import { Studio } from "../venues/studio.js";
+import { OfficeHours } from "../venues/officeHours.js";
 import { PhdStudent } from "../people/phdstudent.js";
 import { NonPhdStudent } from "../people/nonphdstudent.js";
 
@@ -47,14 +48,36 @@ const createSIGs = async () => {
   // create NOT sig
   let notSIG = new SIG({
     name: "Networked Orchestration Technologies SIG",
-    description: "Weekly NOT meeting for ARS SIG",
+    description: "Weekly SIG meeting for NOT SIG",
     day_of_week: "Wednesday",
-    start_time: DateTime.fromISO("2000-01-01T11:00:00", { zone: "America/Chicago" }),
-    end_time: DateTime.fromISO("2000-01-01T12:00:00", { zone: "America/Chicago" }),
+    start_time: DateTime.fromISO("2000-01-01T12:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T13:00:00", { zone: "America/Chicago" }),
     sig_head: kapil._id,
     sig_members: [jason._id, hang._id, charlotte._id]
   });
   await notSIG.save();
+};
+
+const createOHs = async () => {
+  // create ars OH
+  let arsOH = new OfficeHours({
+    name: "Agile Research Studios Office Hours",
+    description: "Weekly office hours for ARS SIG",
+    day_of_week: "Monday",
+    start_time: DateTime.fromISO("2000-01-01T15:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T16:00:00", { zone: "America/Chicago" }),
+  });
+  await arsOH.save();
+
+  // create ars OH
+  let notOH = new OfficeHours({
+    name: "Networked Orchestration Technologies Office Hours",
+    description: "Weekly office hours for NOT SIG",
+    day_of_week: "Monday",
+    start_time: DateTime.fromISO("2000-01-01T14:00:00", { zone: "America/Chicago" }),
+    end_time: DateTime.fromISO("2000-01-01T15:00:00", { zone: "America/Chicago" }),
+  });
+  await notOH.save();
 };
 
 export const createVenueFixtures = async () => {
@@ -66,4 +89,7 @@ export const createVenueFixtures = async () => {
 
   // populate sigs
   await createSIGs();
+
+  // populate office hours
+  await createOHs();
 }

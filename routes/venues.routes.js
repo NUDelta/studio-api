@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import { Venue } from "../models/venues/venue.js";
 import { Studio } from "../models/venues/studio.js";
 import { SIG } from "../models/venues/sig.js";
+import { OfficeHours } from "../models/venues/officeHours.js";
 
 export const venueRouter = new Router();
 
@@ -34,6 +35,16 @@ venueRouter.get("/sig", async (req, res) => {
     res.json(allSigMeetings);
   } catch (error) {
     res.send(`Error when fetching sig meetings: ${ error }`);
+  }
+});
+
+// fetch all office hour times
+venueRouter.get("/officehours", async (req, res) => {
+  try {
+    let allOfficeHours = await OfficeHours.find();
+    res.json(allOfficeHours);
+  } catch (error) {
+    res.send(`Error when fetching office hour times: ${ error }`);
   }
 });
 
