@@ -73,7 +73,7 @@ const createOHs = async () => {
   let notOH = new OfficeHours({
     name: "Networked Orchestration Technologies Office Hours",
     description: "Weekly office hours for NOT SIG",
-    day_of_week: "Monday",
+    day_of_week: "Tuesday",
     start_time: DateTime.fromISO("2000-01-01T14:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T15:00:00", { zone: "America/Chicago" }),
   });
