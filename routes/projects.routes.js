@@ -2,7 +2,9 @@ import { Router } from "express";
 import bodyParser from "body-parser";
 
 import { Project } from "../models/project/project.js";
-import { getSprintLogForProjectName } from "../controllers/sprints/sprintManager.js";
+import {
+  getSprintLogForProjectName
+} from "../controllers/sprints/sprintManager.js";
 
 export const projectRouter = new Router();
 
@@ -16,6 +18,43 @@ projectRouter.get("/", async (req, res) => {
     res.json(allProjs);
   } catch (error) {
     res.send(`Error when fetching projects: ${ error }`);
+  }
+});
+
+// fetch project for student
+projectRouter.get("/fetchProjectForPerson", async (req, res) => {
+  try {
+    // fetch the person's name from the query that we want the sprint log for, and check if valid
+    let personName = req.query.personName;
+    if (personName === undefined) {
+      throw new Error("personName parameter not specified.");
+    }
+
+    // get all projects
+    let allProjs = await Project.find()
+      .populate('students')
+      .populate('sig_head')
+      .populate('faculty_mentor');
+
+    // select the project that the student is on
+    // TODO: students could potentially be on multiple projects
+    let selectedProj = allProjs.filter(
+      (proj) => {
+        return proj.students.some((student) => {
+          return student.name === personName;
+        });
+      }
+    );
+
+    // return json of project or an empty object
+    if (selectedProj.length > 0) {
+      res.json(selectedProj[0]);
+    } else {
+      res.json({});
+    }
+  } catch (error) {
+    console.error(error)
+    res.send(`Error when fetching sprint log for person: ${ error }`);
   }
 });
 
