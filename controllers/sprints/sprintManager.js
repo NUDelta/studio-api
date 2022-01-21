@@ -1,10 +1,9 @@
-import { DateTime } from "luxon";
-
 import { Person } from "../../models/people/person.js";
 import { Project } from "../../models/project/project.js";
 import { SprintCache } from "../../models/cache/sprintCache.js";
 
-import { googleDrive } from "../../index.js";
+import { google } from "googleapis";
+import { googleDriveAuth } from "../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
 
 /**
@@ -144,8 +143,12 @@ const getSprintLogLastUpdate = async (fileUrl) => {
   // parse out fileId
   let sprintLogFileId = fileUrl.split('https://docs.google.com/spreadsheets/d/')[1];
 
+  // create a google drive instance
+  let drive = google.drive('v3');
+
   // get file information for a sprint log
-  let fileInfo = await googleDrive.files.get({
+  let fileInfo = await drive.files.get({
+    auth: googleDriveAuth,
     fileId: sprintLogFileId,
     fields: "*"
   });

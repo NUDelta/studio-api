@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 
 import path from "path";
 import fs from 'fs';
-import { google } from 'googleapis';
 import http from 'http';
 import url from 'url';
 import opn from 'open';
@@ -63,82 +62,11 @@ mongoose.connection.on('error', err => {
   console.error(`MongoDB connection error: ${ err }`);
 });
 
-/*
-  Authenticate google spreadsheets
- */
-export const googleServiceAccountAuth = {
-  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  private_key: process.env.GOOGLE_PRIVATE_KEY
-};
-
-/*
-  Authenticate google drive
-  TODO: look at alt version of auth, such as with a service account
-  https://stackoverflow.com/questions/45492703/google-drive-api-oauth-and-service-account
-  Closer: https://developers.google.com/identity/protocols/oauth2/service-account#python
- */
-// TODO: check if already authenticated
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_REDIRECT_URI
-);
-
-google.options({ auth: oauth2Client });
-
-async function authenticate(scopes) {
-  return new Promise((resolve, reject) => {
-    // grab the url that will be used for authorization
-    const authorizeUrl = oauth2Client.generateAuthUrl({
-      access_type: 'offline',
-      scope: scopes.join(' '),
-    });
-    const server = http
-      .createServer(async (req, res) => {
-        try {
-          if (req.url.indexOf('/oauth2callback') > -1) {
-            const qs = new url.URL(req.url, APP_URL).searchParams;
-            res.end('Authentication successful! Please return to the console.');
-            server.destroy();
-            const {tokens} = await oauth2Client.getToken(qs.get('code'));
-            oauth2Client.credentials = tokens;
-            resolve(oauth2Client);
-          }
-        } catch (e) {
-          reject(e);
-        }
-      })
-      .listen(PORT, () => {
-        // open the browser to the authorize url to start the workflow
-        opn(authorizeUrl, {wait: false}).then(cp => cp.unref());
-      });
-    destroyer(server);
-  });
-}
-
-const scopes =[
-  'https://www.googleapis.com/auth/drive',
-  'https://www.googleapis.com/auth/drive.file',
-  'https://www.googleapis.com/auth/drive.appdata',
-  'https://www.googleapis.com/auth/drive.metadata'
-];
-
-try {
-  await authenticate(scopes);
-  console.log(`Authenticated Google Drive APIs`);
-} catch (error) {
-  console.error(`Error with authenticated Google Drive APIs to MongoDB: ${ error }`);
-}
-
-// TODO: might not be needed since line 86 already adds the oauth client
-export const googleDrive = google.drive({
-  version: 'v3',
-  auth: oauth2Client
-});
 
 /*
  Setup routes
  */
+// TODO: see second answer about how to split up routes: https://stackoverflow.com/questions/25260818/rest-with-express-js-nested-router
 app.use(bodyParser.json(), cors());
 app.use('/users', userRouter);
 app.use('/venues', venueRouter);
