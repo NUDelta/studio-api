@@ -3,7 +3,7 @@ import { Project } from "../../models/project/project.js";
 import { SprintCache } from "../../models/cache/sprintCache.js";
 
 import { google } from "googleapis";
-import { googleDriveAuth } from "../../index.js";
+import { googleDriveAuth } from "../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
 
 /**

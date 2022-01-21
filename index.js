@@ -11,8 +11,6 @@ import url from 'url';
 import opn from 'open';
 import destroyer from 'server-destroy';
 
-import { google } from 'googleapis';
-
 // routes
 import { userRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
@@ -64,37 +62,6 @@ mongoose.connection.on('error', err => {
   console.error(`MongoDB connection error: ${ err }`);
 });
 
-/*
-  Authenticate google spreadsheets
- */
-export const googleServiceAccountAuth = {
-  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  private_key: process.env.GOOGLE_PRIVATE_KEY
-};
-
-/*
-  Authenticate Google Drive
- */
-// configure a JWT auth client for Google Drive's API
-export const googleDriveAuth = new google.auth.JWT(
-  googleServiceAccountAuth.client_email,
-  null,
-  googleServiceAccountAuth.private_key,
-  [
-    'https://www.googleapis.com/auth/drive',
-    'https://www.googleapis.com/auth/drive.file',
-    'https://www.googleapis.com/auth/drive.appdata',
-    'https://www.googleapis.com/auth/drive.metadata'
-  ]);
-
-// authorize the token
-googleDriveAuth.authorize(function (err, tokens) {
-  if (err) {
-    console.log(`Error when authorizing Google Drive: ${ err }`);
-  } else {
-    console.log("Google Drive successfully authorized.");
-  }
-});
 
 /*
  Setup routes

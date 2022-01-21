@@ -1,4 +1,4 @@
-import { googleServiceAccountAuth } from "../../index.js";
+import { googleServiceAccountInfo } from "../../imports/utils/googleAuth.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 /**
@@ -52,7 +52,6 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  * }
  */
 export class SprintLog {
-  // sprintLogDoc; // GoogleSpreadsheet object for the Sprint Log to parse
   people = []; // list of people the sprint is for
   sprints = []; // list of Sprint objects associated with the sprint log
 
@@ -61,7 +60,7 @@ export class SprintLog {
 
     return (async () => {
       // authorize GoogleSpreadsheet to get the Spreadsheet
-      await sprintLogDoc.useServiceAccountAuth(googleServiceAccountAuth);
+      await sprintLogDoc.useServiceAccountAuth(googleServiceAccountInfo);
       await sprintLogDoc.loadInfo();
 
       // fetch all Worksheets
@@ -302,7 +301,8 @@ export class SprintLog {
                 pointsSpent = currCellValue;
                 break;
               case 12:
-                helpfulLinks = worksheet.getCell(rowIndex, colIndex).hyperlink; // TODO: check if just text or hyperlink (and really, capture both in an object)
+                // TODO: check if just text or hyperlink (and really, capture both in an object)
+                helpfulLinks = worksheet.getCell(rowIndex, colIndex).hyperlink;
                 break;
               default:
                 break;
@@ -344,8 +344,9 @@ export class SprintLog {
  * and the current stories in the sprint.
  */
 export class SprintPlan {
-  name = ""; // str name of sprint (e.g., Sprint 1)
-  points = []; // list of objs where each key is a person and values are points available, points committed (total/D/T/R splits), and hours spent (total/D/T/R splits)
+  name = "";    // str name of sprint (e.g., Sprint 1)
+  points = [];  // list of objs where each key is a person and values are points available,
+                // points committed (total/D/T/R splits), and hours spent (total/D/T/R splits)
   stories = []; // list of SprintStories associated with this specific sprint
 
   constructor(sprintName, people) {
