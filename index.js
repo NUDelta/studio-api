@@ -1,4 +1,5 @@
 // application imports
+import Slack from "@slack/bolt"
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
@@ -24,8 +25,14 @@ import { createProjectFixtures } from "./models/fixtures/projectFixtures.js";
 import { createProcessFixtures } from "./models/fixtures/processFixtures.js";
 
 // setup application
-const app = express();
-const router = express.Router();
+const receiver = new Slack.ExpressReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET
+});
+
+const app = new Slack.App({
+  token: process.env.SLACK_BOT_TOKEN,
+  receiver: receiver
+});
 
 // fetch env variables
 const PORT = process.env.PORT || 3000;
@@ -67,32 +74,68 @@ mongoose.connection.on('error', err => {
  Setup routes
  */
 // TODO: see second answer about how to split up routes: https://stackoverflow.com/questions/25260818/rest-with-express-js-nested-router
-app.use(bodyParser.json(), cors());
-app.use('/users', userRouter);
-app.use('/venues', venueRouter);
-app.use('/projects', projectRouter);
-app.use('/sprints', sprintRouter);
+app.receiver.app.use(bodyParser.json(), cors());
+app.receiver.app.use('/users', userRouter);
+app.receiver.app.use('/venues', venueRouter);
+app.receiver.app.use('/projects', projectRouter);
+app.receiver.app.use('/sprints', sprintRouter);
 
-
-// catch any undefined routes
-app.all('*', (request, response) => {
-  console.log('Returning a 404 from the catch-all route');
-  return response.sendStatus(404);
-});
-
-/*
- Start application
- */
-app.use((req, res, next) => {
+app.receiver.app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
-app.use((req, res) => {
-  res.send('Welcome to Express');
+app.receiver.app.all('*', (request, response) => {
+  console.log('Returning a 404 from the catch-all route');
+  return response.sendStatus(404);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${ PORT }`)
-});
+/*
+ Setup Slack Bot
+ */
+// start application
+(async () => {
+  // start app
+  await app.start(PORT);
+  console.log(`App running: ${ APP_URL }`);
+
+  console.log(await app.client.conversations.list())
+
+  const result = await app.client.chat.postMessage({
+    channel: "C032MMU3JH1",
+    text: "test text"
+  });
+  console.log(result)
+})();
+
+
+// app.use(bodyParser.json(), cors());
+// app.use('/users', userRouter);
+// app.use('/venues', venueRouter);
+// app.use('/projects', projectRouter);
+// app.use('/sprints', sprintRouter);
+
+
+// // catch any undefined routes
+// app.all('*', (request, response) => {
+//   console.log('Returning a 404 from the catch-all route');
+//   return response.sendStatus(404);
+// });
+//
+// /*
+//  Start application
+//  */
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+//
+// app.use((req, res) => {
+//   res.send('Welcome to Express');
+// });
+//
+// app.listen(PORT, () => {
+//   console.log(`Server running on port ${ PORT }`)
+// });
