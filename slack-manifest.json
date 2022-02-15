@@ -1,0 +1,75 @@
+{
+    "display_information": {
+        "name": "APPLICATION_NAME"
+    },
+    "features": {
+        "bot_user": {
+            "display_name": "BOT_USER_NAME",
+            "always_online": true
+        }
+    },
+    "oauth_config": {
+        "scopes": {
+            "user": [
+                "admin",
+                "groups:read",
+                "groups:history",
+                "groups:write",
+                "im:history",
+                "im:read",
+                "im:write",
+                "mpim:history",
+                "mpim:read",
+                "mpim:write"
+            ],
+            "bot": [
+                "app_mentions:read",
+                "channels:history",
+                "channels:join",
+                "channels:manage",
+                "channels:read",
+                "chat:write",
+                "chat:write.customize",
+                "chat:write.public",
+                "emoji:read",
+                "files:read",
+                "groups:history",
+                "groups:read",
+                "im:history",
+                "im:read",
+                "im:write",
+                "links:write",
+                "mpim:history",
+                "mpim:read",
+                "mpim:write",
+                "reactions:read",
+                "users.profile:read",
+                "users:read",
+                "groups:write"
+            ]
+        }
+    },
+    "settings": {
+        "event_subscriptions": {
+            "request_url": "BOT_EVENT_URL",
+            "bot_events": [
+                "app_mention",
+                "emoji_changed",
+                "message.channels",
+                "message.groups",
+                "message.im",
+                "message.mpim",
+                "reaction_added",
+                "reaction_removed",
+                "team_join"
+            ]
+        },
+        "interactivity": {
+            "is_enabled": true,
+            "request_url": "BOT_EVENT_URL"
+        },
+        "org_deploy_enabled": false,
+        "socket_mode_enabled": false,
+        "token_rotation_enabled": false
+    }
+}
