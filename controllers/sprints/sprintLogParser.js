@@ -196,6 +196,39 @@ export class SprintLog {
       rowIndex++
       colIndex = loadArea.startColumnIndex;
     }
+    
+    // add a total points field
+    let totalPoints = {
+      point_available: 0,
+      points_committed: {
+        total: 0,
+        design: 0,
+        technology: 0,
+        research: 0
+      },
+      hours_spent: {
+        total: 0,
+        design: 0,
+        technology: 0,
+        research: 0
+      }
+    };
+
+    sprintObj.points.map((pointsForPerson) => {
+      totalPoints.point_available += pointsForPerson.points_available;
+
+      totalPoints.points_committed.total += pointsForPerson.points_committed.total;
+      totalPoints.points_committed.design += pointsForPerson.points_committed.design;
+      totalPoints.points_committed.technology += pointsForPerson.points_committed.technology;
+      totalPoints.points_committed.research += pointsForPerson.points_committed.research;
+
+      totalPoints.hours_spent.total += pointsForPerson.hours_spent.total;
+      totalPoints.hours_spent.design += pointsForPerson.hours_spent.design;
+      totalPoints.hours_spent.technology += pointsForPerson.hours_spent.technology;
+      totalPoints.hours_spent.research += pointsForPerson.hours_spent.research;
+    });
+
+    sprintObj.totalPoints = totalPoints;
 
     // return the updated sprintObj
     return sprintObj;
