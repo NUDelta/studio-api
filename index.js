@@ -107,34 +107,3 @@ app.receiver.app.all('*', (request, response) => {
  */
 await app.start(PORT);
 console.log(`App running: ${ APP_URL }`);
-
-
-// app.use(bodyParser.json(), cors());
-// app.use('/users', userRouter);
-// app.use('/venues', venueRouter);
-// app.use('/projects', projectRouter);
-// app.use('/sprints', sprintRouter);
-
-
-// // catch any undefined routes
-// app.all('*', (request, response) => {
-//   console.log('Returning a 404 from the catch-all route');
-//   return response.sendStatus(404);
-// });
-//
-// /*
-//  Start application
-//  */
-// app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   next();
-// });
-//
-// app.use((req, res) => {
-//   res.send('Welcome to Express');
-// });
-//
-// app.listen(PORT, () => {
-//   console.log(`Server running on port ${ PORT }`)
-// });
