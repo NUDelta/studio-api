@@ -36,8 +36,8 @@ slackRouter.get("/getAllPeople", async (req, res) => {
 slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
   // TODO: check if inputs are valid
   // parse inputs
-  let projName = req.body.projName;
-  let message = req.body.message;
+  let projName = (req.body.projName ?? "").trim();
+  let message = (req.body.message ?? "").trim();
 
   // fetch project info
   let relevantProject = await Project.findOne( { name: projName })

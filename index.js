@@ -20,10 +20,10 @@ import { sprintRouter } from "./routes/sprints.routes.js";
 import { slackRouter } from "./routes/slack.routes.js";
 
 // fixtures for development
-import { createPeopleFixtures } from "./models/fixtures/peopleFixtures.js";
-import { createVenueFixtures } from "./models/fixtures/venueFixtures.js";
-import { createProjectFixtures } from "./models/fixtures/projectFixtures.js";
-import { createProcessFixtures } from "./models/fixtures/processFixtures.js";
+import createPeopleFixtures from "./models/fixtures/populatePeople.js";
+import createProcessFixtures from "./models/fixtures/populateProcesses.js";
+import createProjectFixtures from "./models/fixtures/populateProjects.js";
+import createVenueFixtures from "./models/fixtures/populateVenues.js";
 
 /*
  Get environment variables.
@@ -51,9 +51,9 @@ try {
   if (NODE_ENV === "development") {
     // TODO: populate DB with fixtures here
     await createPeopleFixtures();
-    await createVenueFixtures();
-    await createProjectFixtures();
     await createProcessFixtures();
+    await createProjectFixtures();
+    await createVenueFixtures();
   }
 }
 
