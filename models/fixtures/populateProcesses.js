@@ -1,0 +1,39 @@
+import { Process } from "../processes/process.js";
+import { Sprint } from "../processes/sprints.js";
+
+import { sprintProcessData } from "./data/processFixtures.js";
+
+/**
+ * Creates an array of Promises that, when resolved, create Sprint Process documents.
+ * @return {Promise<unknown[]>}
+ */
+const createSprintProcessDocuments = async () => {
+  // store all promises that we need to save
+  let sprintProcessDocumentPromises = [];
+
+  // loop over each document and save
+  sprintProcessData.forEach((sprintProcess) => {
+    let currSprintProcessDocument = new Sprint({
+      name: sprintProcess.name,
+      start_day: sprintProcess.start_day,
+      end_day:sprintProcess.end_day
+    });
+    sprintProcessDocumentPromises.push(currSprintProcessDocument.save());
+  });
+
+  return Promise.all(sprintProcessDocumentPromises);
+};
+
+/**
+ * Removes existing documents and executes all Promises to create Process documents.
+ * @return {Promise<void>}
+ */
+export default async function main() {
+  // remove all old documents
+  if (process.env.NODE_ENV === "development") {
+    await Process.deleteMany({}).exec();
+  }
+
+  // populate new documents
+  await createSprintProcessDocuments();
+}
