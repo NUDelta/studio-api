@@ -3,8 +3,7 @@ import { SIG } from "../venues/sig.js";
 import { Studio } from "../venues/studio.js";
 import { OfficeHours } from "../venues/officeHours.js";
 
-import { PhdStudent } from "../people/phdstudent.js";
-import { NonPhdStudent } from "../people/nonphdstudent.js";
+import { Person } from "../people/person.js";
 
 import { studioData, sigData, officeHoursData } from "./data/venueFixtures.js";
 
@@ -42,12 +41,12 @@ const createSigDocuments = async () => {
   // loop over each document and save
   for (const sig of sigData) {
     // get sig head
-    let sigHead = await PhdStudent.findOne({ name: sig.sig_head });
+    let sigHead = await Person.findOne({ name: sig.sig_head });
 
     // get members of sig
     let studentPromises = [];
     for (const studentName of sig.sig_members) {
-      studentPromises.push(NonPhdStudent.findOne({ name: studentName }));
+      studentPromises.push(Person.findOne({ name: studentName }));
     }
     let students = await Promise.all(studentPromises);
     let studentIds = students.map((student) => { return student._id; });

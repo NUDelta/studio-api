@@ -1,7 +1,6 @@
 import { Project } from "../project/project.js";
+import { Person } from "../people/person.js";
 import { Faculty } from "../people/faculty.js";
-import { PhdStudent } from "../people/phdstudent.js";
-import { NonPhdStudent } from "../people/nonphdstudent.js";
 
 import { projectData } from "./data/projectFixtures.js";
 
@@ -18,13 +17,13 @@ const createProjectDocuments = async () => {
     // get students
     let studentPromises = [];
     for (const studentName of project.students) {
-      studentPromises.push(NonPhdStudent.findOne({ name: studentName }));
+      studentPromises.push(Person.findOne({ name: studentName }));
     }
     let students = await Promise.all(studentPromises);
     let studentIds = students.map((student) => { return student._id; });
 
     // get sig head
-    let sigHead = await PhdStudent.findOne({ name: project.sig_head });
+    let sigHead = await Person.findOne({ name: project.sig_head });
 
     // get faculty mentor
     let facultyMentor = await Faculty.findOne({ name: project.faculty_mentor });
