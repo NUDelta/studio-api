@@ -24,6 +24,7 @@ import createPeopleFixtures from "./models/fixtures/populatePeople.js";
 import createProcessFixtures from "./models/fixtures/populateProcesses.js";
 import createProjectFixtures from "./models/fixtures/populateProjects.js";
 import createVenueFixtures from "./models/fixtures/populateVenues.js";
+import { prepopulateSprintCache } from "./controllers/sprints/sprintManager.js";
 
 /*
  Get environment variables.
@@ -54,6 +55,9 @@ try {
     await createProcessFixtures();
     await createProjectFixtures();
     await createVenueFixtures();
+
+    // populate sprint cache on startup
+    await prepopulateSprintCache();
   }
 }
 
