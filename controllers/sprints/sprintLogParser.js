@@ -59,32 +59,40 @@ export class SprintLog {
     const sprintLogDoc = new GoogleSpreadsheet(SprintLog.getSprintLogIdForUrl(sprintLogUrl));
 
     return (async () => {
-      // authorize GoogleSpreadsheet to get the Spreadsheet
-      await sprintLogDoc.useServiceAccountAuth(googleServiceAccountInfo);
-      await sprintLogDoc.loadInfo();
+      // TODO: needs to be more granular. When it does fail, wait 60 seconds and try again.
+      // Re-try is handled by the caller rn, but I think it should be done here.
+      try {
+        // authorize GoogleSpreadsheet to get the Spreadsheet
+        await sprintLogDoc.useServiceAccountAuth(googleServiceAccountInfo);
+        await sprintLogDoc.loadInfo();
 
-      // fetch all Worksheets
-      const worksheets = sprintLogDoc.sheetsByIndex;
+        // fetch all Worksheets
+        const worksheets = sprintLogDoc.sheetsByIndex;
 
-      // parse each worksheet
-      for (let i = 0; i < worksheets.length; i++) {
-        // fetch current worksheet's info
-        let currWorksheet = worksheets[i];
-        let currWorksheetTitle = currWorksheet.title.toLowerCase().trim();
+        // parse each worksheet
+        for (let i = 0; i < worksheets.length; i++) {
+          // fetch current worksheet's info
+          let currWorksheet = worksheets[i];
+          let currWorksheetTitle = currWorksheet.title.toLowerCase().trim();
 
-        // parse team worksheet
-        if (currWorksheetTitle === "team") {
-          await this.#parseTeam(currWorksheet);
+          // parse team worksheet
+          if (currWorksheetTitle === "team") {
+            await this.#parseTeam(currWorksheet);
+          }
+
+          // parse sprint sheets
+          if (currWorksheetTitle.startsWith("sprint")) {
+            await this.#parseSprints(currWorksheet);
+          }
         }
 
-        // parse sprint sheets
-        if (currWorksheetTitle.startsWith("sprint")) {
-          await this.#parseSprints(currWorksheet);
-        }
+        // return the object back up the caller
+        return this;
+      } catch (e) {
+        console.log(`Error in loading data for worksheet: ${ e }`);
       }
 
-      // return the object back up the caller
-      return this;
+      return undefined;
     })();
   }
 
@@ -108,6 +116,10 @@ export class SprintLog {
     // create a new Sprint object for each sprint worksheet
     let sprintObj = new SprintPlan(worksheet.title.split(":")[0], this.people);
 
+    // load area for sprint log into worksheet
+    let loadArea = { startRowIndex: 0, endRowIndex: 100, startColumnIndex: 0, endColumnIndex: 14};
+    await worksheet.loadCells(loadArea);
+
     // get summary about points planned/spend for the current sprint
     sprintObj = await this.#parsePointSummaryForSprint(worksheet, sprintObj);
 
@@ -119,9 +131,8 @@ export class SprintLog {
   }
 
   async #parsePointSummaryForSprint(worksheet, sprintObj) {
-    // fetch the area with the point summary for the sprint
+    // area that contains the point summary for the sprint
     let loadArea = { startRowIndex: 0, endRowIndex: 9, startColumnIndex: 0, endColumnIndex: 14}
-    await worksheet.loadCells(loadArea);
 
     // iterate over the point summary area
     let rowIndex = loadArea.startRowIndex;
@@ -235,9 +246,8 @@ export class SprintLog {
   }
 
   async #parseStoriesForSprint(worksheet, sprintObj) {
-    // fetch the area where stories and tasks will live
+    // area that contains the stories and tasks
     let loadArea = { startRowIndex: 10, endRowIndex: 100, startColumnIndex: 0, endColumnIndex: 14}
-    await worksheet.loadCells(loadArea);
 
     // iterate over rows to find stories and their tasks
     let rowIndex = loadArea.startRowIndex;

@@ -49,6 +49,9 @@ export const getSprintLogForProjectName = async (projectName) => {
  * @return {Promise<void>}
  */
 export const prepopulateSprintCache = async () => {
+  // clear current cache
+  await SprintCache.deleteMany({}).exec();
+
   // get all projects
   let allProjects = await Project.find({}).exec();
 
@@ -77,6 +80,14 @@ export const prepopulateSprintCache = async () => {
     // cache miss -- get parsed sprint log
     console.log(`Sprint Cache MISS for project ${ project['name'] }`);
     let parsedSprintLog = await new SprintLog(sprintUrl);
+
+    // if undefined, wait 60 seconds and try again
+    if (parsedSprintLog === undefined) {
+      console.log("Rate limit hit. Waiting 60 seconds before trying again...");
+      await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+      console.log("Attempting to get sprint log again....");
+      parsedSprintLog = await new SprintLog(sprintUrl);
+    }
 
     // add to cache
     if (cachedSprintLog !== undefined) {
