@@ -45,6 +45,60 @@ export const getSprintLogForProjectName = async (projectName) => {
 };
 
 /**
+ * Pre-populates sprint cache with parsed sprint log data.
+ * @return {Promise<void>}
+ */
+export const prepopulateSprintCache = async () => {
+  // clear current cache
+  await SprintCache.deleteMany({}).exec();
+
+  // get all projects
+  let allProjects = await Project.find({}).exec();
+
+  // create an array of promises to push data to cache
+  let cacheUpdatePromises = [];
+  for (let project of allProjects) {
+    // TODO: this should all be in a separate function that is async
+    // get current sprint log url
+    let sprintUrl = project["sprint_log"];
+    let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
+    console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
+
+    // check cache first for the sprint log
+    let cachedSprintLog = await getCachedSprintLog(project);
+    if (cachedSprintLog !== undefined) {
+      // check if cached sprint log is still relevant
+      let cacheData = cachedSprintLog['data'];
+      let cacheDate = cachedSprintLog['last_modified'];
+
+      // check if version in cache is most recent; if not, remove instance
+      if (lastEditDate <= cacheDate) {
+        console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
+      }
+    }
+
+    // cache miss -- get parsed sprint log
+    console.log(`Sprint Cache MISS for project ${ project['name'] }`);
+    let parsedSprintLog = await new SprintLog(sprintUrl);
+
+    // if undefined, wait 60 seconds and try again
+    if (parsedSprintLog === undefined) {
+      console.log("Rate limit hit. Waiting 60 seconds before trying again...");
+      await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+      console.log("Attempting to get sprint log again....");
+      parsedSprintLog = await new SprintLog(sprintUrl);
+    }
+
+    // add to cache
+    if (cachedSprintLog !== undefined) {
+      await updateCachedSprintLog(cachedSprintLog, parsedSprintLog, lastEditDate);
+    } else {
+      await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
+    }
+  }
+};
+
+/**
  * Fetches a sprint log for a project.
  * Checks to see if the project is stored in the cache first before parsing a new one from GDrive.
  * @param project

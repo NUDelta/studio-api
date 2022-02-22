@@ -24,6 +24,7 @@ import createPeopleFixtures from "./models/fixtures/populatePeople.js";
 import createProcessFixtures from "./models/fixtures/populateProcesses.js";
 import createProjectFixtures from "./models/fixtures/populateProjects.js";
 import createVenueFixtures from "./models/fixtures/populateVenues.js";
+import { prepopulateSprintCache } from "./controllers/sprints/sprintManager.js";
 
 /*
  Get environment variables.
@@ -31,6 +32,7 @@ import createVenueFixtures from "./models/fixtures/populateVenues.js";
 const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/studio-api";
 const NODE_ENV = process.env.NODE_ENV || "development";
+const SHOULD_REFRESH_DATA = process.env.SHOULD_REFRESH_DATA.trim().toLowerCase() === "true" || false;
 const APP_URL = process.env.APP_URL || `http://localhost:${ PORT }`;
 
 /*
@@ -48,12 +50,19 @@ try {
 } catch (error) {
   console.error(`Error with connecting to MongoDB: ${ error }`);
 } finally {
-  if (NODE_ENV === "development") {
+  if (NODE_ENV === "development" && SHOULD_REFRESH_DATA) {
+    console.log("Refreshing data in local database.");
+
     // TODO: populate DB with fixtures here
     await createPeopleFixtures();
     await createProcessFixtures();
     await createProjectFixtures();
     await createVenueFixtures();
+
+    // populate sprint cache on startup
+    await prepopulateSprintCache();
+  } else {
+    console.log("Not refreshing data in local database.");
   }
 }
 
