@@ -3,6 +3,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 /**
  * This class handles the parsing of a Google Sheet Sprint Log document.
+ * TODO: field names are inconsistent (both camelCase and snake_case). Should be consistent.
  *
  * Data model for Sprint Log:
  * SprintLog {
@@ -19,13 +20,28 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *              technology: Number,
  *              research: Number
  *          },
- *          hours_spent: {                     // number of hours spent
+ *          hours_spent: {                    // number of hours spent
  *              total: Number,
  *              design: Number,
  *              technology: Number,
  *              research: Number
  *          }
  *       ],
+ *       totalPoints = {                      // total points planned/spent on sprint (students combined)
+ *          point_available: Number,
+ *          points_committed: {
+ *              total: 0,
+ *              design: 0,
+ *              technology: 0,
+ *              research: 0
+ *          },
+ *          hours_spent: {
+ *              total: 0,
+ *              design: 0,
+ *              technology: 0,
+ *              research: 0
+ *          }
+ *       },
  *       stories: [                            // list of SprintStories for the SprintPlan
  *         SprintStory {
  *          description: "String",             // description of the story (typically, the risk in project)
