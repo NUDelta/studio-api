@@ -12,6 +12,9 @@ import url from 'url';
 import opn from 'open';
 import destroyer from 'server-destroy';
 
+// slack responses
+import slackResponses from "./imports/slack/cannedResponses.js"
+
 // routes
 import { userRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
@@ -44,6 +47,7 @@ const mongooseOptions = {
 }
 
 // attempt to connect to mongodb, and detect any connection errors
+// TODO: maybe have a case where for production you check if the database is empty and (if so) populate it.
 try {
   await mongoose.connect(MONGODB_URI, mongooseOptions);
   console.log(`Connected to MongoDB: ${ MONGODB_URI } with options ${ mongooseOptions }`);
@@ -83,6 +87,10 @@ export const app = new Slack.App({
   receiver: receiver
 });
 
+// add canned slack responses
+slackResponses.map((responseObject) => {
+  app.message(responseObject.cue, responseObject.response);
+});
 
 /*
  Setup routes
