@@ -1,16 +1,13 @@
 # Studio API
 An API for accessing data about [Agile Research Studios (ARS)](http://agileresearch.io/), specifically built for the Northwestern [Design, Technology, and Research (DTR)](http://dtr.northwestern.edu) program. 
 
-## Setup
+## Setup for local development
 1. Create a `.env` file as follows:
     ```
    NODE_ENV=development
    PORT=3000
    DEBUG=true
-   API_URL=http://localhost:3000
-   CORS_ORIGINS=http://localhost:8080
    MONGODB_URI=mongodb://localhost/studio-api
-   POOL_SIZE=25
    GOOGLE_SERVICE_ACCOUNT_EMAIL="<GOOGLE_SERVICE_ACCOUNT_EMAIL>"
    GOOGLE_PRIVATE_KEY="<GOOGLE_API_PRIVATE_KEY>"
    SLACK_SIGNING_SECRET="<SLACK_SIGNING_SECRET>"
@@ -27,6 +24,18 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
 3. Run `npm run dev` to start the local Node.js application.
 4. In a separate tab, start MongoDB using `mongod --dbpath=<PATH_TO_DB>`.
 5. In another separate tab, start ngrok using `ngrok http <PORT_NUMBER>`.
+
+## Deployment
+For production, use the following environment variables:
+```
+NODE_ENV=production
+PORT=8080
+MONGODB_URI=<url of mongodb>
+GOOGLE_SERVICE_ACCOUNT_EMAIL="<GOOGLE_SERVICE_ACCOUNT_EMAIL>"
+GOOGLE_PRIVATE_KEY="<GOOGLE_API_PRIVATE_KEY>"
+SLACK_SIGNING_SECRET="<SLACK_SIGNING_SECRET>"
+SLACK_BOT_TOKEN="<SLACK_BOT_TOKEN>"
+```
 
 ## Data Sources
 _Check mark indicates API support for the data source._

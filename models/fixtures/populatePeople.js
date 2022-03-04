@@ -96,3 +96,12 @@ export default async function main() {
   await createPhdStudentDocuments();
   await createNonPhdStudentDocuments();
 }
+
+/**
+ * Checks if the Person collection has documents in it.
+ * @return {Promise<boolean>}
+ */
+export const isPeopleEmpty = async () => {
+  let foundPeople = await Person.find({});
+  return foundPeople.length === 0;
+}

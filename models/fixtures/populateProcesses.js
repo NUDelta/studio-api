@@ -2,6 +2,7 @@ import { Process } from "../processes/process.js";
 import { Sprint } from "../processes/sprints.js";
 
 import { sprintProcessData } from "./data/processFixtures.js";
+import { Person } from "../people/person.js";
 
 /**
  * Creates an array of Promises that, when resolved, create Sprint Process documents.
@@ -36,4 +37,13 @@ export default async function main() {
 
   // populate new documents
   await createSprintProcessDocuments();
+}
+
+/**
+ * Checks if the Process collection has documents in it.
+ * @return {Promise<boolean>}
+ */
+export const isProcessEmpty = async () => {
+  let foundProcesses = await Process.find({});
+  return foundProcesses.length === 0;
 }

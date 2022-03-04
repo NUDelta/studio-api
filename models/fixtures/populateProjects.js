@@ -3,6 +3,7 @@ import { Person } from "../people/person.js";
 import { Faculty } from "../people/faculty.js";
 
 import { projectData } from "./data/projectFixtures.js";
+import { Process } from "../processes/process.js";
 
 /**
  * Creates an array of Promises that, when resolved, create Project documents.
@@ -57,4 +58,13 @@ export default async function main() {
 
   // populate new documents
   await createProjectDocuments();
+}
+
+/**
+ * Checks if the Project collection has documents in it.
+ * @return {Promise<boolean>}
+ */
+export const isProjectEmpty = async () => {
+  let foundProjects = await Project.find({});
+  return foundProjects.length === 0;
 }

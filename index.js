@@ -3,14 +3,6 @@ import Slack from "@slack/bolt"
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
-import bodyParser from "body-parser";
-
-import path from "path";
-import fs from 'fs';
-import http from 'http';
-import url from 'url';
-import opn from 'open';
-import destroyer from 'server-destroy';
 
 // slack responses
 import slackResponses from "./imports/slack/cannedResponses.js"
@@ -23,10 +15,10 @@ import { sprintRouter } from "./routes/sprints.routes.js";
 import { slackRouter } from "./routes/slack.routes.js";
 
 // fixtures for development
-import createPeopleFixtures from "./models/fixtures/populatePeople.js";
-import createProcessFixtures from "./models/fixtures/populateProcesses.js";
-import createProjectFixtures from "./models/fixtures/populateProjects.js";
-import createVenueFixtures from "./models/fixtures/populateVenues.js";
+import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populatePeople.js";
+import createProcessFixtures, { isProcessEmpty } from "./models/fixtures/populateProcesses.js";
+import createProjectFixtures, { isProjectEmpty } from "./models/fixtures/populateProjects.js";
+import createVenueFixtures, { isVenueEmpty } from "./models/fixtures/populateVenues.js";
 import { prepopulateSprintCache } from "./controllers/sprints/sprintManager.js";
 
 /*
@@ -54,19 +46,40 @@ try {
 } catch (error) {
   console.error(`Error with connecting to MongoDB: ${ error }`);
 } finally {
-  if (NODE_ENV === "development" && SHOULD_REFRESH_DATA) {
-    console.log("Refreshing data in local database.");
+  if (NODE_ENV === "development") {
+    if (SHOULD_REFRESH_DATA) {
+      console.log("Development -- Local databases are empty. Populating.");
 
-    // TODO: populate DB with fixtures here
-    await createPeopleFixtures();
-    await createProcessFixtures();
-    await createProjectFixtures();
-    await createVenueFixtures();
+      // TODO: populate DB with fixtures here
+      await createPeopleFixtures();
+      await createProcessFixtures();
+      await createProjectFixtures();
+      await createVenueFixtures();
 
-    // populate sprint cache on startup
-    await prepopulateSprintCache();
-  } else {
-    console.log("Not refreshing data in local database.");
+      // populate sprint cache on startup
+      await prepopulateSprintCache();
+    } else {
+      console.log("Development -- Local databases are populated. Not re-populating.");
+    }
+  }
+
+  if (NODE_ENV === "production") {
+    // check if collections are empty first so that data isn't overwritten
+    if (await isPeopleEmpty() && await isProcessEmpty() &&
+      await isProjectEmpty() && await isVenueEmpty()) {
+      console.log("Production -- Databases are empty. Populating.");
+
+      // populate them if they are
+      await createPeopleFixtures();
+      await createProcessFixtures();
+      await createProjectFixtures();
+      await createVenueFixtures();
+
+      // populate sprint cache on startup
+      await prepopulateSprintCache();
+    } else {
+      console.log("Production -- Databases are populated. Not re-populating.");
+    }
   }
 }
 

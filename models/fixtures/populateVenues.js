@@ -6,6 +6,7 @@ import { OfficeHours } from "../venues/officeHours.js";
 import { Person } from "../people/person.js";
 
 import { studioData, sigData, officeHoursData } from "./data/venueFixtures.js";
+import { Project } from "../project/project.js";
 
 /**
  * Creates an array of Promises that, when resolved, create Studio documents.
@@ -104,4 +105,13 @@ export default async function main() {
   await createStudioDocuments();
   await createSigDocuments();
   await createOfficeHoursDocuments();
+}
+
+/**
+ * Checks if the Venue collection has documents in it.
+ * @return {Promise<boolean>}
+ */
+export const isVenueEmpty = async () => {
+  let foundVenues = await Venue.find({});
+  return foundVenues.length === 0;
 }
