@@ -1,6 +1,9 @@
 # Studio API
 An API for accessing data about [Agile Research Studios (ARS)](http://agileresearch.io/), specifically built for the Northwestern [Design, Technology, and Research (DTR)](http://dtr.northwestern.edu) program. 
 
+## Prerequisites
+1. Make sure you have [Node.js](https://nodejs.org/en/) and [yarn](https://classic.yarnpkg.com/en/docs/install#mac-stable) installed.
+
 ## Setup for local development
 1. Create a `.env` file as follows:
     ```
@@ -19,9 +22,9 @@ An API for accessing data about [Agile Research Studios (ARS)](http://agileresea
    2. For development, use [ngrok](https://ngrok.com/) to tunnel into your localhost and provide your Slack application with the `BOT_EVENT_URL`. In production, use the URL or IP address to your server.
 
 ## Development
-1. Run `npm install` to download the necessary packages.
+1. Run `yarn` to download the necessary packages.
 2. Install [ngrok](https://ngrok.com/download). 
-3. Run `npm run dev` to start the local Node.js application.
+3. Run `yarn run dev` to start the local Node.js application.
 4. In a separate tab, start MongoDB using `mongod --dbpath=<PATH_TO_DB>`.
 5. In another separate tab, start ngrok using `ngrok http <PORT_NUMBER>`.
 
