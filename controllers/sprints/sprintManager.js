@@ -49,6 +49,8 @@ export const getSprintLogForProjectName = async (projectName) => {
  * @return {Promise<void>}
  */
 export const prepopulateSprintCache = async () => {
+  console.log("Populating sprint log cache...");
+
   // clear current cache
   await SprintCache.deleteMany({}).exec();
 
@@ -96,6 +98,8 @@ export const prepopulateSprintCache = async () => {
       await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
     }
   }
+
+  console.log("Sprint log cache populated.");
 };
 
 /**
