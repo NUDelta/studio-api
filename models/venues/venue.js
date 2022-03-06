@@ -23,4 +23,3 @@ export const Venue = mongoose.model('Venue',
     }
     }, options)
 );
-

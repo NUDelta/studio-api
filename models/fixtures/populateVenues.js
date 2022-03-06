@@ -23,7 +23,8 @@ const createStudioDocuments = async () => {
       description: studio.description,
       day_of_week: studio.day_of_week,
       start_time: studio.start_time,
-      end_time: studio.end_time
+      end_time: studio.end_time,
+      slack_channel: studio.slack_channel
     });
     studioDocumentPromises.push(currStudioDocument.save());
   }
@@ -61,6 +62,7 @@ const createSigDocuments = async () => {
       end_time: sig.end_time,
       sig_head: sigHead._id,
       sig_members: studentIds,
+      slack_channel: sig.slack_channel
     });
     sigDocumentPromises.push(currsigDocument.save());
   }

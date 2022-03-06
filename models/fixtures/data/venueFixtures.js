@@ -6,7 +6,8 @@ export const studioData = [
     description: "Weekly studio meeting with all members of the community.",
     day_of_week: "Friday",
     start_time: DateTime.fromISO("2000-01-01T13:00:00", { zone: "America/Chicago" }),
-    end_time: DateTime.fromISO("2000-01-01T16:00:00", { zone: "America/Chicago" })
+    end_time: DateTime.fromISO("2000-01-01T16:00:00", { zone: "America/Chicago" }),
+    slack_channel: "water-cooler"
   }
 ];
 
@@ -18,7 +19,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T12:30:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T13:00:00", { zone: "America/Chicago" }),
     sig_head: "Leesha Maliakal Shah",
-    sig_members: ["Isaac Miller", "Molly Pribble"]
+    sig_members: ["Isaac Miller", "Molly Pribble"],
+    slack_channel: "sig-ars"
   },
   {
     name: "Networked Orchestration Technologies SIG",
@@ -27,7 +29,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T14:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T15:00:00", { zone: "America/Chicago" }),
     sig_head: "Kapil Garg",
-    sig_members: ["Jason Friedman", "Hang Yin", "Sydney Smith"]
+    sig_members: ["Jason Friedman", "Hang Yin", "Sydney Smith"],
+    slack_channel: "sig-not"
   },
   {
     name: "Collective Experiences SIG",
@@ -36,7 +39,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T16:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T17:00:00", { zone: "America/Chicago" }),
     sig_head: "Ryan Louie",
-    sig_members: ["Parveen Dhanoa", "Richard Lam", "Yvan Chu", "Cindy Hu"]
+    sig_members: ["Parveen Dhanoa", "Richard Lam", "Yvan Chu", "Cindy Hu"],
+    slack_channel: "sig-collective-exp"
   },
   {
     name: "Readily Available Learning Experiences SIG",
@@ -45,7 +49,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T13:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T14:00:00", { zone: "America/Chicago" }),
     sig_head: "Gobi Dasu",
-    sig_members: ["Roxy Wilcox", "Fardeem Munir", "Natalie Brewster", "Jonathan Liu"]
+    sig_members: ["Roxy Wilcox", "Fardeem Munir", "Natalie Brewster", "Jonathan Liu"],
+    slack_channel: "sig-rale"
   },
   {
     name: "Context-Aware Metacognitive Practice SIG",
@@ -54,7 +59,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T13:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T14:00:00", { zone: "America/Chicago" }),
     sig_head: "Harrison Kwik",
-    sig_members: ["Justin Shi", "Izzy Chun"]
+    sig_members: ["Justin Shi", "Izzy Chun"],
+    slack_channel: "sig-camp"
   },
   {
     name: "Summer BBQ SIG",
@@ -63,7 +69,8 @@ export const sigData = [
     start_time: DateTime.fromISO("2000-01-01T10:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T11:00:00", { zone: "America/Chicago" }),
     sig_head: "Haoqi Zhang",
-    sig_members: ["Leesha Maliakal Shah", "Gobi Dasu", "Ryan Louie", "Kapil Garg", "Harrison Kwik"]
+    sig_members: ["Leesha Maliakal Shah", "Gobi Dasu", "Ryan Louie", "Kapil Garg", "Harrison Kwik"],
+    slack_channel: "sig-summer-bbq"
   }
 ];
 

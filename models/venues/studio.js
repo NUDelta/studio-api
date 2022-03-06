@@ -5,6 +5,6 @@ import { Venue } from "./venue.js";
 
 export const Studio = Venue.discriminator('Studio',
   new mongoose.Schema({
-    /* intentionally left blank */
+    slack_channel: { type: String, required: true }
   })
 );

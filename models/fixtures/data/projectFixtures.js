@@ -23,7 +23,7 @@ export const projectData = [
     sprint_log: (process.env.NODE_ENV === "development") ?
       "https://docs.google.com/spreadsheets/d/1d5_nydelgTsIRFej1qwmhhNyAevRcB19I_5QAVGuCNE" :
       "https://docs.google.com/spreadsheets/d/1qyFSd0kcLsFw0_FsyDUk0go9ua5qz1y_ElKfDdWqoS0",
-    slack_channel: "proj-mindyoga",
+    slack_channel: "proj-meta-cog-reflect",
     status_update_date: DateTime.fromISO("2022-01-28T13:00:00", { zone: "America/Chicago" })
   },
 
@@ -101,7 +101,7 @@ export const projectData = [
     sprint_log: (process.env.NODE_ENV === "development") ?
       "https://docs.google.com/spreadsheets/d/1O7NOeIAUMd8fyTS0ZrK4QAccu0nXY8lRi_IodoIolZs" :
       "https://docs.google.com/spreadsheets/d/1hFM-88Mk1qdmIq2E0lo76HGz_BEuns5Ug9rmWCfw4HQ",
-    slack_channel: "proj-scaffolded-exercises",
+    slack_channel: "proj-scaffolded-ex",
     status_update_date: DateTime.fromISO("2022-02-04T13:00:00", { zone: "America/Chicago" })
   },
 
