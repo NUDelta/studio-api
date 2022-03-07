@@ -7,6 +7,7 @@ import { PhdStudent } from "../models/people/phdstudent.js";
 import { NonPhdStudent } from "../models/people/nonphdstudent.js";
 
 import { Project } from "../models/project/project.js";
+import { SIG } from "../models/venues/sig.js";
 
 export const slackRouter = new Router();
 
@@ -84,11 +85,47 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
 });
 
 /**
- * TODO: implement
  * Sends message to a SIG's Slack channel.
  */
 slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
-  res.json({});
+  // TODO: check if inputs are valid
+  // parse inputs
+  let sigName = (req.body.sigName ?? "").trim();
+  let message = (req.body.message ?? "").trim();
+
+  // get SIG info for project name
+  let relevantSigVenueInfo = await SIG.findOne({
+    name: {
+      "$regex": sigName,
+      "$options": "i"
+    }
+  }).populate("sig_head").populate("sig_members");
+  if (relevantSigVenueInfo === null) {
+    throw new Error(`no SIG found for ${ sigName }`);
+  }
+
+  let channelName = relevantSigVenueInfo.slack_channel;
+
+  // get people and their names
+  let students = relevantSigVenueInfo.sig_members.map((student) => {
+    return {
+      name: student.name,
+      slack_id: student.slack_id
+    }
+  });
+
+  // send message to channel
+  const result = await app.client.chat.postMessage({
+    channel: channelName,
+    text: `Hey ${
+      students.map((student) => {
+        return `${ student.name }`
+      }).join(", ")
+    }! ${ message }`
+  });
+
+  // return result of slack message
+  res.json(result);
 });
 
 /**
