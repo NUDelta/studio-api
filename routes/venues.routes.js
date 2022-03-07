@@ -171,8 +171,8 @@ venueRouter.get("/sig/lastSig", async (req, res) => {
     );
 
     res.json({
-      start_time: finalSigStartTime,
-      end_time: finalSigEndTime
+      start_time: finalSigStartTime.toJSON(),
+      end_time: finalSigEndTime.toJSON()
     });
   } catch (error) {
     res.send(`Error when fetching last sig meetings: ${ error }`);
