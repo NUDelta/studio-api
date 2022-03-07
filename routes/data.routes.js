@@ -19,7 +19,7 @@ dataRouter.get("/refreshData", async (req, res) => {
   await createVenueFixtures();
 
   // populate sprint cache after data is refreshed
-  await prepopulateSprintCache();
+  prepopulateSprintCache();
 
   res.send("Data refreshed.");
 });
