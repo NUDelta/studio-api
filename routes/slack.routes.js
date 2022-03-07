@@ -32,6 +32,88 @@ slackRouter.get("/getAllPeople", async (req, res) => {
 });
 
 /**
+ * Sends a message to all project channels.
+ */
+slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
+  // parse inputs
+  let message = (req.body.message ?? "").trim();
+
+  // fetch project info
+  let allProjects = await Project.find({}).populate('students');
+  if (allProjects === null) {
+    throw new Error(`no projects found`);
+  }
+
+  // iterate over each project and send message
+  let messagesToSend = [];
+  for (let project of allProjects) {
+    // get channel name
+    let channelName = project.slack_channel;
+
+    // get people and their names
+    let students = project.students.map((student) => {
+      return {
+        name: student.name,
+        slack_id: student.slack_id
+      }
+    });
+
+    // send message to channel
+    messagesToSend.push(app.client.chat.postMessage({
+      channel: channelName,
+      text: `Hey ${
+        students.map((student) => {
+          return `${ student.name }`
+        }).join(", ")
+      }! ${ message }`
+    }));
+  }
+
+  res.json(await Promise.all(messagesToSend));
+});
+
+/**
+ * Sends a message to all SIG channels.
+ */
+slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
+  // parse inputs
+  let message = (req.body.message ?? "").trim();
+
+  // fetch project info
+  let allSigs = await SIG.find({}).populate("sig_members");
+  if (allSigs === null) {
+    throw new Error(`no projects found`);
+  }
+
+  // iterate over each project and send message
+  let messagesToSend = [];
+  for (let sig of allSigs) {
+    // get channel name
+    let channelName = sig.slack_channel;
+
+    // get people and their names
+    let students = sig.sig_members.map((student) => {
+      return {
+        name: student.name,
+        slack_id: student.slack_id
+      }
+    });
+
+    // send message to channel
+    messagesToSend.push(app.client.chat.postMessage({
+      channel: channelName,
+      text: `Hey ${
+        students.map((student) => {
+          return `${ student.name }`
+        }).join(", ")
+      }! ${ message }`
+    }));
+  }
+
+  res.json(await Promise.all(messagesToSend));
+});
+
+/**
  * Sends message to a project's Slack Channel.
  */
 slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
