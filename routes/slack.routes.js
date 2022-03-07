@@ -74,8 +74,8 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
     channel: channelName,
     text: `Hey ${
       students.map((student) => {
-        return `@${ student.slack_id }`
-      }).join(" ")
+        return `${ student.name }`
+      }).join(", ")
     }! ${ message }`
   });
 
