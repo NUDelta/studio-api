@@ -21,6 +21,35 @@ projectRouter.get("/", async (req, res) => {
   }
 });
 
+/**
+ * Get project information, given the name of the project.
+ */
+projectRouter.get("/projectByName", async (req, res) => {
+  try {
+    // fetch the person's name from the query that we want the sprint log for, and check if valid
+    let projName = req.query.projName;
+    if (projName === undefined) {
+      throw new Error("personName parameter not specified.");
+    }
+
+    // find project with projName
+    let relevantProj = await Project.findOne({ name: projName })
+      .populate('students')
+      .populate('sig_head')
+      .populate('faculty_mentor');
+
+    if (relevantProj !== null) {
+      res.json(relevantProj);
+    } else {
+      res.json({});
+    }
+  } catch (error) {
+    console.error(error)
+    res.send(`Error when fetching sprint log for person: ${ error }`);
+  }
+});
+
+
 // fetch project for student
 projectRouter.get("/fetchProjectForPerson", async (req, res) => {
   try {

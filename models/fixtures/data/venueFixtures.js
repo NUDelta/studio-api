@@ -65,7 +65,7 @@ export const sigData = [
   {
     name: "Summer BBQ SIG",
     description: "Weekly SIG meeting for BBQ SIG",
-    day_of_week: "Monday",
+    day_of_week: "Wednesday",
     start_time: DateTime.fromISO("2000-01-01T10:00:00", { zone: "America/Chicago" }),
     end_time: DateTime.fromISO("2000-01-01T11:00:00", { zone: "America/Chicago" }),
     sig_head: "Haoqi Zhang",

@@ -13,6 +13,7 @@ import { venueRouter } from "./routes/venues.routes.js";
 import { projectRouter } from "./routes/projects.routes.js";
 import { sprintRouter } from "./routes/sprints.routes.js";
 import { slackRouter } from "./routes/slack.routes.js";
+import { dataRouter } from "./routes/data.routes.js";
 
 // fixtures for development
 import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populatePeople.js";
@@ -62,6 +63,7 @@ app.receiver.app.use('/venues', venueRouter);
 app.receiver.app.use('/projects', projectRouter);
 app.receiver.app.use('/sprints', sprintRouter);
 app.receiver.app.use('/slack', slackRouter);
+app.receiver.app.use('/data', dataRouter);
 
 app.receiver.app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
