@@ -59,13 +59,6 @@ export const phdStudentData = [
 export const nonPhdStudentData = [
   // SIG ARS
   {
-    name: "Isaac Miller",
-    email: "isaacmiller2024@u.northwestern.edu",
-    slack_id: "isaac-miller",
-    sig_member: "Agile Research Studios",
-    sig_head: "Leesha Maliakal Shah"
-  },
-  {
     name: "Molly Pribble",
     email: "molly@northwestern.edu",
     slack_id: "molly-pribble",
@@ -128,23 +121,9 @@ export const nonPhdStudentData = [
 
   // SIG RALE
   {
-    name: "Roxy Wilcox",
-    email: "RoxannaWilcox2022@u.northwestern.edu",
-    slack_id: "roxy-wilcox",
-    sig_member: "Readily Available Learning Experiences",
-    sig_head: "Gobi Dasu"
-  },
-  {
-    name: "Fardeem Munir",
-    email: "fardeemmunir2023@u.northwestern.edu",
-    slack_id: "fardeem-munir",
-    sig_member: "Readily Available Learning Experiences",
-    sig_head: "Gobi Dasu"
-  },
-  {
-    name: "Natalie Brewster",
-    email: "NatalieBrewster2023@u.northwestern.edu",
-    slack_id: "natalie-brewster",
+    name: "Alexandra Andreiu",
+    email: "alexandraandreiu2023@u.northwestern.edu",
+    slack_id: "alexandra-andreiu",
     sig_member: "Readily Available Learning Experiences",
     sig_head: "Gobi Dasu"
   },
@@ -158,16 +137,16 @@ export const nonPhdStudentData = [
 
   // SIG CAMP
   {
-    name: "Justin Shi",
-    email: "justinshi2023@u.northwestern.edu",
-    slack_id: "justin-shi",
+    name: "Lauren Bichelmeir",
+    email: "laurenbichelmeir2023@u.northwestern.edu",
+    slack_id: "lauren-bichelmeir",
     sig_member: "Context-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   },
   {
-    name: "Izzy Chun",
-    email: "izzychun2022@u.northwestern.edu",
-    slack_id: "izzy-chun",
+    name: "Amy Guo",
+    email: "amyguo2023@u.northwestern.edu",
+    slack_id: "amy-guo",
     sig_member: "Context-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   }
