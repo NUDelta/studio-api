@@ -31,9 +31,7 @@ const createSprintProcessDocuments = async () => {
  */
 export default async function main() {
   // remove all old documents
-  if (process.env.NODE_ENV === "development") {
-    await Process.deleteMany({}).exec();
-  }
+  await Process.deleteMany({}).exec();
 
   // populate new documents
   await createSprintProcessDocuments();

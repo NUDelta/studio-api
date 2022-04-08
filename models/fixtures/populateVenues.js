@@ -99,9 +99,7 @@ const createOfficeHoursDocuments = async () => {
  */
 export default async function main() {
   // remove all old documents
-  if (process.env.NODE_ENV === "development") {
-    await Venue.deleteMany({}).exec();
-  }
+  await Venue.deleteMany({}).exec();
 
   // populate new documents
   await createStudioDocuments();
