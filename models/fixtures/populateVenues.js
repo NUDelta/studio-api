@@ -24,6 +24,7 @@ const createStudioDocuments = async () => {
       day_of_week: studio.day_of_week,
       start_time: studio.start_time,
       end_time: studio.end_time,
+      timezone: studio.timezone,
       slack_channel: studio.slack_channel
     });
     studioDocumentPromises.push(currStudioDocument.save());
@@ -60,6 +61,7 @@ const createSigDocuments = async () => {
       day_of_week: sig.day_of_week,
       start_time: sig.start_time,
       end_time: sig.end_time,
+      timezone: sig.timezone,
       sig_head: sigHead._id,
       sig_members: studentIds,
       slack_channel: sig.slack_channel
@@ -86,6 +88,7 @@ const createOfficeHoursDocuments = async () => {
       day_of_week: officeHours.day_of_week,
       start_time: officeHours.start_time,
       end_time: officeHours.end_time,
+      timezone: officeHours.timezone,
     });
     officeHoursDocumentPromises.push(currOfficeHoursDocument.save());
   }
