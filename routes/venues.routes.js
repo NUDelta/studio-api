@@ -7,6 +7,7 @@ import { SIG } from "../models/venues/sig.js";
 import { OfficeHours } from "../models/venues/officeHours.js";
 import { Project } from "../models/project/project.js";
 import { Sprint } from "../models/processes/sprints.js";
+import { DateTime, Info } from "luxon";
 
 export const venueRouter = new Router();
 
@@ -22,6 +23,7 @@ venueRouter.get("/", async (req, res) => {
 
 // fetch studio meeting time
 venueRouter.get("/studio", async (req, res) => {
+  // TODO: this should be computing the time/date of the next venue (I think) and send that over to the orchestration engine
   try {
     let studioMeeting = await Studio.find();
     res.json(studioMeeting);
@@ -42,8 +44,9 @@ venueRouter.get("/sig", async (req, res) => {
 
 /**
  * Fetches the start and end time of the first SIG meeting (the start of Sprint 1) for a project.
- * // TODO: I don't think this is quite right
- * // TODO: this should be a separate controller
+ * TODO: I don't think this is quite right
+ * TODO: this should be a separate controller
+ * TODO: if not given a project input, return the first SIG meeting for each SIG
  */
 venueRouter.get("/sig/firstSig", async (req, res) => {
   try {
@@ -80,30 +83,37 @@ venueRouter.get("/sig/firstSig", async (req, res) => {
     }
 
     // compute day for venue by first getting the start of the week
-    let weekOfLastSig = new Date(relevantProcess.start_day);
-    weekOfLastSig.setDate(
-      relevantProcess.start_day.getDate() - relevantProcess.start_day.getDay()
+    let weekOfFirstSig = DateTime.fromJSDate(relevantProcess.start_day);
+
+    // shift to day of week based on whn SIG is
+    let dayOfFirstSig = weekOfFirstSig.set({
+      weekday: Info.weekdays().indexOf(relevantSigVenueInfo.day_of_week) + 1}
     );
 
-    // shift day based on day of week when SIG is
-    let firstSigDate = new Date(weekOfLastSig);
-    firstSigDate.setDate(
-      firstSigDate.getDate() + dayOfWeekToIndex(relevantSigVenueInfo.day_of_week)
-    );
-    let firstSigStartTime = new Date(firstSigDate);
-    firstSigStartTime.setHours(
-      relevantSigVenueInfo.start_time.getHours(),
-      relevantSigVenueInfo.start_time.getMinutes()
-    );
-    let finalSigEndTime = new Date(firstSigDate);
-    finalSigEndTime.setHours(
-      relevantSigVenueInfo.end_time.getHours(),
-      relevantSigVenueInfo.end_time.getMinutes()
-    );
+    // add timezone info
+    let venueTz = relevantSigVenueInfo.timezone;
+    let timezoneShiftedSigDay = dayOfFirstSig.setZone(venueTz);
 
+    // create dates with start and end time
+    let [startHours, startMinutes, startSeconds] = relevantSigVenueInfo.start_time.split(":");
+    let firstSigStartTime = timezoneShiftedSigDay.set({
+      hour: startHours,
+      minute: startMinutes,
+      second: startSeconds
+    });
+
+    let [endHours, endMinutes, endSeconds] = relevantSigVenueInfo.end_time.split(":");
+    let firstSigEndTime = timezoneShiftedSigDay.set({
+      hour: endHours,
+      minute: endMinutes,
+      second: endSeconds
+    });
+
+    // return as UTC timestamps
     res.json({
-      start_time: firstSigStartTime,
-      end_time: finalSigEndTime
+      sig_name: sigName,
+      start_time: firstSigStartTime.toUTC().toJSDate(),
+      end_time: firstSigEndTime.toUTC().toJSDate()
     });
   } catch (error) {
     res.send(`Error when fetching last sig meetings: ${ error }`);
@@ -149,30 +159,37 @@ venueRouter.get("/sig/lastSig", async (req, res) => {
     }
 
     // compute day for venue by first getting the start of the week
-    let weekOfLastSig = new Date(relevantProcess.start_day);
-    weekOfLastSig.setDate(
-      relevantProcess.start_day.getDate() - relevantProcess.start_day.getDay()
+    let weekOfLastSig = DateTime.fromJSDate(relevantProcess.start_day);
+
+    // shift to day of week based on whn SIG is
+    let dayOfLastSig = weekOfLastSig.set({
+      weekday: Info.weekdays().indexOf(relevantSigVenueInfo.day_of_week) + 1}
     );
 
-    // shift day based on day of week when SIG is
-    let finalSigDate = new Date(weekOfLastSig);
-    finalSigDate.setDate(
-      finalSigDate.getDate() + dayOfWeekToIndex(relevantSigVenueInfo.day_of_week)
-    );
-    let finalSigStartTime = new Date(finalSigDate);
-    finalSigStartTime.setHours(
-      relevantSigVenueInfo.start_time.getHours(),
-      relevantSigVenueInfo.start_time.getMinutes()
-    );
-    let finalSigEndTime = new Date(finalSigDate);
-    finalSigEndTime.setHours(
-      relevantSigVenueInfo.end_time.getHours(),
-      relevantSigVenueInfo.end_time.getMinutes()
-    );
+    // add timezone info
+    let venueTz = relevantSigVenueInfo.timezone;
+    let timezoneShiftedSigDay = dayOfLastSig.setZone(venueTz);
 
+    // create dates with start and end time
+    let [startHours, startMinutes, startSeconds] = relevantSigVenueInfo.start_time.split(":");
+    let lastSigStartTime = timezoneShiftedSigDay.set({
+      hour: startHours,
+      minute: startMinutes,
+      second: startSeconds
+    });
+
+    let [endHours, endMinutes, endSeconds] = relevantSigVenueInfo.end_time.split(":");
+    let lastSigEndTime = timezoneShiftedSigDay.set({
+      hour: endHours,
+      minute: endMinutes,
+      second: endSeconds
+    });
+
+    // return as UTC timestamps
     res.json({
-      start_time: finalSigStartTime.toJSON(),
-      end_time: finalSigEndTime.toJSON()
+      sig_name: sigName,
+      start_time: lastSigStartTime.toUTC().toJSDate(),
+      end_time: lastSigEndTime.toUTC().toJSDate()
     });
   } catch (error) {
     res.send(`Error when fetching last sig meetings: ${ error }`);
@@ -193,6 +210,7 @@ venueRouter.get("/officehours", async (req, res) => {
 
 /**
  * Converts a string day of the week to an integer index.
+ * TODO: probably not needed if using Luxon.
  *
  * @param dayString
  * @return {number}
