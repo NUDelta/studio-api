@@ -34,6 +34,7 @@ slackRouter.get("/getAllPeople", async (req, res) => {
 /**
  * Sends a message to all project channels.
  */
+// TODO: this should really call the same function that sends data to a single project channel.
 slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
   // parse inputs
   let message = (req.body.message ?? "").trim();
@@ -61,11 +62,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
     // send message to channel
     messagesToSend.push(app.client.chat.postMessage({
       channel: channelName,
-      text: `Hey ${
-        students.map((student) => {
-          return `${ student.name }`
-        }).join(", ")
-      }! ${ message }`
+      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
     }));
   }
 
@@ -75,6 +72,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
 /**
  * Sends a message to all SIG channels.
  */
+// TODO: this should really call the same function that sends data to a single sig channel.
 slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
   // parse inputs
   let message = (req.body.message ?? "").trim();
@@ -102,11 +100,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
     // send message to channel
     messagesToSend.push(app.client.chat.postMessage({
       channel: channelName,
-      text: `Hey ${
-        students.map((student) => {
-          return `${ student.name }`
-        }).join(", ")
-      }! ${ message }`
+      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
     }));
   }
 
@@ -116,6 +110,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
 /**
  * Sends message to a project's Slack Channel.
  */
+// TODO: factor this out into a controller
 slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
   // TODO: check if inputs are valid
   // parse inputs
@@ -155,11 +150,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
   // send message to channel
   const result = await app.client.chat.postMessage({
     channel: channelName,
-    text: `Hey ${
-      students.map((student) => {
-        return `${ student.name }`
-      }).join(", ")
-    }! ${ message }`
+    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
   });
 
   // return result of slack message
@@ -169,6 +160,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
 /**
  * Sends message to a SIG's Slack channel.
  */
+// TODO: factor this out into a controller
 slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
   // TODO: check if inputs are valid
   // parse inputs
@@ -199,11 +191,7 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
   // send message to channel
   const result = await app.client.chat.postMessage({
     channel: channelName,
-    text: `Hey ${
-      students.map((student) => {
-        return `${ student.name }`
-      }).join(", ")
-    }! ${ message }`
+    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
   });
 
   // return result of slack message
@@ -225,3 +213,15 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
 slackRouter.post("/sendMessageToPerson", async (req, res) => {
   res.json({});
 });
+
+
+/**
+ * Returns a list of slack id's when provided a list of people objects, which can be used to ping each person in a channel or direct message in Slack.
+ * @param peopleList list of people objects. each person must contain a slack_id field.
+ * @returns {string} string with each person's slack_id concatenated together.
+ */
+const formatPeopleForSlackMessage = (peopleList) => {
+  return peopleList.map((person) => {
+    return `<@${ person.slack_id }>`
+  }).join(" ");
+}
