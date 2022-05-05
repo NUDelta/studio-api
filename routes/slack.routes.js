@@ -1,3 +1,5 @@
+// TODO: consider having more generic functions: directMessage() [also supports multiple ppl passed in as an array]; channelMessage()
+
 import { Router } from "express";
 import { app } from "../index.js";
 
@@ -91,6 +93,7 @@ slackRouter.get("/getAllPeople", async (req, res) => {
 /**
  * Sends a message to all project channels.
  */
+// TODO: this should really call the same function that sends data to a single project channel.
 slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
   // parse inputs
   let message = (req.body.message ?? "").trim();
@@ -118,11 +121,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
     // send message to channel
     messagesToSend.push(app.client.chat.postMessage({
       channel: channelName,
-      text: `Hey ${
-        students.map((student) => {
-          return `${ student.name }`
-        }).join(", ")
-      }! ${ message }`
+      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
     }));
   }
 
@@ -132,6 +131,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
 /**
  * Sends a message to all SIG channels.
  */
+// TODO: this should really call the same function that sends data to a single sig channel.
 slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
   // parse inputs
   let message = (req.body.message ?? "").trim();
@@ -159,11 +159,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
     // send message to channel
     messagesToSend.push(app.client.chat.postMessage({
       channel: channelName,
-      text: `Hey ${
-        students.map((student) => {
-          return `${ student.name }`
-        }).join(", ")
-      }! ${ message }`
+      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
     }));
   }
 
@@ -173,6 +169,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
 /**
  * Sends message to a project's Slack Channel.
  */
+// TODO: factor this out into a controller
 slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
   // TODO: check if inputs are valid
   // parse inputs
@@ -212,11 +209,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
   // send message to channel
   const result = await app.client.chat.postMessage({
     channel: channelName,
-    text: `Hey ${
-      students.map((student) => {
-        return `${ student.name }`
-      }).join(", ")
-    }! ${ message }`
+    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
   });
 
   // return result of slack message
@@ -226,6 +219,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
 /**
  * Sends message to a SIG's Slack channel.
  */
+// TODO: factor this out into a controller
 slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
   // TODO: check if inputs are valid
   // parse inputs
@@ -256,11 +250,7 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
   // send message to channel
   const result = await app.client.chat.postMessage({
     channel: channelName,
-    text: `Hey ${
-      students.map((student) => {
-        return `${ student.name }`
-      }).join(", ")
-    }! ${ message }`
+    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
   });
 
   // return result of slack message
@@ -276,9 +266,61 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
 });
 
 /**
- * TODO: implement
- * Sends message to a person's DM.
+ * Send a direct message (or a group direct message) to a list of people.
  */
-slackRouter.post("/sendMessageToPerson", async (req, res) => {
-  res.json({});
+slackRouter.post("/sendMessageToPeople", async (req, res) => {
+  // parse inputs from request
+  let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
+  let message = (req.body.message ?? "").trim();
+
+  // TODO: sorting like this is fine for now, but may want to have more control over user order
+  // get slack ids for people
+  const allPeople = await Person.find({
+    "name": {
+      "$in": people
+    }
+  }).sort("role name");
+
+  const peopleSlackIds = allPeople.map(person => {
+    return {
+      name: person.name,
+      slack_id: person.slack_id
+    }
+  });
+
+  // open a multi-person direct message (MPIM) channel
+  // api documentation: https://api.slack.com/methods/conversations.open
+  try {
+    let conversationForPeopleResponse = await app.client.conversations.open({
+      return_im: true,
+      users: peopleSlackIds.map(person => { return person.slack_id }).join(",")
+    });
+
+    // send the message from the request to the MPIM channel
+    if (conversationForPeopleResponse["ok"]) {
+      const channelId =  conversationForPeopleResponse["channel"]["id"];
+      const result = await app.client.chat.postMessage({
+        channel: channelId,
+        text: `Hey ${formatPeopleForSlackMessage(peopleSlackIds)}! ${ message }`
+      });
+
+      // return result of slack message
+      res.json(result);
+    }
+  } catch (error) {
+    // return error if any issues occur
+    res.json(error);
+  }
 });
+
+
+/**
+ * Returns a list of slack id's when provided a list of people objects, which can be used to ping each person in a channel or direct message in Slack.
+ * @param peopleList list of people objects. each person must contain a slack_id field.
+ * @returns {string} string with each person's slack_id concatenated together.
+ */
+const formatPeopleForSlackMessage = (peopleList) => {
+  return peopleList.map((person) => {
+    return `<@${ person.slack_id }>`
+  }).join(" ");
+}
