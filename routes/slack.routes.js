@@ -15,20 +15,77 @@ export const slackRouter = new Router();
  * Get all channels (public and private) that Slack Bot can access.
  */
 slackRouter.get("/getAllChannels", async (req, res) => {
-  let conversationList = await app.client.conversations.list({
-    types: "public_channel,private_channel"
-  });
-  res.json(conversationList.channels);
+  let conversationsList = [];
+
+  // keep getting responses while a next cursor exists
+  let nextCursorExists = true;
+  let nextCursorStr = "";
+  let error;
+
+  while (nextCursorExists) {
+    // get the next set of conversations based on the current cursor
+    let conversationListResponse = await app.client.conversations.list({
+      types: "public_channel,private_channel"
+    });
+
+    // check if response is ok before adding to people's list
+    if (conversationListResponse["ok"]) {
+      conversationsList = conversationsList.concat(conversationListResponse.channels);
+
+      // get next cursor
+      nextCursorStr = conversationListResponse["response_metadata"]["next_cursor"];
+      nextCursorExists = nextCursorStr !== "";
+    } else {
+      error = conversationListResponse;
+      nextCursorExists = false;
+    }
+  }
+
+  // return response
+  if (error !== undefined) {
+    res.json(error)
+  } else {
+    res.json(conversationsList);
+  }
 });
 
 /**
  * Get all people in the team.
  */
 slackRouter.get("/getAllPeople", async (req, res) => {
-  let peopleList = await app.client.users.list({
-    include_locale: true
-  });
-  res.json(peopleList.members);
+  let peopleList = [];
+
+  // keep getting responses while a next cursor exists
+  let nextCursorExists = true;
+  let nextCursorStr = "";
+  let error;
+
+  while (nextCursorExists) {
+    // get the next set of people based on the current cursor
+    let peopleListResponse = await app.client.users.list({
+      include_locale: true,
+      cursor: nextCursorStr
+    });
+
+    // check if response is ok before adding to people's list
+    if (peopleListResponse["ok"]) {
+      peopleList = peopleList.concat(peopleListResponse.members);
+
+      // get next cursor
+      nextCursorStr = peopleListResponse["response_metadata"]["next_cursor"];
+      nextCursorExists = nextCursorStr !== "";
+    } else {
+      error = peopleListResponse;
+      nextCursorExists = false;
+    }
+  }
+
+  // return response
+  if (error !== undefined) {
+    res.json(error)
+  } else {
+    res.json(peopleList);
+  }
 });
 
 /**
