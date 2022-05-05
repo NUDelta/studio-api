@@ -1,3 +1,5 @@
+// TODO: consider having more generic functions: directMessage() [also supports multiple ppl passed in as an array]; channelMessage()
+
 import { Router } from "express";
 import { app } from "../index.js";
 
@@ -207,11 +209,51 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
 });
 
 /**
- * TODO: implement
- * Sends message to a person's DM.
+ * Send a direct message (or a group direct message) to a list of people.
  */
-slackRouter.post("/sendMessageToPerson", async (req, res) => {
-  res.json({});
+slackRouter.post("/sendMessageToPeople", async (req, res) => {
+  // parse inputs from request
+  let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
+  let message = (req.body.message ?? "").trim();
+
+  // TODO: sorting like this is fine for now, but may want to have more control over user order
+  // get slack ids for people
+  const allPeople = await Person.find({
+    "name": {
+      "$in": people
+    }
+  }).sort("role name");
+
+  const peopleSlackIds = allPeople.map(person => {
+    return {
+      name: person.name,
+      slack_id: person.slack_id
+    }
+  });
+
+  // open a multi-person direct message (MPIM) channel
+  // api documentation: https://api.slack.com/methods/conversations.open
+  try {
+    let conversationForPeopleResponse = await app.client.conversations.open({
+      return_im: true,
+      users: peopleSlackIds.map(person => { return person.slack_id }).join(",")
+    });
+
+    // send the message from the request to the MPIM channel
+    if (conversationForPeopleResponse["ok"]) {
+      const channelId =  conversationForPeopleResponse["channel"]["id"];
+      const result = await app.client.chat.postMessage({
+        channel: channelId,
+        text: `Hey ${formatPeopleForSlackMessage(peopleSlackIds)}! ${ message }`
+      });
+
+      // return result of slack message
+      res.json(result);
+    }
+  } catch (error) {
+    // return error if any issues occur
+    res.json(error);
+  }
 });
 
 
