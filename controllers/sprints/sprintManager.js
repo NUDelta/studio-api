@@ -198,12 +198,14 @@ const updateCachedSprintLog = async (cachedSprintLog, updatedData, updatedDate) 
  * @return {Promise<Date>}
  */
 const getSprintLogLastUpdate = async (fileUrl) => {
+  // TODO: this will break if "/edit" is included in the url
   // parse out fileId
   let sprintLogFileId = fileUrl.split('https://docs.google.com/spreadsheets/d/')[1];
 
   // create a google drive instance
   let drive = google.drive('v3');
 
+  // TODO: no error checking here
   // get file information for a sprint log
   let fileInfo = await drive.files.get({
     auth: googleDriveAuth,

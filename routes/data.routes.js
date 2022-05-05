@@ -18,7 +18,7 @@ dataRouter.get("/refreshData", async (req, res) => {
   await createProjectFixtures();
   await createVenueFixtures();
 
-  // populate sprint cache after data is refreshed
+  // populate sprint cache after data is refreshed. run async so that the request can finsh and not timeout
   prepopulateSprintCache();
 
   res.send("Data refreshed.");
