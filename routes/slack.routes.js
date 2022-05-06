@@ -269,28 +269,28 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
  * Send a direct message (or a group direct message) to a list of people.
  */
 slackRouter.post("/sendMessageToPeople", async (req, res) => {
-  // parse inputs from request
-  let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
-  let message = (req.body.message ?? "").trim();
-
-  // TODO: sorting like this is fine for now, but may want to have more control over user order
-  // get slack ids for people
-  const allPeople = await Person.find({
-    "name": {
-      "$in": people
-    }
-  }).sort("role name");
-
-  const peopleSlackIds = allPeople.map(person => {
-    return {
-      name: person.name,
-      slack_id: person.slack_id
-    }
-  });
-
-  // open a multi-person direct message (MPIM) channel
-  // api documentation: https://api.slack.com/methods/conversations.open
   try {
+    // parse inputs from request
+    let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
+    let message = (req.body.message ?? "").trim();
+
+    // TODO: sorting like this is fine for now, but may want to have more control over user order
+    // get slack ids for people
+    const allPeople = await Person.find({
+      "name": {
+        "$in": people
+      }
+    }).sort("role name");
+
+    const peopleSlackIds = allPeople.map(person => {
+      return {
+        name: person.name,
+        slack_id: person.slack_id
+      }
+    });
+
+    // open a multi-person direct message (MPIM) channel
+    // api documentation: https://api.slack.com/methods/conversations.open
     let conversationForPeopleResponse = await app.client.conversations.open({
       return_im: true,
       users: peopleSlackIds.map(person => { return person.slack_id }).join(",")
@@ -309,7 +309,7 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
     }
   } catch (error) {
     // return error if any issues occur
-    res.json(error);
+    res.json(`Error in /sendMessageToPeople: ${ error }`);
   }
 });
 
