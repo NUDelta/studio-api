@@ -32,13 +32,11 @@ slackRouter.get("/getAllChannels", async (req, res) => {
     });
 
     // check if response is ok before adding to people's list
-    console.log(conversationListResponse);
     if (conversationListResponse["ok"]) {
       conversationsList = conversationsList.concat(conversationListResponse.channels);
 
       // get next cursor
       nextCursorStr = conversationListResponse["response_metadata"]["next_cursor"];
-      console.log(`Next Cursor String: ${ nextCursorStr }`);
       nextCursorExists = nextCursorStr !== "";
     } else {
       error = conversationListResponse;

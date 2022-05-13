@@ -1,5 +1,6 @@
 import { DateTime } from "luxon";
 
+// TODO: replace slack_channel names with IDs
 export const projectData = [
   // SIG ARS
   // {
@@ -115,7 +116,7 @@ export const projectData = [
     sprint_log: (process.env.NODE_ENV === "development") ?
       "https://docs.google.com/spreadsheets/d/1JMlYA1z8J_BECWs8l7oqsP2hhQ5sE9XdJd9USprjUSY" :
       "https://docs.google.com/spreadsheets/d/1Rp4ObUSWQ_dgsjhkLDGVGqXLQKrWenPQhTKiLlxC69o",
-    slack_channel: "proj-qa-buddy",
+    slack_channel: "proj-cardinal",
     status_update_date: DateTime.fromISO("2022-05-27T13:00:00", { zone: "America/Chicago" })
   },
   {
