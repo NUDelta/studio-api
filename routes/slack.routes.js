@@ -27,7 +27,8 @@ slackRouter.get("/getAllChannels", async (req, res) => {
   while (nextCursorExists) {
     // get the next set of conversations based on the current cursor
     let conversationListResponse = await app.client.conversations.list({
-      types: "public_channel,private_channel"
+      types: "public_channel,private_channel",
+      cursor: nextCursorStr,
     });
 
     // check if response is ok before adding to people's list
@@ -37,7 +38,7 @@ slackRouter.get("/getAllChannels", async (req, res) => {
 
       // get next cursor
       nextCursorStr = conversationListResponse["response_metadata"]["next_cursor"];
-      console.log(nextCursorStr);
+      console.log(`Next Cursor String: ${ nextCursorStr }`);
       nextCursorExists = nextCursorStr !== "";
     } else {
       error = conversationListResponse;
