@@ -5,8 +5,7 @@ import { SprintCache } from "../../../models/cache/sprintCache.js";
 import { google } from "googleapis";
 import { googleDriveAuth } from "../../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
-
-// TODO: add error handling across the board for these functions
+import { fetchCurrentSprint } from "../../processes/sprints/fetch.js";
 
 /**
  * Fetches a sprint log for a project, given a person's name.
@@ -90,6 +89,9 @@ const getSprintLogForProject = async (project) => {
       // check if version in cache is most recent; if not, remove instance
       if (lastEditDate <= cacheDate) {
         console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
+
+        // add current sprint
+        cacheData["current_sprint"] = await getDataForCurrentSprint(cacheData);
         return cacheData;
       }
     }
@@ -121,7 +123,8 @@ const getSprintLogForProject = async (project) => {
       await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
     }
 
-    // return parsed sprint log if successful
+    // add current sprint, and return parsed sprint log if successful
+    parsedSprintLog["current_sprint"] = await getDataForCurrentSprint(parsedSprintLog);
     return parsedSprintLog;
   } catch (error) {
     console.error(`Error in getSprintLogForProject: ${ error }`);
@@ -202,6 +205,41 @@ const getSprintLogLastUpdate = async (fileUrl) => {
     return new Date(fileInfo['data']['modifiedTime']);
   } catch (error) {
     console.error(`Error in getSprintLogLastUpdate: ${ error }`);
+    return error;
+  }
+};
+
+
+/**
+ * Gets the data for the current sprint, based on the current date.
+ *
+ * @param allSprintLogData object all data from the sprint log.
+ * @returns {Promise<null|object>} information for current sprint (if found), else null
+ */
+const getDataForCurrentSprint = async (allSprintLogData) => {
+  try {
+    // get current sprint date
+    let currentSprint = await fetchCurrentSprint();
+
+    // check if empty sprint log
+    if (currentSprint &&
+      Object.keys(currentSprint).length === 0 &&
+      Object.getPrototypeOf(currentSprint) === Object.prototype) {
+      return null;
+    }
+
+    // get data for current sprint
+    let relevantData = allSprintLogData["sprints"].filter(currentSprintData => {
+      return currentSprintData["name"] === currentSprint["name"];
+    });
+
+    // check if sprint data was found, and return if so. otherwise, null.
+    if (relevantData.length > 0) {
+      return relevantData[0];
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error in getDataForCurrentSprint: ${ error }`);
     return error;
   }
 };
