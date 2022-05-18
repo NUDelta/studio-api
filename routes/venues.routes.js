@@ -11,7 +11,9 @@ import { DateTime, Info } from "luxon";
 
 export const venueRouter = new Router();
 
-// fetch all venues
+/**
+ * Fetches all venues.
+ */
 venueRouter.get("/", async (req, res) => {
   try {
     let allVenues = await Venue.find();
@@ -19,6 +21,27 @@ venueRouter.get("/", async (req, res) => {
   } catch (error) {
     res.send(`Error when fetching all venues: ${ error }`);
   }
+});
+
+/**
+ * Fetch the relevant venues for a project. These include Studio, SIG, and Office Hours.
+ */
+venueRouter.get("/venuesForProject", (req, res) => {
+});
+
+/**
+ * Fetch the relevant venues for a person. These include Studio, SIG, and Office Hours.
+ * TODO: when new students are modeled, also include things like onboarding mentors.
+ */
+venueRouter.get("/venuesForPerson", (req, res) => {
+
+});
+
+/**
+ * Fetch the relevant venues for a SIG. These include SIG and Office Hours.
+ */
+venueRouter.get("/venuesForSig", (req, res) => {
+
 });
 
 // fetch studio meeting time

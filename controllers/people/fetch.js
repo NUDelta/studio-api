@@ -80,7 +80,7 @@ export const fetchNonPhdStudents = async () => {
  * @param personName string name of person to fetch data for.
  * @returns {Promise<>} promise that if resolved, returns a person with all of their data.
  */
-export const getPersonByName = async (personName) => {
+export const fetchPersonByName = async (personName) => {
   try {
     let relevantPerson = await Person.findOne({
       name: personName

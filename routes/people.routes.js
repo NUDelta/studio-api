@@ -6,7 +6,7 @@ import {
   fetchAllPeople,
   fetchFaculty,
   fetchNonPhdStudents,
-  fetchPhdStudents, getPersonByName
+  fetchPhdStudents, fetchPersonByName
 } from "../controllers/people/fetch.js";
 import { getSprintLogForPerson } from "../controllers/tools/sprints/sprintManager.js";
 
@@ -65,7 +65,7 @@ peopleRouter.get('/fetchByName', async (req, res) => {
     }
 
     // fetch and return person
-    res.json(await getPersonByName(personName));
+    res.json(await fetchPersonByName(personName));
   } catch (error) {
     res.send(`Error when fetching person by name: ${ error }`);
   }
