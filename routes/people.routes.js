@@ -6,7 +6,7 @@ import { Faculty } from "../models/people/faculty.js";
 import { PhdStudent } from "../models/people/phdstudent.js";
 import { NonPhdStudent } from "../models/people/nonphdstudent.js";
 
-import { getSprintLogForPerson } from "../controllers/sprints/sprintManager.js";
+import { getSprintLogForPerson } from "../controllers/tools/sprints/sprintManager.js";
 import { Project } from "../models/project/project.js";
 
 export const userRouter = new Router();

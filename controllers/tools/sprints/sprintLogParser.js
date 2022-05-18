@@ -1,9 +1,9 @@
-import { googleServiceAccountInfo } from "../../imports/utils/googleAuth.js";
+import { googleServiceAccountInfo } from "../../../imports/utils/googleAuth.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
 /**
  * This class handles the parsing of a Google Sheet Sprint Log document.
- * TODO: field names are inconsistent (both camelCase and snake_case). Should be consistent.
+ * TODO: include a quick access for current sprint
  *
  * Data model for Sprint Log:
  * SprintLog {
@@ -13,14 +13,14 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *       name: "String",                      // name of sprint (e.g., "Sprint 0")
  *       points: [                            // summary of points for the sprint for each student
  *          name: "String",                   // name of specific student
- *          points_available: Number,         // number of points student has (for ugrads, typically 8)
- *          points_committed: {               // number of points committed
+ *          pointsAvailable: Number,         // number of points student has (for ugrads, typically 8)
+ *          pointsCommitted: {               // number of points committed
  *              total: Number,
  *              design: Number,
  *              technology: Number,
  *              research: Number
  *          },
- *          hours_spent: {                    // number of hours spent
+ *          hoursSpent: {                    // number of hours spent
  *              total: Number,
  *              design: Number,
  *              technology: Number,
@@ -28,14 +28,14 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *          }
  *       ],
  *       totalPoints = {                      // total points planned/spent on sprint (students combined)
- *          point_available: Number,
- *          points_committed: {
+ *          pointAvailable: Number,
+ *          pointsCommitted: {
  *              total: 0,
  *              design: 0,
  *              technology: 0,
  *              research: 0
  *          },
- *          hours_spent: {
+ *          hoursSpent: {
  *              total: 0,
  *              design: 0,
  *              technology: 0,
@@ -214,26 +214,26 @@ export class SprintLog {
         }
 
         // store data into a the sprint object
-        sprintObj.updatePointsObjForPerson(personName, "points_available", pointsAvailable);
-        sprintObj.updatePointsObjForPerson(personName, "points_committed", pointsCommitted);
-        sprintObj.updatePointsObjForPerson(personName, "hours_spent", hoursSpent);
+        sprintObj.updatePointsObjForPerson(personName, "pointsAvailable", pointsAvailable);
+        sprintObj.updatePointsObjForPerson(personName, "pointsCommitted", pointsCommitted);
+        sprintObj.updatePointsObjForPerson(personName, "hoursSpent", hoursSpent);
       }
 
       // move to the next row and also reset the column index
       rowIndex++
       colIndex = loadArea.startColumnIndex;
     }
-    
+
     // add a total points field
     let totalPoints = {
-      point_available: 0,
-      points_committed: {
+      pointAvailable: 0,
+      pointsCommitted: {
         total: 0,
         design: 0,
         technology: 0,
         research: 0
       },
-      hours_spent: {
+      hoursSpent: {
         total: 0,
         design: 0,
         technology: 0,
@@ -242,17 +242,17 @@ export class SprintLog {
     };
 
     sprintObj.points.map((pointsForPerson) => {
-      totalPoints.point_available += pointsForPerson.points_available;
+      totalPoints.pointAvailable += pointsForPerson.pointsAvailable;
 
-      totalPoints.points_committed.total += pointsForPerson.points_committed.total;
-      totalPoints.points_committed.design += pointsForPerson.points_committed.design;
-      totalPoints.points_committed.technology += pointsForPerson.points_committed.technology;
-      totalPoints.points_committed.research += pointsForPerson.points_committed.research;
+      totalPoints.pointsCommitted.total += pointsForPerson.pointsCommitted.total;
+      totalPoints.pointsCommitted.design += pointsForPerson.pointsCommitted.design;
+      totalPoints.pointsCommitted.technology += pointsForPerson.pointsCommitted.technology;
+      totalPoints.pointsCommitted.research += pointsForPerson.pointsCommitted.research;
 
-      totalPoints.hours_spent.total += pointsForPerson.hours_spent.total;
-      totalPoints.hours_spent.design += pointsForPerson.hours_spent.design;
-      totalPoints.hours_spent.technology += pointsForPerson.hours_spent.technology;
-      totalPoints.hours_spent.research += pointsForPerson.hours_spent.research;
+      totalPoints.hoursSpent.total += pointsForPerson.hoursSpent.total;
+      totalPoints.hoursSpent.design += pointsForPerson.hoursSpent.design;
+      totalPoints.hoursSpent.technology += pointsForPerson.hoursSpent.technology;
+      totalPoints.hoursSpent.research += pointsForPerson.hoursSpent.research;
     });
 
     sprintObj.totalPoints = totalPoints;
@@ -415,14 +415,14 @@ export class SprintPlan {
     people.forEach(person => {
       this.points.push({
         name: person,
-        points_available: 0,
-        points_committed: {
+        pointsAvailable: 0,
+        pointsCommitted: {
           total: 0,
           design: 0,
           technology: 0,
           research: 0
         },
-        hours_spent: {
+        hoursSpent: {
           total: 0,
           design: 0,
           technology: 0,

@@ -1,9 +1,9 @@
-import { Person } from "../../models/people/person.js";
-import { Project } from "../../models/project/project.js";
-import { SprintCache } from "../../models/cache/sprintCache.js";
+import { Person } from "../../../models/people/person.js";
+import { Project } from "../../../models/project/project.js";
+import { SprintCache } from "../../../models/cache/sprintCache.js";
 
 import { google } from "googleapis";
-import { googleDriveAuth } from "../../imports/utils/googleAuth.js"
+import { googleDriveAuth } from "../../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
 
 // TODO: add error handling across the board for these functions

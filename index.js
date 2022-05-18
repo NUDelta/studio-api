@@ -20,7 +20,7 @@ import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populateP
 import createProcessFixtures, { isProcessEmpty } from "./models/fixtures/populateProcesses.js";
 import createProjectFixtures, { isProjectEmpty } from "./models/fixtures/populateProjects.js";
 import createVenueFixtures, { isVenueEmpty } from "./models/fixtures/populateVenues.js";
-import { prepopulateSprintCache } from "./controllers/sprints/sprintManager.js";
+import { prepopulateSprintCache } from "./controllers/tools/sprints/sprintManager.js";
 
 /*
  Get environment variables.

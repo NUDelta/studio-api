@@ -4,7 +4,7 @@ import createPeopleFixtures from "../models/fixtures/populatePeople.js";
 import createProcessFixtures from "../models/fixtures/populateProcesses.js";
 import createProjectFixtures from "../models/fixtures/populateProjects.js";
 import createVenueFixtures from "../models/fixtures/populateVenues.js";
-import { prepopulateSprintCache } from "../controllers/sprints/sprintManager.js";
+import { prepopulateSprintCache } from "../controllers/tools/sprints/sprintManager.js";
 
 export const dataRouter = new Router();
 

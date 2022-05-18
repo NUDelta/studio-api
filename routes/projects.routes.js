@@ -1,12 +1,13 @@
 import { Router } from "express";
-import { fetchAllProjects, fetchProjectByName } from "../controllers/projectRoutes/fetchProjects.js";
+import { fetchAllProjects, fetchProjectByName } from "../controllers/projects/fetch.js";
 import bodyParser from "body-parser";
 
 import { Project } from "../models/project/project.js";
 import {
   getSprintLogForProjectName
-} from "../controllers/sprints/sprintManager.js";
+} from "../controllers/tools/sprints/sprintManager.js";
 
+// TODO: return error codes with error messages
 export const projectRouter = new Router();
 
 /**
