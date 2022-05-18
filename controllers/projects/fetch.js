@@ -17,7 +17,8 @@ export const fetchAllProjects = async (shouldPopulateTools= false) => {
     let allProjs = await Project.find()
       .populate('students')
       .populate('sig_head')
-      .populate('faculty_mentor').lean();
+      .populate('faculty_mentor')
+      .lean();
 
     // populate tool data, if specified
     if (shouldPopulateTools) {
@@ -44,10 +45,13 @@ export const fetchAllProjects = async (shouldPopulateTools= false) => {
 export const fetchProjectByName = async (projName, shouldPopulateTools= false) => {
   try {
     // find project with projName
-    let relevantProj = await Project.findOne({ name: projName })
+    let relevantProj = await Project.findOne({
+      name: projName
+    })
       .populate('students')
       .populate('sig_head')
-      .populate('faculty_mentor').lean();
+      .populate('faculty_mentor')
+      .lean();
 
     // check if no project was found
     if (relevantProj === null) {

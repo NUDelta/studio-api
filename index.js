@@ -8,7 +8,7 @@ import mongoose from 'mongoose';
 import slackResponses from "./imports/slack/cannedResponses.js"
 
 // routes
-import { userRouter } from "./routes/people.routes.js";
+import { peopleRouter } from "./routes/people.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
 import { projectRouter } from "./routes/projects.routes.js";
 import { sprintRouter } from "./routes/sprints.routes.js";
@@ -58,7 +58,7 @@ app.receiver.app.use(express.urlencoded({
   extended: true
 }));
 
-app.receiver.app.use('/users', userRouter);
+app.receiver.app.use('/people', peopleRouter);
 app.receiver.app.use('/venues', venueRouter);
 app.receiver.app.use('/projects', projectRouter);
 app.receiver.app.use('/sprints', sprintRouter);
