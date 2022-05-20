@@ -17,12 +17,10 @@ import { slackRouter } from "./routes/slack.routes.js";
 import { dataRouter } from "./routes/data.routes.js";
 
 // fixtures for development
-import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populatePeople.js";
-import createProcessFixtures, { isProcessEmpty } from "./models/fixtures/populateProcesses.js";
-import createProjectFixtures, { isProjectEmpty } from "./models/fixtures/populateProjects.js";
-import createVenueFixtures, { isVenueEmpty } from "./models/fixtures/populateVenues.js";
-import createSocialStructureFixtures, { isSocialStructureEmpty } from "./models/fixtures/populateSocialStructures.js";
-import { prepopulateSprintCache } from "./controllers/tools/sprints/sprintManager.js";
+import {
+  allDatabasesAreEmpty,
+  populateData
+} from "./controllers/databaseManagement/refreshData.js";
 
 /*
  Get environment variables.
@@ -94,7 +92,6 @@ const mongooseOptions = {
 }
 
 // attempt to connect to mongodb, and detect any connection errors
-// TODO: maybe have a case where for production you check if the database is empty and (if so) populate it.
 try {
   await mongoose.connect(MONGODB_URI, mongooseOptions);
   console.log(`Connected to MongoDB: ${ MONGODB_URI } with options ${ mongooseOptions }`);
@@ -105,15 +102,9 @@ try {
     if (SHOULD_REFRESH_DATA) {
       console.log("Development -- Local databases are empty. Populating.");
 
-      // TODO: populate DB with fixtures here
-      await createPeopleFixtures();
-      await createProcessFixtures();
-      await createProjectFixtures();
-      await createVenueFixtures();
-      await createSocialStructureFixtures();
-
-      // populate sprint cache on startup
-      await prepopulateSprintCache();
+      // TODO: populate database fixtures here
+      // populate all data synchronously
+      await populateData();
     } else {
       console.log("Development -- Local databases are populated. Not re-populating.");
     }
@@ -121,20 +112,11 @@ try {
 
   if (NODE_ENV === "production") {
     // check if collections are empty first so that data isn't overwritten
-    if (await isPeopleEmpty() && await isProcessEmpty() &&
-      await isProjectEmpty() && await isVenueEmpty() &&
-      await isSocialStructureEmpty()) {
+    if (await allDatabasesAreEmpty()) {
       console.log("Production -- Databases are empty. Populating.");
 
-      // populate them if they are
-      await createPeopleFixtures();
-      await createProcessFixtures();
-      await createProjectFixtures();
-      await createVenueFixtures();
-      await createSocialStructureFixtures();
-
-      // populate sprint cache on startup
-      await prepopulateSprintCache();
+      // populate all data synchronously
+      await populateData();
     } else {
       console.log("Production -- Databases are populated. Not re-populating.");
     }
