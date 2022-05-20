@@ -21,7 +21,9 @@ projectRouter.get("/", async (req, res) => {
     // fetch and return data
     res.json(await fetchAllProjects(shouldPopulateTools));
   } catch (error) {
-    res.send(`Error in /projects/: ${ error }`);
+    let msg = `Error in /projects/: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -30,10 +32,10 @@ projectRouter.get("/", async (req, res) => {
  */
 projectRouter.get("/projectByName", async (req, res) => {
   try {
-    // fetch the person's name from the query that we want the sprint log for, and check if valid
-    let projName = req.query.projName;
+    // fetch the project's name from the query that we want the sprint log for, and check if valid
+    let projName = req.query.projectName;
     if (projName === undefined) {
-      throw new Error("personName parameter not specified.");
+      throw new Error("projectName parameter not specified.");
     }
 
     // get whether tools should be populated
@@ -42,8 +44,9 @@ projectRouter.get("/projectByName", async (req, res) => {
     // fetch and return data
     res.json(await fetchProjectByName(projName, shouldPopulateTools));
   } catch (error) {
-    console.error(error)
-    res.send(`Error in projects/projectByName: ${ error }`);
+    let msg = `Error in projects/projectByName: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -82,8 +85,9 @@ projectRouter.get("/fetchProjectForPerson", async (req, res) => {
       res.json({});
     }
   } catch (error) {
-    console.error(error)
-    res.send(`Error when fetching sprint log for person: ${ error }`);
+    let msg = `Error in projects/fetchProjectForPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -103,7 +107,9 @@ projectRouter.get("/fetchSprintLogForProject", async (req, res) => {
     // return json of sprint log
     res.json(sprintLogForProject);
   } catch (error) {
-    res.send(`Error when fetching sprint log for project: ${ error }`);
+    let msg = `Error in projects/fetchSprintLogForProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -135,7 +141,9 @@ projectRouter.get("/peopleOnProject", async (req, res) => {
     // return json of sprint log
     res.json(output);
   } catch (error) {
-    res.send(`Error when fetching people on project for project: ${ error }`);
+    let msg = `Error in projects/peopleOnProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -157,6 +165,8 @@ projectRouter.get("/slackChannelForProject", async (req, res) => {
     // return json of slack channel for project
     res.json(relevantProject["slack_channel"]);
   } catch (error) {
-    res.send(`Error when fetching slack channel for project: ${ error }`);
+    let msg = `Error in projects/slackChannelForProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });

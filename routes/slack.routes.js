@@ -57,7 +57,9 @@ slackRouter.get("/getAllChannels", async (req, res) => {
     // return response
     res.json(conversationsList);
   } catch (error) {
-    res.send(`Error in /slack/getAllChannels: ${ error }`);
+    let msg = `Error in /slack/getAllChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -101,7 +103,9 @@ slackRouter.get("/getAllPeople", async (req, res) => {
     // return response
     res.json(peopleList);
   } catch (error) {
-    res.send(`Error in /slack/getAllPeople: ${ error }`);
+    let msg = `Error in /slack/getAllPeople: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -144,7 +148,9 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
     // send messages, and return result to caller
     res.json(await Promise.all(messagesToSend));
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToAllProjChannels: ${ error }`);
+    let msg = `Error in /slack/sendMessageToAllProjChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -189,7 +195,9 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
     // send messages, and return result to caller
     res.json(await Promise.all(messagesToSend));
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToAllSigChannels: ${ error }`);
+    let msg = `Error in /slack/sendMessageToAllSigChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -243,7 +251,9 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
     // return result of slack message
     res.json(result);
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToProjChannel: ${ error }`);
+    let msg = `Error in /slack/sendMessageToProjChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -293,7 +303,9 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
     // return result of slack message
     res.json(result);
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToSigChannel: ${ error }`);
+    let msg = `Error in /slack/sendMessageToSigChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -305,7 +317,9 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
   try {
     res.json({});
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToCommitteeChannel: ${ error }`);
+    let msg = `Error in /slack/sendMessageToCommitteeChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -352,7 +366,9 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
       res.json(result);
     }
   } catch (error) {
-    res.send(`Error in /slack/sendMessageToPeople: ${ error }`);
+    let msg = `Error in /slack/sendMessageToPeople: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 

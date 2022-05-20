@@ -1,8 +1,6 @@
 import { Router } from "express";
-import bodyParser from "body-parser";
 import { DateTime } from "luxon";
 
-import { Sprint } from "../models/processes/sprints.js";
 import {
   fetchAllSprints,
   fetchCurrentSprint, fetchSprintByDate,
@@ -13,7 +11,9 @@ export const sprintRouter = new Router();
 
 // TODO: may need to rename this module or put it in a subfolder. this is really about the sprint PROCESS, nto the actual sprints themselves
 
-// get all sprints
+/**
+ * Fetch all sprints.
+ */
 sprintRouter.get("/", async (req, res) => {
   try {
     res.json(await fetchAllSprints());
@@ -22,8 +22,22 @@ sprintRouter.get("/", async (req, res) => {
   }
 });
 
-// get sprint by sprint name (e.g., sprint 1)
-sprintRouter.get("/sprintByName", async (req, res) => {
+/**
+ * Fetch the current sprint, based on the current datetime.
+ */
+sprintRouter.get("/currentSprint", async (req, res) => {
+  try {
+    // return sprint if found
+    res.json(await fetchCurrentSprint());
+  } catch (error) {
+    res.json(`Error when fetching current sprint: ${ error }`);
+  }
+});
+
+/**
+ * Fetch a sprint by sprint name (e.g., "Sprint 1")
+ */
+sprintRouter.get("/byName", async (req, res) => {
   try {
     // check to see if a sprint name was provided
     let sprintName = req.query.sprintName;
@@ -38,23 +52,11 @@ sprintRouter.get("/sprintByName", async (req, res) => {
   }
 });
 
-/**
- * Gets the current sprint, based on the current time.
- */
-sprintRouter.get("/currentSprint", async (req, res) => {
-  try {
-    // return sprint if found
-    res.json(await fetchCurrentSprint());
-  } catch (error) {
-    res.json(`Error when fetching current sprint: ${ error }`);
-  }
-});
-
 
 /**
- * Gets the current sprint, based on the current time.
+ * Fetch the current sprint, based on the current time.
  */
-sprintRouter.get("/sprintByDate", async (req, res) => {
+sprintRouter.get("/byDate", async (req, res) => {
   try {
     // check to see if a date was provided
     let dateString = req.query.timestamp;

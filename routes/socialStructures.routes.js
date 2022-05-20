@@ -13,7 +13,9 @@ socialStructureRouter.get("/", async (req, res) => {
   try {
     res.json(await fetchAllSocialStructures());
   } catch (error) {
-    res.send(`Error in /socialStructures/: ${ error }`);
+    let msg = `Error in /socialStructures/: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -24,7 +26,9 @@ socialStructureRouter.get("/sigs", async (req, res) => {
   try {
     res.json(await fetchSigStructures());
   } catch (error) {
-    res.send(`Error in /socialStructures/sigs: ${ error }`);
+    let msg = `Error in /socialStructures/sigs: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -35,7 +39,9 @@ socialStructureRouter.get("/committees", async (req, res) => {
   try {
     res.json(await fetchCommitteeStructures());
   } catch (error) {
-    res.send(`Error in /socialStructures/committees: ${ error }`);
+    let msg = `Error in /socialStructures/committees: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -46,7 +52,9 @@ socialStructureRouter.get("/onboardingPairs", async (req, res) => {
   try {
     res.json(await fetchOnboardingPairings());
   } catch (error) {
-    res.send(`Error in /socialStructures/onboardingPairs: ${ error }`);
+    let msg = `Error in /socialStructures/onboardingPairs: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -63,7 +71,9 @@ socialStructureRouter.get("/forPerson", async (req, res) => {
 
     res.json(await fetchSocialStructuresForPerson(personName));
   } catch (error) {
-    res.send(`Error in /socialStructures/forPerson: ${ error }`);
+    let msg = `Error in /socialStructures/forPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -80,6 +90,8 @@ socialStructureRouter.get("/forProject", async (req, res) => {
 
     res.json(await fetchSocialStructuresForProject(projectName));
   } catch (error) {
-    res.send(`Error in /socialStructures/forProject: ${ error }`);
+    let msg = `Error in /socialStructures/forProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });

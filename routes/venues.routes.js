@@ -19,7 +19,9 @@ venueRouter.get("/", async (req, res) => {
     let allVenues = await Venue.find();
     res.json(allVenues);
   } catch (error) {
-    res.send(`Error when fetching all venues: ${ error }`);
+    let msg = `Error in /venues/: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -27,6 +29,13 @@ venueRouter.get("/", async (req, res) => {
  * Fetch the relevant venues for a project. These include Studio, SIG, and Office Hours.
  */
 venueRouter.get("/venuesForProject", (req, res) => {
+  try {
+    res.json({})
+  } catch (error) {
+    let msg = `Error in /venues/venuesForProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
 });
 
 /**
@@ -34,24 +43,38 @@ venueRouter.get("/venuesForProject", (req, res) => {
  * TODO: when new students are modeled, also include things like onboarding mentors.
  */
 venueRouter.get("/venuesForPerson", (req, res) => {
-
+  try {
+    res.json({})
+  } catch (error) {
+    let msg = `Error in /venues/venuesForPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
 });
 
 /**
  * Fetch the relevant venues for a SIG. These include SIG and Office Hours.
  */
 venueRouter.get("/venuesForSig", (req, res) => {
-
+  try {
+    res.json({})
+  } catch (error) {
+    let msg = `Error in /venues/venuesForSig: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
 });
 
 // fetch studio meeting time
 venueRouter.get("/studio", async (req, res) => {
-  // TODO: this should be computing the time/date of the next venue (I think) and send that over to the orchestration engine
+  // TODO: this should be computing the time/date of the next venue (I think) and send that over to the orchestration engine --> have this be an optional thing (like includeNextInstance)
   try {
     let studioMeeting = await Studio.find();
     res.json(studioMeeting);
   } catch (error) {
-    res.send(`Error when fetching studio meeting: ${ error }`);
+    let msg = `Error in /venues/studio: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -61,7 +84,9 @@ venueRouter.get("/sig", async (req, res) => {
     let allSigMeetings = await SIG.find().populate("sig_head").populate("sig_members");
     res.json(allSigMeetings);
   } catch (error) {
-    res.send(`Error when fetching sig meetings: ${ error }`);
+    let msg = `Error in /venues/sig: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -139,7 +164,9 @@ venueRouter.get("/sig/firstSig", async (req, res) => {
       end_time: firstSigEndTime.toUTC().toJSDate()
     });
   } catch (error) {
-    res.send(`Error when fetching last sig meetings: ${ error }`);
+    let msg = `Error in /venues/firstSig: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -215,7 +242,9 @@ venueRouter.get("/sig/lastSig", async (req, res) => {
       end_time: lastSigEndTime.toUTC().toJSDate()
     });
   } catch (error) {
-    res.send(`Error when fetching last sig meetings: ${ error }`);
+    let msg = `Error in /venues/lastSig: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -225,7 +254,9 @@ venueRouter.get("/officehours", async (req, res) => {
     let allOfficeHours = await OfficeHours.find();
     res.json(allOfficeHours);
   } catch (error) {
-    res.send(`Error when fetching office hour times: ${ error }`);
+    let msg = `Error in /venues/officehours: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
