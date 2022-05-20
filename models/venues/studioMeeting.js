@@ -3,8 +3,8 @@ import { DateTime } from "luxon";
 
 import { Venue } from "./venue.js";
 
-export const Studio = Venue.discriminator('Studio',
+export const StudioMeeting = Venue.discriminator('StudioMeeting',
   new mongoose.Schema({
-    slack_channel: { type: String, required: true }
+    /* intentionally left blank */
   })
 );

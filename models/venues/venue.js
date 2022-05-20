@@ -21,6 +21,7 @@ const luxonValidTimezones = [
 // allow for schema to be inheritable for different community roles
 const options = { discriminatorKey : 'type' }
 
+// studio: everyone; SigMeeting: project members and sig heads; office hours: members of specific projects
 // base venue schema
 export const Venue = mongoose.model('Venue',
   new mongoose.Schema({
@@ -33,6 +34,7 @@ export const Venue = mongoose.model('Venue',
     },
     start_time: { type: String, required: true }, // HH:MM:SS
     end_time: { type: String, required: true },   // HH:MM:SS
-    timezone: { type: String, requrired: true, enum: luxonValidTimezones }
+    timezone: { type: String, required: true, enum: luxonValidTimezones },
+    attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Person' }],
     }, options)
 );

@@ -5,12 +5,12 @@ export const facultyData = [
     slack_id: (process.env.NODE_ENV === "development") ? "U03EA817FU3" : "U0E2XS3LL",
     sig_lead: "Summer BBQ"
   },
-  {
-    name: "Nell O'Rourke",
-    email: "nell@northwestern.edu",
-    slack_id: "U2MGUUFK5",
-    sig_lead: "Summer BEACH"
-  }
+  // {
+  //   name: "Nell O'Rourke",
+  //   email: "nell@northwestern.edu",
+  //   slack_id: "U2MGUUFK5",
+  //   sig_lead: "Summer BEACH"
+  // }
 ];
 
 export const phdStudentData = [
@@ -52,7 +52,7 @@ export const phdStudentData = [
     slack_id: "UHQQKMFSM",
     sig_lead: "Contextually-Aware Metacognitive Practice",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Nell O'Rourke"
+    faculty_mentor: "Haoqi Zhang"
   }
 ];
 
