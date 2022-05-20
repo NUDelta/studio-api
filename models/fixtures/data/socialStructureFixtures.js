@@ -11,7 +11,7 @@ const getAllMembersForSig = (allProjects, sigName) => {
     allProjects.filter(project => {
       return project.sig_name === sigName;
     }).reduce((previousValue, currentValue) => {
-      return [...previousValue, currentValue.sig_head, ...currentValue.students];
+      return [...previousValue, ...currentValue.students];
     }, [])
   ));
 };
