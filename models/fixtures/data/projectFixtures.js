@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 
 // TODO: replace slack_channel names with IDs
+// TODO: I think the SIG head and faculty mentor should be inferred from which SIG the project is associated with
 export const projectData = [
   // SIG ARS
   // {
@@ -109,7 +110,7 @@ export const projectData = [
   // SIG CAMP
   {
     name: "Cardinal",
-    sig_name: "Context-Aware Metacognitive Practice",
+    sig_name: "Contextually-Aware Metacognitive Practice",
     students: ["Lauren Bichelmeir"],
     sig_head: "Harrison Kwik",
     faculty_mentor: "Haoqi Zhang",
@@ -121,7 +122,7 @@ export const projectData = [
   },
   {
     name: "Path",
-    sig_name: "Context-Aware Metacognitive Practice",
+    sig_name: "Contextually-Aware Metacognitive Practice",
     students: ["Amy Guo"],
     sig_head: "Harrison Kwik",
     faculty_mentor: "Haoqi Zhang",

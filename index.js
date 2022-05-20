@@ -20,6 +20,7 @@ import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populateP
 import createProcessFixtures, { isProcessEmpty } from "./models/fixtures/populateProcesses.js";
 import createProjectFixtures, { isProjectEmpty } from "./models/fixtures/populateProjects.js";
 import createVenueFixtures, { isVenueEmpty } from "./models/fixtures/populateVenues.js";
+import createSocialStructureFixtures, { isSocialStructureEmpty } from "./models/fixtures/populateSocialStructures.js";
 import { prepopulateSprintCache } from "./controllers/tools/sprints/sprintManager.js";
 
 /*
@@ -107,6 +108,7 @@ try {
       await createProcessFixtures();
       await createProjectFixtures();
       await createVenueFixtures();
+      await createSocialStructureFixtures();
 
       // populate sprint cache on startup
       await prepopulateSprintCache();
@@ -118,7 +120,8 @@ try {
   if (NODE_ENV === "production") {
     // check if collections are empty first so that data isn't overwritten
     if (await isPeopleEmpty() && await isProcessEmpty() &&
-      await isProjectEmpty() && await isVenueEmpty()) {
+      await isProjectEmpty() && await isVenueEmpty() &&
+      await isSocialStructureEmpty()) {
       console.log("Production -- Databases are empty. Populating.");
 
       // populate them if they are
@@ -126,6 +129,7 @@ try {
       await createProcessFixtures();
       await createProjectFixtures();
       await createVenueFixtures();
+      await createSocialStructureFixtures();
 
       // populate sprint cache on startup
       await prepopulateSprintCache();

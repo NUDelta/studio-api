@@ -4,6 +4,7 @@ import createPeopleFixtures from "../models/fixtures/populatePeople.js";
 import createProcessFixtures from "../models/fixtures/populateProcesses.js";
 import createProjectFixtures from "../models/fixtures/populateProjects.js";
 import createVenueFixtures from "../models/fixtures/populateVenues.js";
+import createSocialStructureFixtures from "../models/fixtures/populateSocialStructures.js";
 import { prepopulateSprintCache } from "../controllers/tools/sprints/sprintManager.js";
 
 export const dataRouter = new Router();
@@ -17,8 +18,10 @@ dataRouter.get("/refreshData", async (req, res) => {
   await createProcessFixtures();
   await createProjectFixtures();
   await createVenueFixtures();
+  await createSocialStructureFixtures();
 
-  // populate sprint cache after data is refreshed. run async so that the request can finsh and not timeout
+  // populate sprint cache after data is refreshed.
+  // run async so that the request can finsh and not timeout
   prepopulateSprintCache();
 
   res.send("Data refreshed.");

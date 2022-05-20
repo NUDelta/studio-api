@@ -50,7 +50,7 @@ export const phdStudentData = [
     name: "Harrison Kwik",
     email: "harrison@northwestern.edu",
     slack_id: "UHQQKMFSM",
-    sig_lead: "Context-Aware Metacognitive Practice",
+    sig_lead: "Contextually-Aware Metacognitive Practice",
     sig_member: "Summer BBQ",
     faculty_mentor: "Nell O'Rourke"
   }
@@ -140,14 +140,14 @@ export const nonPhdStudentData = [
     name: "Lauren Bichelmeir",
     email: "laurenbichelmeir2023@u.northwestern.edu",
     slack_id: "U035GLA80S2",
-    sig_member: "Context-Aware Metacognitive Practice",
+    sig_member: "Contextually-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   },
   {
     name: "Amy Guo",
     email: "amyguo2023@u.northwestern.edu",
     slack_id: "U035GLAFZGE",
-    sig_member: "Context-Aware Metacognitive Practice",
+    sig_member: "Contextually-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   }
 ];
