@@ -3,7 +3,7 @@ import { SigStructure } from "../social-structures/sig.js";
 import { CommitteeStructure } from "../social-structures/committee.js";
 import { OnboardingPairing } from "../social-structures/onboardingPairing.js";
 
-import { sigSocialStructuresData } from "./data/socialStructureFixtures.js";
+import { onboardingPairData, sigSocialStructuresData } from "./data/socialStructureFixtures.js";
 import { Person } from "../people/person.js";
 
 /**
@@ -14,7 +14,7 @@ const createSigSocialStructureDocuments = async () => {
   // store all documents to insert
   let sigStructureDocuments = [];
 
-  // loop over each document and save
+  // loop over each document and create it
   for (let sigStruct of sigSocialStructuresData) {
     // get members
     let membersPromises = [];
@@ -42,6 +42,32 @@ const createSigSocialStructureDocuments = async () => {
 };
 
 /**
+ * Creates the Onboarding Pairs social structure.
+ * @returns {Promise<Array<HydratedDocument<unknown, {}, {}>>>}
+ */
+const createOnboardingPairsDocuments = async () => {
+  // store all documents to insert
+  let onboardingPairsDocuments = [];
+
+  // loop over each document and create it
+  for (let onboardingStruct of onboardingPairData) {
+    // get mentor and mentee
+    let mentor = await Person.findOne({ name: onboardingStruct.mentor });
+    let mentee = await Person.findOne({ name: onboardingStruct.mentee });
+
+    // create document
+    onboardingPairsDocuments.push({
+      name: `${ onboardingStruct.mentor } - ${ onboardingStruct.mentee } onboarding pairing`,
+      description: `Mentor-Mentee pairing for ${ onboardingStruct.mentor } and ${ onboardingStruct.mentee }`,
+      mentor: mentor._id,
+      mentee: mentee._id,
+    });
+  }
+
+  return OnboardingPairing.insertMany(onboardingPairsDocuments);
+};
+
+/**
  * Removes existing documents and insert all SocialStructure documents.
  * @return {Promise<void>}
  */
@@ -51,6 +77,7 @@ export default async function main() {
 
   // populate new documents
   await createSigSocialStructureDocuments();
+  await createOnboardingPairsDocuments();
 }
 
 /**

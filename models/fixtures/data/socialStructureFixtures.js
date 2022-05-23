@@ -51,3 +51,24 @@ export const sigSocialStructuresData = [
     sig_head: "Haoqi Zhang",
   }
 ];
+
+export const onboardingPairData = [
+  {
+    name: "",
+    description: "",
+    mentor: "Cindy Hu",
+    mentee: "Alexandra Andreiu"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Jason Friedman",
+    mentee: "Amy Guo"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Parveen Dhanoa",
+    mentee: "Lauren Bichelmeir"
+  },
+];
