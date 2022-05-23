@@ -78,7 +78,7 @@ export const fetchProjectByName = async (projName, shouldPopulateTools= false) =
  * @returns {Promise<any>} promise that, when resolved, returns a project with tool data pulled in.
  */
 const populateProjectTools = async (project) => {
-  // deep clone project object so it doesn't modify the passed in value
+  // deep clone project object so that it doesn't modify the passed in value
   let clonedProject = JSON.parse(JSON.stringify(project));
 
   // populate sprint log data

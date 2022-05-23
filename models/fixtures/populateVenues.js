@@ -97,10 +97,17 @@ const createOfficeHoursDocuments = async () => {
     // get projects of sig
     let projectPromises = [];
     for (const projectName of currOfficeHoursData.projects) {
-      projectPromises.push(Project.findOne({ name: projectName }));
+      projectPromises.push(Project.findOne({ name: projectName }).populate("students"));
     }
-    let projectIds = (await Promise.all(projectPromises))
-      .map((project) => { return project._id });
+    let projectObjects = await Promise.all(projectPromises);
+    let projectIds = projectObjects.map((project) => { return project._id });
+
+    // get attendees of sig
+    let memberIds = projectObjects
+      .map((project) => {
+        return project.students.map(student => { return student._id })
+      })
+      .reduce((acc, val) => acc.concat(val), []);
 
     // create documents
     officeHoursDocuments.push({
@@ -110,6 +117,7 @@ const createOfficeHoursDocuments = async () => {
       start_time: currOfficeHoursData.start_time,
       end_time: currOfficeHoursData.end_time,
       timezone: currOfficeHoursData.timezone,
+      attendees: memberIds,
       projects: projectIds
     });
   }

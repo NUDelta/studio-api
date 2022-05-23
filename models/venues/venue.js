@@ -19,7 +19,7 @@ const luxonValidTimezones = [
 ].sort((a, b) => (a < b ? -1 : 1));
 
 // allow for schema to be inheritable for different community roles
-const options = { discriminatorKey : 'type' }
+const options = { discriminatorKey : 'kind' }
 
 // studio: everyone; SigMeeting: project members and sig heads; office hours: members of specific projects
 // base venue schema

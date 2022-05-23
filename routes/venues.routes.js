@@ -1,23 +1,25 @@
 import { Router } from "express";
-import bodyParser from "body-parser";
 
-import { Venue } from "../models/venues/venue.js";
-import { Studio } from "../models/venues/studio.js";
-import { SIG } from "../models/venues/sig.js";
-import { OfficeHours } from "../models/venues/officeHours.js";
+import { SigMeeting } from "../models/venues/sigMeeting.js";
 import { Project } from "../models/project/project.js";
 import { Sprint } from "../models/processes/sprints.js";
 import { DateTime, Info } from "luxon";
+import {
+  fetchAllVenues, fetchOfficeHours,
+  fetchSigMeetings,
+  fetchStudioMeetings, fetchVenuesForPerson, fetchVenuesForProject, fetchVenuesForSig
+} from "../controllers/venues/fetch.js";
 
 export const venueRouter = new Router();
+
+// TODO: maybe include ability to ask for nextInstance of each venue
 
 /**
  * Fetches all venues.
  */
 venueRouter.get("/", async (req, res) => {
   try {
-    let allVenues = await Venue.find();
-    res.json(allVenues);
+    res.json(await fetchAllVenues());
   } catch (error) {
     let msg = `Error in /venues/: ${ error }`;
     console.error(msg)
@@ -26,13 +28,58 @@ venueRouter.get("/", async (req, res) => {
 });
 
 /**
+ * Fetch all SIG meetings.
+ */
+venueRouter.get("/sig", async (req, res) => {
+  try {
+    res.json(await fetchSigMeetings());
+  } catch (error) {
+    let msg = `Error in /venues/sig: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
+ * Fetch all office hours.
+ */
+venueRouter.get("/officehours", async (req, res) => {
+  try {
+    res.json(await fetchOfficeHours());
+  } catch (error) {
+    let msg = `Error in /venues/officehours: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
+ * Fetches all Studio venues.
+ */
+venueRouter.get("/studio", async (req, res) => {
+  try {
+    res.json(await fetchStudioMeetings());
+  } catch (error) {
+    let msg = `Error in /venues/studio: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
  * Fetch the relevant venues for a project. These include Studio, SIG, and Office Hours.
  */
-venueRouter.get("/venuesForProject", (req, res) => {
+venueRouter.get("/forProject", async (req, res) => {
   try {
-    res.json({})
+    // fetch the project's name from the query that we want the sprint log for, and check if valid
+    let projectName = req.query.projectName;
+    if (projectName === undefined) {
+      throw new Error("projectName parameter not specified.");
+    }
+
+    res.json(await fetchVenuesForProject(projectName));
   } catch (error) {
-    let msg = `Error in /venues/venuesForProject: ${ error }`;
+    let msg = `Error in /venues/forProject: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -42,11 +89,17 @@ venueRouter.get("/venuesForProject", (req, res) => {
  * Fetch the relevant venues for a person. These include Studio, SIG, and Office Hours.
  * TODO: when new students are modeled, also include things like onboarding mentors.
  */
-venueRouter.get("/venuesForPerson", (req, res) => {
+venueRouter.get("/forPerson", async (req, res) => {
   try {
-    res.json({})
+    // fetch the person's name from the query that we want the relevant social structures for
+    let personName = req.query.personName;
+    if (personName === undefined) {
+      throw new Error("personName parameter not specified.");
+    }
+
+    res.json(await fetchVenuesForPerson(personName));
   } catch (error) {
-    let msg = `Error in /venues/venuesForPerson: ${ error }`;
+    let msg = `Error in /venues/forPerson: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -55,40 +108,22 @@ venueRouter.get("/venuesForPerson", (req, res) => {
 /**
  * Fetch the relevant venues for a SIG. These include SIG and Office Hours.
  */
-venueRouter.get("/venuesForSig", (req, res) => {
+venueRouter.get("/forSig", async (req, res) => {
   try {
-    res.json({})
+    // fetch the person's name from the query that we want the relevant social structures for
+    let sigName = req.query.sigName;
+    if (sigName === undefined) {
+      throw new Error("sigName parameter not specified.");
+    }
+
+    res.json(await fetchVenuesForSig(sigName));
   } catch (error) {
-    let msg = `Error in /venues/venuesForSig: ${ error }`;
+    let msg = `Error in /venues/forSig: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
 });
 
-// fetch studio meeting time
-venueRouter.get("/studio", async (req, res) => {
-  // TODO: this should be computing the time/date of the next venue (I think) and send that over to the orchestration engine --> have this be an optional thing (like includeNextInstance)
-  try {
-    let studioMeeting = await Studio.find();
-    res.json(studioMeeting);
-  } catch (error) {
-    let msg = `Error in /venues/studio: ${ error }`;
-    console.error(msg)
-    res.send(msg);
-  }
-});
-
-// fetch all SIG meetings
-venueRouter.get("/sig", async (req, res) => {
-  try {
-    let allSigMeetings = await SIG.find().populate("sig_head").populate("sig_members");
-    res.json(allSigMeetings);
-  } catch (error) {
-    let msg = `Error in /venues/sig: ${ error }`;
-    console.error(msg)
-    res.send(msg);
-  }
-});
 
 /**
  * Fetches the start and end time of the first SIG meeting (the start of Sprint 1) for a project.
@@ -112,7 +147,7 @@ venueRouter.get("/sig/firstSig", async (req, res) => {
 
     // get SIG info for project name
     let sigName = relevantProject.sig_name;
-    let relevantSigVenueInfo = await SIG.findOne({
+    let relevantSigVenueInfo = await SigMeeting.findOne({
       name: {
         "$regex": sigName,
         "$options": "i"
@@ -190,7 +225,7 @@ venueRouter.get("/sig/lastSig", async (req, res) => {
 
     // get SIG info for project name
     let sigName = relevantProject.sig_name;
-    let relevantSigVenueInfo = await SIG.findOne({
+    let relevantSigVenueInfo = await SigMeeting.findOne({
       name: {
         "$regex": sigName,
         "$options": "i"
@@ -243,18 +278,6 @@ venueRouter.get("/sig/lastSig", async (req, res) => {
     });
   } catch (error) {
     let msg = `Error in /venues/lastSig: ${ error }`;
-    console.error(msg)
-    res.send(msg);
-  }
-});
-
-// fetch all office hour times
-venueRouter.get("/officehours", async (req, res) => {
-  try {
-    let allOfficeHours = await OfficeHours.find();
-    res.json(allOfficeHours);
-  } catch (error) {
-    let msg = `Error in /venues/officehours: ${ error }`;
     console.error(msg)
     res.send(msg);
   }

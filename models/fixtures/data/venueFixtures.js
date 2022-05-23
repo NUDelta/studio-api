@@ -4,7 +4,7 @@ import { projectData } from "./projectFixtures.js";
 
 export const studioData = [
   {
-    name: "Studio meeting",
+    name: "Studio Meeting",
     description: "Weekly studio meeting with all members of the community.",
     day_of_week: "Friday",
     start_time: "13:00:00",
