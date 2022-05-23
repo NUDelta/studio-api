@@ -121,8 +121,7 @@ export const fetchSocialStructuresForPerson = async (personName) => {
 };
 
 /**
- * Fetches social structures that are relevant for a project.
- * Currently, this will only be SIGs that the projects are in.
+ * Fetches social structures that are relevant for a project, including SIGs and onboarding pairs.
  * @param projectName string name of project to find relevant structures for.
  * @returns {Promise<>} promise that if resolved, returns a list of social structures that are relevant to projectName.
  */
@@ -139,6 +138,11 @@ export const fetchSocialStructuresForProject = async (projectName) => {
     return (await Promise.all([
       fetchSigStructures({
         name: relevantProject.sig_name
+      }),
+      fetchOnboardingPairings({
+        mentee: {
+          $in: relevantProject.students
+        }
       })
     ])).flat();
   } catch (error) {
