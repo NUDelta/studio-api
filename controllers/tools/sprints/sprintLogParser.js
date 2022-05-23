@@ -1,18 +1,21 @@
 import { googleServiceAccountInfo } from "../../../imports/utils/googleAuth.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
+// TODO: comment all the code in this file
+
 /**
  * This class handles the parsing of a Google Sheet Sprint Log document.
- * TODO: include a quick access for current sprint
  *
  * Data model for Sprint Log:
  * SprintLog {
- *   people: [String]                         // student names
- *   sprints: [                               // list of SprintPlans for each sprint in the qtr
+ *   url: "String"                           // link to Google Drive Spreadsheet
+ *   documentId: "String"                    // ID of document parsed from URL
+ *   people: [String]                        // student names
+ *   sprints: [                              // list of SprintPlans for each sprint in the qtr
  *     SprintPlan {
- *       name: "String",                      // name of sprint (e.g., "Sprint 0")
- *       points: [                            // summary of points for the sprint for each student
- *          name: "String",                   // name of specific student
+ *       name: "String",                     // name of sprint (e.g., "Sprint 0")
+ *       points: [                           // summary of points for the sprint for each student
+ *          name: "String",                  // name of specific student
  *          pointsAvailable: Number,         // number of points student has (for ugrads, typically 8)
  *          pointsCommitted: {               // number of points committed
  *              total: Number,
@@ -27,7 +30,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *              research: Number
  *          }
  *       ],
- *       totalPoints = {                      // total points planned/spent on sprint (students combined)
+ *       totalPoints: {                      // total points planned/spent on sprint (students combined)
  *          pointAvailable: Number,
  *          pointsCommitted: {
  *              total: 0,
@@ -42,6 +45,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *              research: 0
  *          }
  *       },
+ *       url: "String"                         // link to specific Worksheet in Google Drive for this sprint
  *       stories: [                            // list of SprintStories for the SprintPlan
  *         SprintStory {
  *          description: "String",             // description of the story (typically, the risk in project)
@@ -49,7 +53,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *          deliverables: "String",            // description of the deliverable
  *          totalPointsRequired: Number,       // number of points allocated to this story
  *          totalPointsSpent: Number,          // number of points spend so far on this story
- *          tasks = [                          // list of SprintTasks for each SprintStory
+ *          tasks: [                           // list of SprintTasks for each SprintStory
  *           SprintTask {
  *              description: "String",         // description of the task
  *              expectedRoadblocks: "String",  // expected roadblocks for the task (if any)
@@ -68,11 +72,17 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  * }
  */
 export class SprintLog {
+  url = ""; // Google Drive URL for Sprint Log
+  documentId = ""; // Google Drive spreadsheet id for the current sprint log
+
   people = []; // list of people the sprint is for
   sprints = []; // list of Sprint objects associated with the sprint log
 
   constructor(sprintLogUrl) {
-    const sprintLogDoc = new GoogleSpreadsheet(SprintLog.getSprintLogIdForUrl(sprintLogUrl));
+    // get documentId and create new google spreadsheet parser
+    this.url = sprintLogUrl;
+    this.documentId = SprintLog.getSprintLogIdForUrl(sprintLogUrl);
+    const sprintLogDoc = new GoogleSpreadsheet(this.documentId);
 
     return (async () => {
       // TODO: needs to be more granular. When it does fail, wait 60 seconds and try again.
@@ -105,13 +115,14 @@ export class SprintLog {
         // return the object back up the caller
         return this;
       } catch (e) {
-        console.log(`Error in loading data for worksheet: ${ e }`);
+        console.error(`Error in loading data for worksheet: ${ e }`);
       }
 
       return undefined;
     })();
   }
 
+  // TODO: better as a utility function for getting the document ID for Google Drive files.
   static getSprintLogIdForUrl(url) {
     let re = new RegExp('[-\\w]{25,}'); // note that this isn't a super robust regex
     let output = url.match(re);
@@ -213,7 +224,7 @@ export class SprintLog {
           colIndex++;
         }
 
-        // store data into a the sprint object
+        // store data into a sprint object
         sprintObj.updatePointsObjForPerson(personName, "pointsAvailable", pointsAvailable);
         sprintObj.updatePointsObjForPerson(personName, "pointsCommitted", pointsCommitted);
         sprintObj.updatePointsObjForPerson(personName, "hoursSpent", hoursSpent);
@@ -256,6 +267,9 @@ export class SprintLog {
     });
 
     sprintObj.totalPoints = totalPoints;
+
+    // add url for the current sprint
+    sprintObj.url = `https://docs.google.com/spreadsheets/d/${ this.documentId }/edit#gid=${ worksheet.sheetId }`;
 
     // return the updated sprintObj
     return sprintObj;
