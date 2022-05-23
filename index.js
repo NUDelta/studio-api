@@ -48,6 +48,53 @@ slackResponses.map((responseObject) => {
   app.message(responseObject.cue, responseObject.response);
 });
 
+// TODO: have message update the same text so multiple messages aren't coming in
+// add handlers for different selection types
+app.action("single-select", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_option.text.text }`
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+app.action("multi-select", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_options.map(option => {
+          return `${ option.text.text } \n`
+        }).join("")}`
+      )
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+app.action("checkbox", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_options.map(option => {
+          return `${ option.text.text } \n`
+        }).join("")}`
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+
+
 /*
  Setup routes
  */

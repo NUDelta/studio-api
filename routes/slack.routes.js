@@ -8,6 +8,13 @@ import { NonPhdStudent } from "../models/people/nonphdstudent.js";
 
 import { Project } from "../models/project/project.js";
 import { SigStructure } from "../models/social-structures/sig.js";
+import {
+  messageChannel,
+  messagePersonWithOptions
+} from "../controllers/communication/slack/send.js";
+import {
+  formatPeopleForSlackMessage
+} from "../controllers/communication/slack/payloadGenerator.js";
 
 export const slackRouter = new Router();
 
@@ -139,10 +146,11 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
       });
 
       // create promises to send message to channel
-      messagesToSend.push(app.client.chat.postMessage({
-        channel: channelName,
-        text: `Hey ${ formatPeopleForSlackMessage(students) }! ${ message }`
-      }));
+      messagesToSend.push(messageChannel(
+        channelName,
+        formatPeopleForSlackMessage(students),
+        message
+      ));
     }
 
     // send messages, and return result to caller
@@ -186,10 +194,11 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
       });
 
       // create promises to send message to channel
-      messagesToSend.push(app.client.chat.postMessage({
-        channel: channelName,
-        text: `Hey ${ formatPeopleForSlackMessage(students) }! ${ message }`
-      }));
+      messagesToSend.push(messageChannel(
+        channelName,
+        formatPeopleForSlackMessage(students),
+        message
+      ));
     }
 
     // send messages, and return result to caller
@@ -243,10 +252,11 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
     };
 
     // send message to channel
-    const result = await app.client.chat.postMessage({
-      channel: channelName,
-      text: `Hey ${ formatPeopleForSlackMessage(students) }! ${ message }`
-    });
+    const result = await messageChannel(
+      channelName,
+      formatPeopleForSlackMessage(students),
+      message
+    );
 
     // return result of slack message
     res.json(result);
@@ -295,10 +305,11 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
     });
 
     // send message to channel
-    const result = await app.client.chat.postMessage({
-      channel: channelName,
-      text: `Hey ${ formatPeopleForSlackMessage(students) }! ${ message }`
-    });
+    const result = await messageChannel(
+      channelName,
+      formatPeopleForSlackMessage(students),
+      message
+    );
 
     // return result of slack message
     res.json(result);
@@ -357,10 +368,13 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
     // send the message from the request to the MPIM channel
     if (conversationForPeopleResponse["ok"]) {
       const channelId =  conversationForPeopleResponse["channel"]["id"];
-      const result = await app.client.chat.postMessage({
-        channel: channelId,
-        text: `Hey ${formatPeopleForSlackMessage(peopleSlackIds)}! ${ message }`
-      });
+
+      // send message to channel
+      const result = await messageChannel(
+        channelId,
+        formatPeopleForSlackMessage(peopleSlackIds),
+        message
+      );
 
       // return result of slack message
       res.json(result);
@@ -372,14 +386,56 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
   }
 });
 
+slackRouter.post("/presentOptionsToPerson", async (req, res) => {
+  try {
+    // TODO: check if any params are not included
+    // parse inputs from request
+    let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
+    let message = (req.body.message ?? "").trim();
+    let options = JSON.parse(req.body.options ?? "[]");
+    let selectType = (req.body.selectType ?? "checkbox").trim();
 
-/**
- * Returns a list of slack id's when provided a list of people objects, which can be used to ping each person in a channel or direct message in Slack.
- * @param peopleList list of people objects. each person must contain a slack_id field.
- * @returns {string} string with each person's slack_id concatenated together.
- */
-const formatPeopleForSlackMessage = (peopleList) => {
-  return peopleList.map((person) => {
-    return `<@${ person.slack_id }>`
-  }).join(" ");
-}
+    // TODO: sorting like this is fine for now, but may want to have more control over user order
+    // get slack ids for people
+    const allPeople = await Person.find({
+      "name": {
+        "$in": people
+      }
+    }).sort("role name");
+
+    const peopleSlackIds = allPeople.map(person => {
+      return {
+        name: person.name,
+        slack_id: person.slack_id
+      }
+    });
+
+    // open a multi-person direct message (MPIM) channel
+    // api documentation: https://api.slack.com/methods/conversations.open
+    let conversationForPeopleResponse = await app.client.conversations.open({
+      return_im: true,
+      users: peopleSlackIds.map(person => { return person.slack_id }).join(",")
+    });
+
+    // send the message from the request to the MPIM channel
+    if (conversationForPeopleResponse["ok"]) {
+      const channelId =  conversationForPeopleResponse["channel"]["id"];
+
+      // send message to channel
+      const result = await messagePersonWithOptions(
+        channelId,
+        formatPeopleForSlackMessage(peopleSlackIds),
+        message,
+        options,
+        selectType
+      );
+
+      // return result of slack message
+      res.json(result);
+    }
+  } catch (error) {
+    let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
