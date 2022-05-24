@@ -120,7 +120,7 @@ slackRouter.get("/getAllPeople", async (req, res) => {
  * Sends a message to all project channels.
  */
 // TODO: this should really call the same function that sends data to a single project channel.
-slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
+slackRouter.post("/messageAllProjectChannels", async (req, res) => {
   try {
     // parse inputs
     let message = (req.body.message ?? "").trim();
@@ -156,7 +156,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
     // send messages, and return result to caller
     res.json(await Promise.all(messagesToSend));
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToAllProjChannels: ${ error }`;
+    let msg = `Error in /slack/messageAllProjectChannels: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -166,7 +166,7 @@ slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
  * Sends a message to all SIG channels.
  */
 // TODO: this should really call the same function that sends data to a single sig channel.
-slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
+slackRouter.post("/messageAllSigChannels", async (req, res) => {
   try {
     // parse inputs
     let message = (req.body.message ?? "").trim();
@@ -204,7 +204,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
     // send messages, and return result to caller
     res.json(await Promise.all(messagesToSend));
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToAllSigChannels: ${ error }`;
+    let msg = `Error in /slack/messageAllSigChannels: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -214,7 +214,7 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
  * Sends message to a project's Slack Channel.
  */
 // TODO: factor this out into a controller
-slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
+slackRouter.post("/messageProjectChannel", async (req, res) => {
   try {
     // TODO: check if inputs are valid
     // parse inputs
@@ -261,7 +261,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
     // return result of slack message
     res.json(result);
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToProjChannel: ${ error }`;
+    let msg = `Error in /slack/messageProjectChannel: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -271,7 +271,7 @@ slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
  * Sends message to a SIG's Slack channel.
  */
 // TODO: factor this out into a controller
-slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
+slackRouter.post("/messageSigChannel", async (req, res) => {
   try {
     // TODO: check if inputs are valid
     // parse inputs
@@ -314,7 +314,7 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
     // return result of slack message
     res.json(result);
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToSigChannel: ${ error }`;
+    let msg = `Error in /slack/messageSigChannel: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -324,11 +324,11 @@ slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
  * TODO: implement
  * Sends message to a committee's Slack Channel.
  */
-slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
+slackRouter.post("/messageCommitteeChannel", async (req, res) => {
   try {
     res.json({});
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToCommitteeChannel: ${ error }`;
+    let msg = `Error in /slack/messageCommitteeChannel: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
@@ -337,7 +337,7 @@ slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
 /**
  * Send a direct message (or a group direct message) to a list of people.
  */
-slackRouter.post("/sendMessageToPeople", async (req, res) => {
+slackRouter.post("/messagePeople", async (req, res) => {
   try {
     // parse inputs from request
     let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
@@ -380,12 +380,15 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
       res.json(result);
     }
   } catch (error) {
-    let msg = `Error in /slack/sendMessageToPeople: ${ error }`;
+    let msg = `Error in /slack/messagePeople: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
 });
 
+/**
+ * Presents a set of strategy options to a person which they can choose to have the system track.
+ */
 slackRouter.post("/presentOptionsToPerson", async (req, res) => {
   try {
     // TODO: check if any params are not included
@@ -433,6 +436,20 @@ slackRouter.post("/presentOptionsToPerson", async (req, res) => {
       // return result of slack message
       res.json(result);
     }
+  } catch (error) {
+    let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
+ * Presents a summary to a person, given an list of objects to include.
+ * TODO: implement
+ */
+slackRouter.post("/presentSummaryToPerson", async (req, res) => {
+  try {
+      res.json({});
   } catch (error) {
     let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
     console.error(msg)
