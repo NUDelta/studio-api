@@ -4,6 +4,7 @@
 
 import { Project } from "../../models/project/project.js";
 import { getSprintLogForProjectName } from "../tools/sprints/sprintManager.js";
+import { Person } from "../../models/people/person.js";
 
 /**
  * Fetches all projects and their data.
@@ -37,7 +38,6 @@ export const fetchAllProjects = async (shouldPopulateTools= false) => {
 
 /**
  * Fetches a single project by project name.
- *
  * @param projName string project name to fetch.
  * @param shouldPopulateTools optional boolean for if tools should be populated (e.g., sprint log).
  * @returns {Promise} promise that if resolved, returns a project. if rejected, error
@@ -70,6 +70,47 @@ export const fetchProjectByName = async (projName, shouldPopulateTools= false) =
     return error;
   }
 };
+
+/**
+ * Fetches a single project for a specified person.
+ * @param personName string person name to fetch project for.
+ * @param shouldPopulateTools optional boolean for if tools should be populated (e.g., sprint log).
+ * @returns {Promise} promise that if resolved, returns a project. if rejected, error
+ */
+export const fetchProjectForPerson = async (personName, shouldPopulateTools= false) => {
+  try {
+    // get id for person
+    let relevantPerson = await Person.findOne({ name: personName }).exec();
+    if (relevantPerson === null) {
+      throw new Error(`person not found for ${ personName }`);
+    }
+
+    // find project where relevantPerson is a student on the project
+    let relevantProj = await Project.findOne({
+      students: relevantPerson._id
+    })
+      .populate('students')
+      .populate('sig_head')
+      .populate('faculty_mentor')
+      .lean();
+
+    // check if no project was found
+    if (relevantProj === null) {
+      return {};
+    }
+
+    // populate tool data, if specified
+    if (shouldPopulateTools) {
+      return await populateProjectTools(relevantProj);
+    }
+
+    // otherwise, return all projects with links to tools
+    return relevantProj;
+  } catch (error) {
+    console.error(`Error in fetchProjectForPerson: ${ error }`);
+    return error;
+  }
+}
 
 /**
  * Populates data from tools linked in the project model.

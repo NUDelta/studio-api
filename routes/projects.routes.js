@@ -1,5 +1,9 @@
 import { Router } from "express";
-import { fetchAllProjects, fetchProjectByName } from "../controllers/projects/fetch.js";
+import {
+  fetchAllProjects,
+  fetchProjectByName,
+  fetchProjectForPerson
+} from "../controllers/projects/fetch.js";
 import bodyParser from "body-parser";
 
 import { Project } from "../models/project/project.js";
@@ -30,7 +34,7 @@ projectRouter.get("/", async (req, res) => {
 /**
  * Fetch a project given a project name.
  */
-projectRouter.get("/projectByName", async (req, res) => {
+projectRouter.get("/byName", async (req, res) => {
   try {
     // fetch the project's name from the query that we want the sprint log for, and check if valid
     let projName = req.query.projectName;
@@ -54,7 +58,7 @@ projectRouter.get("/projectByName", async (req, res) => {
 /**
  * Fetch a project given a student on the project.
  */
-projectRouter.get("/fetchProjectForPerson", async (req, res) => {
+projectRouter.get("/forPerson", async (req, res) => {
   try {
     // fetch the person's name from the query that we want the sprint log for, and check if valid
     let personName = req.query.personName;
@@ -62,30 +66,12 @@ projectRouter.get("/fetchProjectForPerson", async (req, res) => {
       throw new Error("personName parameter not specified.");
     }
 
-    // get all projects
-    let allProjs = await Project.find()
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
+    // get whether tools should be populated
+    let shouldPopulateTools = (req.query.populateTools ?? "").trim().toLowerCase() === "true";
 
-    // select the project that the student is on
-    // TODO: students could potentially be on multiple projects
-    let selectedProj = allProjs.filter(
-      (proj) => {
-        return proj.students.some((student) => {
-          return student.name === personName;
-        });
-      }
-    );
-
-    // return json of project or an empty object
-    if (selectedProj.length > 0) {
-      res.json(selectedProj[0]);
-    } else {
-      res.json({});
-    }
+    res.json(await fetchProjectForPerson(personName, shouldPopulateTools));
   } catch (error) {
-    let msg = `Error in projects/fetchProjectForPerson: ${ error }`;
+    let msg = `Error in projects/forPerson: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
