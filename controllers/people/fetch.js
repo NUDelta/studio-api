@@ -49,7 +49,7 @@ export const fetchFaculty = async () => {
 export const fetchPhdStudents = async () => {
   try {
     return await PhdStudent.find()
-      .populate("faculty_mentor")
+      .populate("sig_head")
       .lean();
   } catch (error) {
     console.error(`Error in fetchAllPeople: ${ error }`);
@@ -96,9 +96,8 @@ export const fetchPersonByName = async (personName) => {
       case "Faculty":
         return relevantPerson;
       case "NonPhdStudent":
-        return relevantPerson.populate("sig_head");
       case "PhdStudent":
-        return relevantPerson.populate("faculty_mentor");
+        return relevantPerson.populate("sig_head");
     }
   } catch (error) {
     console.error(`Error in getPersonByName: ${ error }`);

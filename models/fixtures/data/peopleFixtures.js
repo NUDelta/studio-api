@@ -20,7 +20,7 @@ export const phdStudentData = [
     slack_id: "U0E33DF5F",
     sig_lead: "Agile Research Studios",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Gobi Dasu",
@@ -28,7 +28,7 @@ export const phdStudentData = [
     slack_id: "UCCCTJGG4",
     sig_lead: "Readily Available Learning Experiences",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Ryan Louie",
@@ -36,7 +36,7 @@ export const phdStudentData = [
     slack_id: "U6YKFU5UH",
     sig_lead: "Collective Experiences",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Kapil Garg",
@@ -44,7 +44,7 @@ export const phdStudentData = [
     slack_id: (process.env.NODE_ENV === "development") ? "U033BDY8A1E" : "U0G17CVCZ",
     sig_lead: "Networked Orchestration Technologies",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Harrison Kwik",
@@ -52,7 +52,7 @@ export const phdStudentData = [
     slack_id: "UHQQKMFSM",
     sig_lead: "Contextually-Aware Metacognitive Practice",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   }
 ];
 
