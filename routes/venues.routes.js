@@ -1,18 +1,19 @@
 import { Router } from "express";
-
-import { SigMeeting } from "../models/venues/sigMeeting.js";
-import { Project } from "../models/project/project.js";
-import { Sprint } from "../models/processes/sprints.js";
-import { DateTime, Info } from "luxon";
 import {
-  fetchAllVenues, fetchOfficeHours,
+  fetchAllVenues,
+  fetchOfficeHours,
   fetchSigMeetings,
-  fetchStudioMeetings, fetchVenuesForPerson, fetchVenuesForProject, fetchVenuesForSig
+  fetchStudioMeetings,
+  fetchVenuesForPerson,
+  fetchVenuesForProject,
+  fetchVenuesForSig,
+  firstInstanceOfVenue, lastInstanceOfVenue
 } from "../controllers/venues/fetch.js";
 
 export const venueRouter = new Router();
 
 // TODO: maybe include ability to ask for nextInstance of each venue
+// TODO: implement a generic venue route that returns whatever venue is asked for
 
 /**
  * Fetches all venues.
@@ -124,199 +125,44 @@ venueRouter.get("/forSig", async (req, res) => {
   }
 });
 
-
 /**
- * Fetches the start and end time of the first SIG meeting (the start of Sprint 1) for a project.
- * TODO: I don't think this is quite right
- * TODO: this should be a separate controller
- * TODO: if not given a project input, return the first SIG meeting for each SIG
+ * Fetches the start and end time of the first instance of a venue.
+ * For Studio meetings, this is the week of Sprint 0. For all other venues, Sprint 1.
  */
-venueRouter.get("/sig/firstSig", async (req, res) => {
+venueRouter.get("/firstInstance", async (req, res) => {
   try {
-    // parse inputs
-    let projName = (req.query.projName ?? "").trim();
-
-    // fetch project info
-    let relevantProject = await Project.findOne( { name: projName })
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
-    if (relevantProject === null) {
-      throw new Error(`no project found for ${ projName }`);
+    // check if venue name was passed in
+    let venueName = req.query.venueName;
+    if (venueName === undefined) {
+      throw new Error("venueName parameter not specified.");
     }
 
-    // get SIG info for project name
-    let sigName = relevantProject.sig_name;
-    let relevantSigVenueInfo = await SigMeeting.findOne({
-      name: {
-        "$regex": sigName,
-        "$options": "i"
-      }
-    });
-    if (relevantSigVenueInfo === null) {
-      throw new Error(`no SIG found for ${ projName }`);
-    }
-
-    // get processes to figure out when last sprint starts
-    let relevantProcess = await Sprint.findOne({
-      name: "Sprint 1"
-    });
-    if (relevantProcess === null) {
-      throw new Error(`no sprint info found for Sprint 1`);
-    }
-
-    // compute day for venue by first getting the start of the week
-    let weekOfFirstSig = DateTime.fromJSDate(relevantProcess.start_day);
-
-    // shift to day of week based on whn SIG is
-    let dayOfFirstSig = weekOfFirstSig.set({
-      weekday: Info.weekdays().indexOf(relevantSigVenueInfo.day_of_week) + 1}
-    );
-
-    // add timezone info
-    let venueTz = relevantSigVenueInfo.timezone;
-    let timezoneShiftedSigDay = dayOfFirstSig.setZone(venueTz);
-
-    // create dates with start and end time
-    let [startHours, startMinutes, startSeconds] = relevantSigVenueInfo.start_time.split(":");
-    let firstSigStartTime = timezoneShiftedSigDay.set({
-      hour: startHours,
-      minute: startMinutes,
-      second: startSeconds
-    });
-
-    let [endHours, endMinutes, endSeconds] = relevantSigVenueInfo.end_time.split(":");
-    let firstSigEndTime = timezoneShiftedSigDay.set({
-      hour: endHours,
-      minute: endMinutes,
-      second: endSeconds
-    });
-
-    // return as UTC timestamps
-    res.json({
-      sig_name: sigName,
-      start_time: firstSigStartTime.toUTC().toJSDate(),
-      end_time: firstSigEndTime.toUTC().toJSDate()
-    });
+    res.json(await firstInstanceOfVenue(venueName));
   } catch (error) {
-    let msg = `Error in /venues/firstSig: ${ error }`;
+    let msg = `Error in /venues/firstInstance: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
 });
 
 /**
- * Fetches the start and end time of the last SIG meeting (the start of Sprint 5) for a project.
- * TODO: this breaks for fall quarter where sprint 5 is 2 weeks and there is a SIG meeting in between.
+ * Fetches the start and end time of the last instance of a venue.
+ * For all venues, this is the week of Sprint 5.
+ * TODO: This will probably break for Fall when Sprint 5 is 2 weeks.
  */
-venueRouter.get("/sig/lastSig", async (req, res) => {
+venueRouter.get("/lastInstance", async (req, res) => {
   try {
-    // parse inputs
-    let projName = (req.query.projName ?? "").trim();
-
-    // fetch project info
-    let relevantProject = await Project.findOne( { name: projName })
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
-    if (relevantProject === null) {
-      throw new Error(`no project found for ${ projName }`);
+    // check if venue name was passed in
+    let venueName = req.query.venueName;
+    if (venueName === undefined) {
+      throw new Error("venueName parameter not specified.");
     }
 
-    // get SIG info for project name
-    let sigName = relevantProject.sig_name;
-    let relevantSigVenueInfo = await SigMeeting.findOne({
-      name: {
-        "$regex": sigName,
-        "$options": "i"
-      }
-    });
-    if (relevantSigVenueInfo === null) {
-      throw new Error(`no SIG found for ${ projName }`);
-    }
-
-    // get processes to figure out when last sprint starts
-    let relevantProcess = await Sprint.findOne({
-      name: "Sprint 5"
-    });
-    if (relevantProcess === null) {
-      throw new Error(`no sprint info found for Sprint 5`);
-    }
-
-    // compute day for venue by first getting the start of the week
-    let weekOfLastSig = DateTime.fromJSDate(relevantProcess.start_day);
-
-    // shift to day of week based on whn SIG is
-    let dayOfLastSig = weekOfLastSig.set({
-      weekday: Info.weekdays().indexOf(relevantSigVenueInfo.day_of_week) + 1}
-    );
-
-    // add timezone info
-    let venueTz = relevantSigVenueInfo.timezone;
-    let timezoneShiftedSigDay = dayOfLastSig.setZone(venueTz);
-
-    // create dates with start and end time
-    let [startHours, startMinutes, startSeconds] = relevantSigVenueInfo.start_time.split(":");
-    let lastSigStartTime = timezoneShiftedSigDay.set({
-      hour: startHours,
-      minute: startMinutes,
-      second: startSeconds
-    });
-
-    let [endHours, endMinutes, endSeconds] = relevantSigVenueInfo.end_time.split(":");
-    let lastSigEndTime = timezoneShiftedSigDay.set({
-      hour: endHours,
-      minute: endMinutes,
-      second: endSeconds
-    });
-
-    // return as UTC timestamps
-    res.json({
-      sig_name: sigName,
-      start_time: lastSigStartTime.toUTC().toJSDate(),
-      end_time: lastSigEndTime.toUTC().toJSDate()
-    });
+    res.json(await lastInstanceOfVenue(venueName));
   } catch (error) {
-    let msg = `Error in /venues/lastSig: ${ error }`;
+    let msg = `Error in /venues/lastInstance: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
 });
 
-// TODO: implement a generic venue route that returns whatever venue is asked for
-
-/**
- * Converts a string day of the week to an integer index.
- * TODO: probably not needed if using Luxon.
- *
- * @param dayString
- * @return {number}
- */
-const dayOfWeekToIndex = function (dayString) {
-  let dayIndex;
-  switch (dayString) {
-    case "Sunday":
-      dayIndex = 0;
-      break;
-    case "Monday":
-      dayIndex = 1;
-      break;
-    case "Tuesday":
-      dayIndex = 2;
-      break;
-    case "Wednesday":
-      dayIndex = 3;
-      break;
-    case "Thursday":
-      dayIndex = 4;
-      break;
-    case "Friday":
-      dayIndex = 5;
-      break;
-    case "Saturday":
-      dayIndex = 6;
-      break;
-  }
-
-  return dayIndex;
-};

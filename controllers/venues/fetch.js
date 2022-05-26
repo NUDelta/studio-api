@@ -2,6 +2,7 @@
  * This file is responsible for fetching venues from the database.
  */
 
+import { Venue } from "../../models/venues/venue.js";
 import { SigMeeting } from "../../models/venues/sigMeeting.js";
 import { StudioMeeting } from "../../models/venues/studioMeeting.js";
 import { OfficeHours } from "../../models/venues/officeHours.js";
@@ -9,6 +10,8 @@ import { OfficeHours } from "../../models/venues/officeHours.js";
 import { Person } from "../../models/people/person.js";
 import { Project } from "../../models/project/project.js";
 import { SigStructure } from "../../models/social-structures/sig.js";
+
+import { getFirstInstanceOfVenue, getLastInstanceOfVenue } from "./computeSpecificInstance.js";
 
 /**
  * Fetches all venues.
@@ -165,6 +168,48 @@ export const fetchVenuesForSig = async (sigName) => {
     ])).flat();
   } catch (error) {
     console.error(`Error in fetchVenuesForSig: ${ error }`);
+    return error;
+  }
+};
+
+/**
+ * Fetches the first instance of a venue.
+ * @param venueName string name of venue to get the first instance of.
+ * @returns {Promise<Date|*>} promise that if resolved, returns the date of first instance of venue.
+ */
+export const firstInstanceOfVenue = async (venueName) => {
+  try {
+    // get venue by name
+    let relevantVenue = await Venue.findOne({ name: venueName });
+    if (relevantVenue === null) {
+      throw new Error(`no project found for ${ venueName }`);
+    }
+
+    // compute and return first instance of the venue
+    return await getFirstInstanceOfVenue(relevantVenue);
+  } catch (error) {
+    console.error(`Error in firstInstanceOfVenue: ${ error }`);
+    return error;
+  }
+};
+
+/**
+ * Fetches the last instance of a venue.
+ * @param venueName string name of venue to get the last instance of.
+ * @returns {Promise<Date|*>} promise that if resolved, returns the date of last instance of venue.
+ */
+export const lastInstanceOfVenue = async (venueName) => {
+  try {
+    // get venue by name
+    let relevantVenue = await Venue.findOne({ name: venueName });
+    if (relevantVenue === null) {
+      throw new Error(`no project found for ${ venueName }`);
+    }
+
+    // compute and return first instance of the venue
+    return await getLastInstanceOfVenue(relevantVenue);
+  } catch (error) {
+    console.error(`Error in firstInstanceOfVenue: ${ error }`);
     return error;
   }
 };
