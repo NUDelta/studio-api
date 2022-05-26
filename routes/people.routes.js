@@ -66,7 +66,7 @@ peopleRouter.get('/nonphdstudents', async (req, res) => {
 /**
  * Fetch a specific person, by name.
  */
-peopleRouter.get('/fetchByName', async (req, res) => {
+peopleRouter.get('/byName', async (req, res) => {
   try {
     // fetch the person's name from the query that we want their info for
     let personName = req.query.personName;
@@ -77,7 +77,7 @@ peopleRouter.get('/fetchByName', async (req, res) => {
     // fetch and return person
     res.json(await fetchPersonByName(personName));
   } catch (error) {
-    let msg = `Error in /people/fetchByName: ${ error }`;
+    let msg = `Error in /people/byName: ${ error }`;
     console.error(msg)
     res.send(msg);
   }
