@@ -77,7 +77,7 @@ const getSprintLogForProject = async (project) => {
     // get sprint url from project and last edit timestamp
     let sprintUrl = project["sprint_log"];
     let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
-    console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
+    // console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
 
     // check cache first for the sprint log
     let cachedSprintLog = await getCachedSprintLog(project);
@@ -88,7 +88,7 @@ const getSprintLogForProject = async (project) => {
 
       // check if version in cache is most recent; if not, remove instance
       if (lastEditDate <= cacheDate) {
-        console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
+        // console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
 
         // add current sprint
         cacheData["current_sprint"] = await getDataForCurrentSprint(cacheData);
