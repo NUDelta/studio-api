@@ -1,85 +1,106 @@
+import { getAllMembersForSig } from "./utils.js";
+import { facultyData, phdStudentData, nonPhdStudentData } from "./peopleFixtures.js";
+import { projectData } from "./projectFixtures.js";
+
 export const studioData = [
   {
-    name: "Studio meeting",
+    name: "Studio Meeting",
     description: "Weekly studio meeting with all members of the community.",
     day_of_week: "Friday",
     start_time: "13:00:00",
     end_time: "16:00:00",
     timezone: "America/Chicago",
-    slack_channel: "water-cooler"
+    attendees: [
+      facultyData.map(person => { return person.name }),
+      phdStudentData.map(person => { return person.name }),
+      nonPhdStudentData.map(person => { return person.name }),
+    ].flat(),
   }
 ];
 
-export const sigData = [
+export const sigMeetingData = [
   {
-    name: "Agile Research Studios SIG",
+    name: "Agile Research Studios SIG Meeting",
     description: "Weekly SIG meeting for ARS SIG",
     day_of_week: "Monday",
     start_time: "13:00:00",
     end_time: "14:00:00",
     timezone: "America/Chicago",
-    sig_head: "Leesha Maliakal Shah",
-    sig_members: ["Molly Pribble"],
-    slack_channel: "sig-ars"
+    attendees: getAllMembersForSig(projectData, "Agile Research Studios"),
+    projects: [
+      "MindYoga"
+    ],
   },
   {
-    name: "Networked Orchestration Technologies SIG",
+    name: "Networked Orchestration Technologies SIG Meeting",
     description: "Weekly SIG meeting for NOT SIG",
     day_of_week: "Monday",
     start_time: "15:00:00",
     end_time: "16:00:00",
     timezone: "America/Chicago",
-    sig_head: "Kapil Garg",
-    sig_members: ["Jason Friedman", "Hang Yin", "Sydney Smith"],
-    slack_channel: "sig-not"
+    attendees: getAllMembersForSig(projectData, "Networked Orchestration Technologies"),
+    projects: [
+      "Orchestration Scripting Environments",
+      "Interactive SOAP Notes"
+    ],
   },
   {
-    name: "Collective Experiences SIG",
+    name: "Collective Experiences SIG Meeting",
     description: "Weekly SIG meeting for CE SIG",
     day_of_week: "Monday",
     start_time: "16:00:00",
     end_time: "17:00:00",
     timezone: "America/Chicago",
-    sig_head: "Ryan Louie",
-    sig_members: ["Parveen Dhanoa", "Richard Lam", "Yvan Chu", "Cindy Hu"],
-    slack_channel: "sig-collective-exp"
+    attendees: getAllMembersForSig(projectData, "Collective Experiences"),
+    projects: [
+      "Collective Narrative",
+      "CE for Relationship Development"
+    ],
   },
   {
-    name: "Readily Available Learning Experiences SIG",
+    name: "Readily Available Learning Experiences SIG Meeting",
     description: "Weekly SIG meeting for RALE SIG",
     day_of_week: "Thursday",
     start_time: "13:00:00",
     end_time: "14:00:00",
     timezone: "America/Chicago",
-    sig_head: "Gobi Dasu",
-    sig_members: ["Alexandra Andreiu", "Jonathan Liu"],
-    slack_channel: "sig-rale"
+    attendees: getAllMembersForSig(projectData, "Readily Available Learning Experiences"),
+    projects: [
+      "Knowledge Maps",
+      "Scaffolded Exercises"
+    ],
   },
   {
-    name: "Context-Aware Metacognitive Practice SIG",
+    name: "Contextually-Aware Metacognitive Practice SIG Meeting",
     description: "Weekly SIG meeting for CAMP SIG",
     day_of_week: "Tuesday",
     start_time: "16:00:00",
     end_time: "17:00:00",
     timezone: "America/Chicago",
-    sig_head: "Harrison Kwik",
-    sig_members: ["Lauren Bichelmeir", "Amy Guo"],
-    slack_channel: "sig-camp"
+    attendees: getAllMembersForSig(projectData, "Contextually-Aware Metacognitive Practice"),
+    projects: [
+      "Cardinal",
+      "Path"
+    ],
   },
   {
-    name: "Summer BBQ SIG",
+    name: "Summer BBQ SIG Meeting",
     description: "Weekly SIG meeting for BBQ SIG",
     day_of_week: "Friday",
     start_time: "16:00:00",
     end_time: "17:00:00",
     timezone: "America/Chicago",
-    sig_head: "Haoqi Zhang",
-    sig_members: ["Leesha Maliakal Shah", "Gobi Dasu", "Ryan Louie", "Kapil Garg", "Harrison Kwik"],
-    slack_channel: "sig-summer-bbq"
+    attendees: getAllMembersForSig(projectData, "Summer BBQ"),
+    projects: [
+      "Compass",
+      "Gobi Proj",
+      "Ryan Proj",
+      "Kapil Proj",
+      "Harrison Proj"
+    ],
   }
 ];
 
-// TODO: be able to encode different office hours for each project
 // TODO: be able to encode ad-hoc office hours
 export const officeHoursData = [
   {
@@ -88,7 +109,10 @@ export const officeHoursData = [
     day_of_week: "Wednesday",
     start_time: "13:00:00",
     end_time: "14:00:00",
-    timezone: "America/Chicago"
+    timezone: "America/Chicago",
+    projects: [
+      "MindYoga"
+    ]
   },
   {
     name: "Networked Orchestration Technologies Office Hours",
@@ -96,22 +120,44 @@ export const officeHoursData = [
     day_of_week: "Wednesday",
     start_time: "15:00:00",
     end_time: "16:00:00",
-    timezone: "America/Chicago"
+    timezone: "America/Chicago",
+    projects: [
+      "Orchestration Scripting Environments",
+      "Interactive SOAP Notes"
+    ]
   },
   {
-    name: "Collective Experiences SIG",
-    description: "Weekly office hours for CE SIG",
+    name: "Collective Experiences SIG Office Hours for Collective Narrative",
+    description: "Weekly office hours for CE SIG's Collective Narrative project",
     day_of_week: "Wednesday",
     start_time: "09:00:00",
     end_time: "10:00:00",
-    timezone: "America/Chicago"
+    timezone: "America/Chicago",
+    projects: [
+      "Collective Narrative"
+    ]
   },
   {
-    name: "Context-Aware Metacognitive Practice SIG",
+    name: "Collective Experiences SIG Office Hours for Collective Experiences Relationship Dev",
+    description: "Weekly office hours for CE SIG's Collective Experiences Relationship Dev project",
+    day_of_week: "Thursday",
+    start_time: "14:00:00",
+    end_time: "15:00:00",
+    timezone: "America/Chicago",
+    projects: [
+      "CE for Relationship Development"
+    ]
+  },
+  {
+    name: "Contextually-Aware Metacognitive Practice SIG",
     description: "Weekly office hours for CAMP SIG",
     day_of_week: "Thursday",
     start_time: "11:00:00",
     end_time: "13:30:00",
-    timezone: "America/Chicago"
+    timezone: "America/Chicago",
+    projects: [
+      "Cardinal",
+      "Path"
+    ]
   }
 ];

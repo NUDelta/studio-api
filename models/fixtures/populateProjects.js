@@ -29,6 +29,8 @@ const createProjectDocuments = async () => {
     // get faculty mentor
     let facultyMentor = await Faculty.findOne({ name: project.faculty_mentor });
 
+    // TODO: maybe replace with create and insertMany
+    // https://stackoverflow.com/questions/38290684/mongoose-save-vs-insert-vs-create#:~:text=save()%20is%20an%20instance,object%20as%20a%20first%20parameter.
     // create project document
     let currProjectDocument = new Project({
       name: project.name,

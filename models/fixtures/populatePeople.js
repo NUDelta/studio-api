@@ -38,8 +38,8 @@ const createPhdStudentDocuments = async () => {
 
   // loop over each document and save
   for (const phdStudent of phdStudentData) {
-    // get faculty mentor
-    let facultyMentor = await Faculty.findOne({ name: phdStudent.faculty_mentor });
+    // get sig head
+    let sigHead = await Faculty.findOne({ name: phdStudent.sig_head });
 
     // create phd student document
     let currPhdStudentDocument = new PhdStudent({
@@ -48,7 +48,7 @@ const createPhdStudentDocuments = async () => {
       slack_id: phdStudent.slack_id,
       sig_lead: phdStudent.sig_lead,
       sig_member: phdStudent.sig_member,
-      faculty_mentor: facultyMentor._id
+      sig_head: sigHead._id
     });
     phdStudentDocumentPromises.push(currPhdStudentDocument.save());
   }
@@ -66,7 +66,7 @@ const createNonPhdStudentDocuments = async () => {
 
   // loop over each document and save
   for (const nonPhdStudent of nonPhdStudentData) {
-    // get faculty mentor
+    // get sig head
     let sigHead = await PhdStudent.findOne({ name: nonPhdStudent.sig_head });
 
     // create non-phd student document

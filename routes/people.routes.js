@@ -1,58 +1,93 @@
 import { Router } from "express";
-import bodyParser from "body-parser";
 
 import { Person } from "../models/people/person.js";
-import { Faculty } from "../models/people/faculty.js";
-import { PhdStudent } from "../models/people/phdstudent.js";
-import { NonPhdStudent } from "../models/people/nonphdstudent.js";
+import {
+  fetchAllPeople,
+  fetchFaculty,
+  fetchNonPhdStudents,
+  fetchPhdStudents, fetchPersonByName
+} from "../controllers/people/fetch.js";
+import { getSprintLogForPerson } from "../controllers/tools/sprints/sprintManager.js";
 
-import { getSprintLogForPerson } from "../controllers/sprints/sprintManager.js";
-import { Project } from "../models/project/project.js";
+export const peopleRouter = new Router();
 
-export const userRouter = new Router();
-
-// fetch all users
-userRouter.get("/", async (req, res) => {
+/**
+ * Fetch all people.
+ */
+peopleRouter.get("/", async (req, res) => {
   try {
-    let allPeople = await Person.find();
-    res.json(allPeople);
+    res.json(await fetchAllPeople());
   } catch (error) {
-    res.send(`Error when fetching all users: ${ error }`);
+    let msg = `Error in /people/: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
-// fetch faculty mentors
-userRouter.get('/faculty', async (req, res) => {
+/**
+ * Fetch all people who are Faculty.
+ */
+peopleRouter.get('/faculty', async (req, res) => {
   try {
-    let allFaculty = await Faculty.find();
-    res.json(allFaculty);
+    res.json(await fetchFaculty());
   } catch (error) {
-    res.send(`Error when fetching faculty members: ${ error }`);
+    let msg = `Error in /people/faculty: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
-// fetch phd students
-userRouter.get('/phdstudents', async (req, res) => {
+/**
+ * Fetch all people who are Ph.D. Students.
+ */
+peopleRouter.get('/phdstudents', async (req, res) => {
   try {
-    let allPhdStudents = await PhdStudent.find().populate("faculty_mentor");
-    res.json(allPhdStudents);
+    res.json(await fetchPhdStudents());
   } catch (error) {
-    res.send(`Error when fetching PhD students: ${ error }`);
+    let msg = `Error in /people/phdstudents: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
-// fetch non-phd students
-userRouter.get('/nonphdstudents', async (req, res) => {
+/**
+ * Fetch all people who are Non-Ph.D. Students (i.e., Undergrad and Masters students).
+ */
+peopleRouter.get('/nonphdstudents', async (req, res) => {
   try {
-    let allNonPhdStudents = await NonPhdStudent.find().populate("sig_head");
-    res.json(allNonPhdStudents);
+    res.json(await fetchNonPhdStudents());
   } catch (error) {
-    res.send(`Error when fetching non-PhD students: ${ error }`);
+    let msg = `Error in /people/nonphdstudents: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
-// fetch sprint log for a person
-userRouter.get("/fetchSprintLogForPerson", async (req, res) => {
+/**
+ * Fetch a specific person, by name.
+ */
+peopleRouter.get('/byName', async (req, res) => {
+  try {
+    // fetch the person's name from the query that we want their info for
+    let personName = req.query.personName;
+    if (personName === undefined) {
+      throw new Error("personName parameter not specified.");
+    }
+
+    // fetch and return person
+    res.json(await fetchPersonByName(personName));
+  } catch (error) {
+    let msg = `Error in /people/byName: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+// TODO: might not be needed
+/**
+ * Get Sprint Log for a person.
+ */
+peopleRouter.get("/fetchSprintLogForPerson", async (req, res) => {
   try {
     // fetch the person's name from the query that we want the sprint log for, and check if valid
     let personName = req.query.personName;
@@ -66,12 +101,17 @@ userRouter.get("/fetchSprintLogForPerson", async (req, res) => {
     // return json of sprint log
     res.json(sprintLogForPerson);
   } catch (error) {
-    console.error(error)
-    res.send(`Error when fetching sprint log for person: ${ error }`);
+    let msg = `Error in /people/fetchSprintLogForPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
-userRouter.get("/slackIdForPerson", async (req, res) => {
+// TODO: might not be needed
+/**
+ * Get Slack ID for a person.
+ */
+peopleRouter.get("/slackIdForPerson", async (req, res) => {
   try {
     // fetch the person's name from the query that we want the slack channel for
     let personName = req.query.personName;
@@ -88,6 +128,8 @@ userRouter.get("/slackIdForPerson", async (req, res) => {
     // return json of slack channel for project
     res.json(relevantPerson["slack_id"]);
   } catch (error) {
-    res.send(`Error when fetching slack Id for person: ${ error }`);
+    let msg = `Error in /people/slackIdForPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });

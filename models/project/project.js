@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// TODO: add slack channel for project
 export const Project = mongoose.model('Project',
   new mongoose.Schema({
         name: { type: String, required: true },

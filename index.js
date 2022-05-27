@@ -8,7 +8,8 @@ import mongoose from 'mongoose';
 import slackResponses from "./imports/slack/cannedResponses.js"
 
 // routes
-import { userRouter } from "./routes/people.routes.js";
+import { peopleRouter } from "./routes/people.routes.js";
+import { socialStructureRouter } from "./routes/socialStructures.routes.js";
 import { venueRouter } from "./routes/venues.routes.js";
 import { projectRouter } from "./routes/projects.routes.js";
 import { sprintRouter } from "./routes/sprints.routes.js";
@@ -16,11 +17,10 @@ import { slackRouter } from "./routes/slack.routes.js";
 import { dataRouter } from "./routes/data.routes.js";
 
 // fixtures for development
-import createPeopleFixtures, { isPeopleEmpty } from "./models/fixtures/populatePeople.js";
-import createProcessFixtures, { isProcessEmpty } from "./models/fixtures/populateProcesses.js";
-import createProjectFixtures, { isProjectEmpty } from "./models/fixtures/populateProjects.js";
-import createVenueFixtures, { isVenueEmpty } from "./models/fixtures/populateVenues.js";
-import { prepopulateSprintCache } from "./controllers/sprints/sprintManager.js";
+import {
+  allDatabasesAreEmpty,
+  populateData
+} from "./controllers/databaseManagement/refreshData.js";
 
 /*
  Get environment variables.
@@ -48,6 +48,53 @@ slackResponses.map((responseObject) => {
   app.message(responseObject.cue, responseObject.response);
 });
 
+// TODO: have message update the same text so multiple messages aren't coming in
+// add handlers for different selection types
+app.action("single-select", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_option.text.text }`
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+app.action("multi-select", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_options.map(option => {
+          return `${ option.text.text } \n`
+        }).join("")}`
+      )
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+app.action("checkbox", async ({ body, client, ack, say, logger }) => {
+    await ack();
+    try {
+      // console.log(JSON.stringify(body, null, 2))
+      await say("Ok! I will orchestrate the following strategies: \n" +
+        `${ body.actions[0].selected_options.map(option => {
+          return `${ option.text.text } \n`
+        }).join("")}`
+      );
+    } catch (error) {
+      logger.error(error);
+    }
+  }
+);
+
+
+
 /*
  Setup routes
  */
@@ -58,7 +105,8 @@ app.receiver.app.use(express.urlencoded({
   extended: true
 }));
 
-app.receiver.app.use('/users', userRouter);
+app.receiver.app.use('/people', peopleRouter);
+app.receiver.app.use('/socialStructures', socialStructureRouter);
 app.receiver.app.use('/venues', venueRouter);
 app.receiver.app.use('/projects', projectRouter);
 app.receiver.app.use('/sprints', sprintRouter);
@@ -91,7 +139,6 @@ const mongooseOptions = {
 }
 
 // attempt to connect to mongodb, and detect any connection errors
-// TODO: maybe have a case where for production you check if the database is empty and (if so) populate it.
 try {
   await mongoose.connect(MONGODB_URI, mongooseOptions);
   console.log(`Connected to MongoDB: ${ MONGODB_URI } with options ${ mongooseOptions }`);
@@ -102,14 +149,9 @@ try {
     if (SHOULD_REFRESH_DATA) {
       console.log("Development -- Local databases are empty. Populating.");
 
-      // TODO: populate DB with fixtures here
-      await createPeopleFixtures();
-      await createProcessFixtures();
-      await createProjectFixtures();
-      await createVenueFixtures();
-
-      // populate sprint cache on startup
-      await prepopulateSprintCache();
+      // TODO: populate database fixtures here
+      // populate all data synchronously
+      await populateData();
     } else {
       console.log("Development -- Local databases are populated. Not re-populating.");
     }
@@ -117,18 +159,11 @@ try {
 
   if (NODE_ENV === "production") {
     // check if collections are empty first so that data isn't overwritten
-    if (await isPeopleEmpty() && await isProcessEmpty() &&
-      await isProjectEmpty() && await isVenueEmpty()) {
+    if (await allDatabasesAreEmpty()) {
       console.log("Production -- Databases are empty. Populating.");
 
-      // populate them if they are
-      await createPeopleFixtures();
-      await createProcessFixtures();
-      await createProjectFixtures();
-      await createVenueFixtures();
-
-      // populate sprint cache on startup
-      await prepopulateSprintCache();
+      // populate all data synchronously
+      await populateData();
     } else {
       console.log("Production -- Databases are populated. Not re-populating.");
     }

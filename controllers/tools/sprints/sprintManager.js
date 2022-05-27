@@ -1,10 +1,11 @@
-import { Person } from "../../models/people/person.js";
-import { Project } from "../../models/project/project.js";
-import { SprintCache } from "../../models/cache/sprintCache.js";
+import { Person } from "../../../models/people/person.js";
+import { Project } from "../../../models/project/project.js";
+import { SprintCache } from "../../../models/cache/sprintCache.js";
 
 import { google } from "googleapis";
-import { googleDriveAuth } from "../../imports/utils/googleAuth.js"
+import { googleDriveAuth } from "../../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
+import { fetchCurrentSprint } from "../../processes/sprints/fetch.js";
 
 /**
  * Fetches a sprint log for a project, given a person's name.
@@ -57,48 +58,11 @@ export const prepopulateSprintCache = async () => {
   // get all projects
   let allProjects = await Project.find({}).exec();
 
-  // create an array of promises to push data to cache
-  let cacheUpdatePromises = [];
-  for (let project of allProjects) {
-    // TODO: this should all be in a separate function that is async
-    // get current sprint log url
-    let sprintUrl = project["sprint_log"];
-    let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
-    console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
-
-    // check cache first for the sprint log
-    let cachedSprintLog = await getCachedSprintLog(project);
-    if (cachedSprintLog !== undefined) {
-      // check if cached sprint log is still relevant
-      let cacheData = cachedSprintLog['data'];
-      let cacheDate = cachedSprintLog['last_modified'];
-
-      // check if version in cache is most recent; if not, remove instance
-      if (lastEditDate <= cacheDate) {
-        console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
-      }
-    }
-
-    // cache miss -- get parsed sprint log
-    console.log(`Sprint Cache MISS for project ${ project['name'] }`);
-    let parsedSprintLog = await new SprintLog(sprintUrl);
-
-    // if undefined, wait 60 seconds and try again
-    if (parsedSprintLog === undefined) {
-      console.log("Rate limit hit. Waiting 60 seconds before trying again...");
-      await new Promise(resolve => setTimeout(resolve, 60 * 1000));
-      console.log("Attempting to get sprint log again....");
-      parsedSprintLog = await new SprintLog(sprintUrl);
-    }
-
-    // add to cache
-    if (cachedSprintLog !== undefined) {
-      await updateCachedSprintLog(cachedSprintLog, parsedSprintLog, lastEditDate);
-    } else {
-      await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
-    }
-  }
-
+  // create an array of promises to execute
+  let cacheUpdatePromises = allProjects.map(project => {
+    return getSprintLogForProject(project);
+  });
+  await Promise.all(cacheUpdatePromises);
   console.log("Sprint log cache populated.");
 };
 
@@ -109,38 +73,63 @@ export const prepopulateSprintCache = async () => {
  * @return {Promise<*|*>}
  */
 const getSprintLogForProject = async (project) => {
-  // get sprint url from project and last edit timestamp
-  let sprintUrl = project['sprint_log'];
-  let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
-  console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
+  try {
+    // get sprint url from project and last edit timestamp
+    let sprintUrl = project["sprint_log"];
+    let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
+    // console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
 
-  // check cache first for the sprint log
-  let cachedSprintLog = await getCachedSprintLog(project);
-  if (cachedSprintLog !== undefined) {
-    // check if cached sprint log is still relevant
-    let cacheData = cachedSprintLog['data'];
-    let cacheDate = cachedSprintLog['last_modified'];
+    // check cache first for the sprint log
+    let cachedSprintLog = await getCachedSprintLog(project);
+    if (cachedSprintLog !== undefined) {
+      // check if cached sprint log is still relevant
+      let cacheData = cachedSprintLog['data'];
+      let cacheDate = cachedSprintLog['last_modified'];
 
-    // check if version in cache is most recent; if not, remove instance
-    if (lastEditDate <= cacheDate) {
-      console.log(`Sprint Cache HIT for project ${ project['name'] }`);
-      return cacheData;
+      // check if version in cache is most recent; if not, remove instance
+      if (lastEditDate <= cacheDate) {
+        // console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
+
+        // add current sprint
+        cacheData["current_sprint"] = await getDataForCurrentSprint(cacheData);
+        return cacheData;
+      }
     }
+
+    // cache miss -- get parsed sprint log
+    console.log(`Sprint Cache MISS for project ${ project['name'] }`);
+
+    // attempt to get sprint log, retrying up to 5 times with 60s in between
+    let parsedSprintLog = undefined;
+    let retryCount = 5;
+
+    while (parsedSprintLog === undefined && retryCount > 0) {
+      // attempt to fetch
+      parsedSprintLog = await new SprintLog(sprintUrl);
+
+      // if undefined, wait 60 seconds and try again
+      if (parsedSprintLog === undefined) {
+        console.log(`getSprintLog(${ project['name'] }) -- Rate limit hit. Waiting 60 seconds before trying again. Retries left: ${ retryCount }`);
+        await new Promise(resolve => setTimeout(resolve, 60 * 1000));
+        console.log(`getSprintLog(${ project['name'] }) -- Attempting to get sprint log again.`);
+        retryCount -= 1;
+      }
+    }
+
+    // add to cache
+    if (cachedSprintLog !== undefined) {
+      await updateCachedSprintLog(cachedSprintLog, parsedSprintLog, lastEditDate);
+    } else {
+      await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
+    }
+
+    // add current sprint, and return parsed sprint log if successful
+    parsedSprintLog["current_sprint"] = await getDataForCurrentSprint(parsedSprintLog);
+    return parsedSprintLog;
+  } catch (error) {
+    console.error(`Error in getSprintLogForProject: ${ error }`);
+    return error;
   }
-
-  // cache miss -- get parsed sprint log
-  console.log(`Sprint Cache MISS for project ${ project['name'] }`);
-  let parsedSprintLog = await new SprintLog(sprintUrl);
-
-  // add to cache
-  if (cachedSprintLog !== undefined) {
-    await updateCachedSprintLog(cachedSprintLog, parsedSprintLog, lastEditDate);
-  } else {
-    await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
-  }
-
-  // return parsed sprint log
-  return parsedSprintLog;
 };
 
 /*
@@ -205,13 +194,52 @@ const getSprintLogLastUpdate = async (fileUrl) => {
   // create a google drive instance
   let drive = google.drive('v3');
 
-  // TODO: no error checking here
   // get file information for a sprint log
-  let fileInfo = await drive.files.get({
-    auth: googleDriveAuth,
-    fileId: sprintLogFileId,
-    fields: "*"
-  });
+  try {
+    let fileInfo = await drive.files.get({
+      auth: googleDriveAuth,
+      fileId: sprintLogFileId,
+      fields: "*"
+    });
 
-  return new Date(fileInfo['data']['modifiedTime']);
+    return new Date(fileInfo['data']['modifiedTime']);
+  } catch (error) {
+    console.error(`Error in getSprintLogLastUpdate: ${ error }`);
+    return error;
+  }
+};
+
+
+/**
+ * Gets the data for the current sprint, based on the current date.
+ *
+ * @param allSprintLogData object all data from the sprint log.
+ * @returns {Promise<null|object>} information for current sprint (if found), else null
+ */
+const getDataForCurrentSprint = async (allSprintLogData) => {
+  try {
+    // get current sprint date
+    let currentSprint = await fetchCurrentSprint();
+
+    // check if empty sprint log
+    if (currentSprint &&
+      Object.keys(currentSprint).length === 0 &&
+      Object.getPrototypeOf(currentSprint) === Object.prototype) {
+      return null;
+    }
+
+    // get data for current sprint
+    let relevantData = allSprintLogData["sprints"].filter(currentSprintData => {
+      return currentSprintData["name"] === currentSprint["name"];
+    });
+
+    // check if sprint data was found, and return if so. otherwise, null.
+    if (relevantData.length > 0) {
+      return relevantData[0];
+    }
+    return null;
+  } catch (error) {
+    console.error(`Error in getDataForCurrentSprint: ${ error }`);
+    return error;
+  }
 };

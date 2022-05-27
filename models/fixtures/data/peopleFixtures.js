@@ -5,12 +5,12 @@ export const facultyData = [
     slack_id: (process.env.NODE_ENV === "development") ? "U03EA817FU3" : "U0E2XS3LL",
     sig_lead: "Summer BBQ"
   },
-  {
-    name: "Nell O'Rourke",
-    email: "nell@northwestern.edu",
-    slack_id: "U2MGUUFK5",
-    sig_lead: "Summer BEACH"
-  }
+  // {
+  //   name: "Nell O'Rourke",
+  //   email: "nell@northwestern.edu",
+  //   slack_id: "U2MGUUFK5",
+  //   sig_lead: "Summer BEACH"
+  // }
 ];
 
 export const phdStudentData = [
@@ -20,7 +20,7 @@ export const phdStudentData = [
     slack_id: "U0E33DF5F",
     sig_lead: "Agile Research Studios",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Gobi Dasu",
@@ -28,7 +28,7 @@ export const phdStudentData = [
     slack_id: "UCCCTJGG4",
     sig_lead: "Readily Available Learning Experiences",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Ryan Louie",
@@ -36,7 +36,7 @@ export const phdStudentData = [
     slack_id: "U6YKFU5UH",
     sig_lead: "Collective Experiences",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Kapil Garg",
@@ -44,15 +44,15 @@ export const phdStudentData = [
     slack_id: (process.env.NODE_ENV === "development") ? "U033BDY8A1E" : "U0G17CVCZ",
     sig_lead: "Networked Orchestration Technologies",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Haoqi Zhang"
+    sig_head: "Haoqi Zhang"
   },
   {
     name: "Harrison Kwik",
     email: "harrison@northwestern.edu",
     slack_id: "UHQQKMFSM",
-    sig_lead: "Context-Aware Metacognitive Practice",
+    sig_lead: "Contextually-Aware Metacognitive Practice",
     sig_member: "Summer BBQ",
-    faculty_mentor: "Nell O'Rourke"
+    sig_head: "Haoqi Zhang"
   }
 ];
 
@@ -140,14 +140,14 @@ export const nonPhdStudentData = [
     name: "Lauren Bichelmeir",
     email: "laurenbichelmeir2023@u.northwestern.edu",
     slack_id: "U035GLA80S2",
-    sig_member: "Context-Aware Metacognitive Practice",
+    sig_member: "Contextually-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   },
   {
     name: "Amy Guo",
     email: "amyguo2023@u.northwestern.edu",
     slack_id: "U035GLAFZGE",
-    sig_member: "Context-Aware Metacognitive Practice",
+    sig_member: "Contextually-Aware Metacognitive Practice",
     sig_head: "Harrison Kwik"
   }
 ];

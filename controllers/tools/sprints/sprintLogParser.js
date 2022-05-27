@@ -1,47 +1,51 @@
-import { googleServiceAccountInfo } from "../../imports/utils/googleAuth.js";
+import { googleServiceAccountInfo } from "../../../imports/utils/googleAuth.js";
 import { GoogleSpreadsheet } from 'google-spreadsheet';
+
+// TODO: comment all the code in this file
 
 /**
  * This class handles the parsing of a Google Sheet Sprint Log document.
- * TODO: field names are inconsistent (both camelCase and snake_case). Should be consistent.
  *
  * Data model for Sprint Log:
  * SprintLog {
- *   people: [String]                         // student names
- *   sprints: [                               // list of SprintPlans for each sprint in the qtr
+ *   url: "String"                           // link to Google Drive Spreadsheet
+ *   documentId: "String"                    // ID of document parsed from URL
+ *   people: [String]                        // student names
+ *   sprints: [                              // list of SprintPlans for each sprint in the qtr
  *     SprintPlan {
- *       name: "String",                      // name of sprint (e.g., "Sprint 0")
- *       points: [                            // summary of points for the sprint for each student
- *          name: "String",                   // name of specific student
- *          points_available: Number,         // number of points student has (for ugrads, typically 8)
- *          points_committed: {               // number of points committed
+ *       name: "String",                     // name of sprint (e.g., "Sprint 0")
+ *       points: [                           // summary of points for the sprint for each student
+ *          name: "String",                  // name of specific student
+ *          pointsAvailable: Number,         // number of points student has (for ugrads, typically 8)
+ *          pointsCommitted: {               // number of points committed
  *              total: Number,
  *              design: Number,
  *              technology: Number,
  *              research: Number
  *          },
- *          hours_spent: {                    // number of hours spent
+ *          hoursSpent: {                    // number of hours spent
  *              total: Number,
  *              design: Number,
  *              technology: Number,
  *              research: Number
  *          }
  *       ],
- *       totalPoints = {                      // total points planned/spent on sprint (students combined)
- *          point_available: Number,
- *          points_committed: {
+ *       totalPoints: {                      // total points planned/spent on sprint (students combined)
+ *          pointAvailable: Number,
+ *          pointsCommitted: {
  *              total: 0,
  *              design: 0,
  *              technology: 0,
  *              research: 0
  *          },
- *          hours_spent: {
+ *          hoursSpent: {
  *              total: 0,
  *              design: 0,
  *              technology: 0,
  *              research: 0
  *          }
  *       },
+ *       url: "String"                         // link to specific Worksheet in Google Drive for this sprint
  *       stories: [                            // list of SprintStories for the SprintPlan
  *         SprintStory {
  *          description: "String",             // description of the story (typically, the risk in project)
@@ -49,7 +53,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  *          deliverables: "String",            // description of the deliverable
  *          totalPointsRequired: Number,       // number of points allocated to this story
  *          totalPointsSpent: Number,          // number of points spend so far on this story
- *          tasks = [                          // list of SprintTasks for each SprintStory
+ *          tasks: [                           // list of SprintTasks for each SprintStory
  *           SprintTask {
  *              description: "String",         // description of the task
  *              expectedRoadblocks: "String",  // expected roadblocks for the task (if any)
@@ -68,11 +72,17 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  * }
  */
 export class SprintLog {
+  url = ""; // Google Drive URL for Sprint Log
+  documentId = ""; // Google Drive spreadsheet id for the current sprint log
+
   people = []; // list of people the sprint is for
   sprints = []; // list of Sprint objects associated with the sprint log
 
   constructor(sprintLogUrl) {
-    const sprintLogDoc = new GoogleSpreadsheet(SprintLog.getSprintLogIdForUrl(sprintLogUrl));
+    // get documentId and create new google spreadsheet parser
+    this.url = sprintLogUrl;
+    this.documentId = SprintLog.getSprintLogIdForUrl(sprintLogUrl);
+    const sprintLogDoc = new GoogleSpreadsheet(this.documentId);
 
     return (async () => {
       // TODO: needs to be more granular. When it does fail, wait 60 seconds and try again.
@@ -105,13 +115,14 @@ export class SprintLog {
         // return the object back up the caller
         return this;
       } catch (e) {
-        console.log(`Error in loading data for worksheet: ${ e }`);
+        console.error(`Error in loading data for worksheet: ${ e }`);
       }
 
       return undefined;
     })();
   }
 
+  // TODO: better as a utility function for getting the document ID for Google Drive files.
   static getSprintLogIdForUrl(url) {
     let re = new RegExp('[-\\w]{25,}'); // note that this isn't a super robust regex
     let output = url.match(re);
@@ -213,27 +224,27 @@ export class SprintLog {
           colIndex++;
         }
 
-        // store data into a the sprint object
-        sprintObj.updatePointsObjForPerson(personName, "points_available", pointsAvailable);
-        sprintObj.updatePointsObjForPerson(personName, "points_committed", pointsCommitted);
-        sprintObj.updatePointsObjForPerson(personName, "hours_spent", hoursSpent);
+        // store data into a sprint object
+        sprintObj.updatePointsObjForPerson(personName, "pointsAvailable", pointsAvailable);
+        sprintObj.updatePointsObjForPerson(personName, "pointsCommitted", pointsCommitted);
+        sprintObj.updatePointsObjForPerson(personName, "hoursSpent", hoursSpent);
       }
 
       // move to the next row and also reset the column index
       rowIndex++
       colIndex = loadArea.startColumnIndex;
     }
-    
+
     // add a total points field
     let totalPoints = {
-      point_available: 0,
-      points_committed: {
+      pointAvailable: 0,
+      pointsCommitted: {
         total: 0,
         design: 0,
         technology: 0,
         research: 0
       },
-      hours_spent: {
+      hoursSpent: {
         total: 0,
         design: 0,
         technology: 0,
@@ -242,20 +253,23 @@ export class SprintLog {
     };
 
     sprintObj.points.map((pointsForPerson) => {
-      totalPoints.point_available += pointsForPerson.points_available;
+      totalPoints.pointAvailable += pointsForPerson.pointsAvailable;
 
-      totalPoints.points_committed.total += pointsForPerson.points_committed.total;
-      totalPoints.points_committed.design += pointsForPerson.points_committed.design;
-      totalPoints.points_committed.technology += pointsForPerson.points_committed.technology;
-      totalPoints.points_committed.research += pointsForPerson.points_committed.research;
+      totalPoints.pointsCommitted.total += pointsForPerson.pointsCommitted.total;
+      totalPoints.pointsCommitted.design += pointsForPerson.pointsCommitted.design;
+      totalPoints.pointsCommitted.technology += pointsForPerson.pointsCommitted.technology;
+      totalPoints.pointsCommitted.research += pointsForPerson.pointsCommitted.research;
 
-      totalPoints.hours_spent.total += pointsForPerson.hours_spent.total;
-      totalPoints.hours_spent.design += pointsForPerson.hours_spent.design;
-      totalPoints.hours_spent.technology += pointsForPerson.hours_spent.technology;
-      totalPoints.hours_spent.research += pointsForPerson.hours_spent.research;
+      totalPoints.hoursSpent.total += pointsForPerson.hoursSpent.total;
+      totalPoints.hoursSpent.design += pointsForPerson.hoursSpent.design;
+      totalPoints.hoursSpent.technology += pointsForPerson.hoursSpent.technology;
+      totalPoints.hoursSpent.research += pointsForPerson.hoursSpent.research;
     });
 
     sprintObj.totalPoints = totalPoints;
+
+    // add url for the current sprint
+    sprintObj.url = `https://docs.google.com/spreadsheets/d/${ this.documentId }/edit#gid=${ worksheet.sheetId }`;
 
     // return the updated sprintObj
     return sprintObj;
@@ -415,14 +429,14 @@ export class SprintPlan {
     people.forEach(person => {
       this.points.push({
         name: person,
-        points_available: 0,
-        points_committed: {
+        pointsAvailable: 0,
+        pointsCommitted: {
           total: 0,
           design: 0,
           technology: 0,
           research: 0
         },
-        hours_spent: {
+        hoursSpent: {
           total: 0,
           design: 0,
           technology: 0,

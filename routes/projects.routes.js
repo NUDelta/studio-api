@@ -1,57 +1,64 @@
 import { Router } from "express";
+import {
+  fetchAllProjects,
+  fetchProjectByName,
+  fetchProjectForPerson
+} from "../controllers/projects/fetch.js";
 import bodyParser from "body-parser";
 
 import { Project } from "../models/project/project.js";
 import {
   getSprintLogForProjectName
-} from "../controllers/sprints/sprintManager.js";
+} from "../controllers/tools/sprints/sprintManager.js";
 
+// TODO: return error codes with error messages
 export const projectRouter = new Router();
 
-// fetch all projects
+/**
+ * Fetch all projects.
+ */
 projectRouter.get("/", async (req, res) => {
   try {
-    let allProjs = await Project.find()
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
-    res.json(allProjs);
+    // get whether tools should be populated
+    let shouldPopulateTools = (req.query.populateTools ?? "").trim().toLowerCase() === "true";
+
+    // fetch and return data
+    res.json(await fetchAllProjects(shouldPopulateTools));
   } catch (error) {
-    res.send(`Error when fetching projects: ${ error }`);
+    let msg = `Error in /projects/: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
 /**
- * Get project information, given the name of the project.
+ * Fetch a project given a project name.
  */
-projectRouter.get("/projectByName", async (req, res) => {
+projectRouter.get("/byName", async (req, res) => {
   try {
-    // fetch the person's name from the query that we want the sprint log for, and check if valid
-    let projName = req.query.projName;
+    // fetch the project's name from the query that we want the sprint log for, and check if valid
+    let projName = req.query.projectName;
     if (projName === undefined) {
-      throw new Error("personName parameter not specified.");
+      throw new Error("projectName parameter not specified.");
     }
 
-    // find project with projName
-    let relevantProj = await Project.findOne({ name: projName })
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
+    // get whether tools should be populated
+    let shouldPopulateTools = (req.query.populateTools ?? "").trim().toLowerCase() === "true";
 
-    if (relevantProj !== null) {
-      res.json(relevantProj);
-    } else {
-      res.json({});
-    }
+    // fetch and return data
+    res.json(await fetchProjectByName(projName, shouldPopulateTools));
   } catch (error) {
-    console.error(error)
-    res.send(`Error when fetching sprint log for person: ${ error }`);
+    let msg = `Error in projects/projectByName: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
 
-// fetch project for student
-projectRouter.get("/fetchProjectForPerson", async (req, res) => {
+/**
+ * Fetch a project given a student on the project.
+ */
+projectRouter.get("/forPerson", async (req, res) => {
   try {
     // fetch the person's name from the query that we want the sprint log for, and check if valid
     let personName = req.query.personName;
@@ -59,34 +66,18 @@ projectRouter.get("/fetchProjectForPerson", async (req, res) => {
       throw new Error("personName parameter not specified.");
     }
 
-    // get all projects
-    let allProjs = await Project.find()
-      .populate('students')
-      .populate('sig_head')
-      .populate('faculty_mentor');
+    // get whether tools should be populated
+    let shouldPopulateTools = (req.query.populateTools ?? "").trim().toLowerCase() === "true";
 
-    // select the project that the student is on
-    // TODO: students could potentially be on multiple projects
-    let selectedProj = allProjs.filter(
-      (proj) => {
-        return proj.students.some((student) => {
-          return student.name === personName;
-        });
-      }
-    );
-
-    // return json of project or an empty object
-    if (selectedProj.length > 0) {
-      res.json(selectedProj[0]);
-    } else {
-      res.json({});
-    }
+    res.json(await fetchProjectForPerson(personName, shouldPopulateTools));
   } catch (error) {
-    console.error(error)
-    res.send(`Error when fetching sprint log for person: ${ error }`);
+    let msg = `Error in projects/forPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
+// TODO: probably can deprecate this
 // fetch sprint log for a project
 projectRouter.get("/fetchSprintLogForProject", async (req, res) => {
   try {
@@ -102,10 +93,13 @@ projectRouter.get("/fetchSprintLogForProject", async (req, res) => {
     // return json of sprint log
     res.json(sprintLogForProject);
   } catch (error) {
-    res.send(`Error when fetching sprint log for project: ${ error }`);
+    let msg = `Error in projects/fetchSprintLogForProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
+// TODO: may not be needed since projects populate with the people
 projectRouter.get("/peopleOnProject", async (req, res) => {
   try {
     // fetch the project's name from the query that we want the sprint log for, and check if valid
@@ -133,10 +127,13 @@ projectRouter.get("/peopleOnProject", async (req, res) => {
     // return json of sprint log
     res.json(output);
   } catch (error) {
-    res.send(`Error when fetching people on project for project: ${ error }`);
+    let msg = `Error in projects/peopleOnProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
+// TODO: is this needed?
 projectRouter.get("/slackChannelForProject", async (req, res) => {
   try {
     // fetch the project's name from the query that we want the slack channel for
@@ -154,8 +151,8 @@ projectRouter.get("/slackChannelForProject", async (req, res) => {
     // return json of slack channel for project
     res.json(relevantProject["slack_channel"]);
   } catch (error) {
-    res.send(`Error when fetching slack channel for project: ${ error }`);
+    let msg = `Error in projects/slackChannelForProject: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
-
-// TODO: be able to search by project name

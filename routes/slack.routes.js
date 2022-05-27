@@ -1,5 +1,3 @@
-// TODO: consider having more generic functions: directMessage() [also supports multiple ppl passed in as an array]; channelMessage()
-
 import { Router } from "express";
 import { app } from "../index.js";
 
@@ -9,46 +7,66 @@ import { PhdStudent } from "../models/people/phdstudent.js";
 import { NonPhdStudent } from "../models/people/nonphdstudent.js";
 
 import { Project } from "../models/project/project.js";
-import { SIG } from "../models/venues/sig.js";
+import { SigStructure } from "../models/social-structures/sig.js";
+import {
+  messageChannel,
+  messagePersonWithOptions
+} from "../controllers/communication/slack/send.js";
+import {
+  formatPeopleForSlackMessage
+} from "../controllers/communication/slack/payloadGenerator.js";
 
 export const slackRouter = new Router();
+
+/*
+ TODO: factor all logic out into a controller with generic functions:
+  directMessage() [also supports multiple ppl passed in as an array]; channelMessage().
+  Routes for specific behavior are ok (e.g., message all projs or SIGs
+ */
 
 /**
  * Get all channels (public and private) that Slack Bot can access.
  */
 slackRouter.get("/getAllChannels", async (req, res) => {
-  let conversationsList = [];
+  try {
+    let conversationsList = [];
 
-  // keep getting responses while a next cursor exists
-  let nextCursorExists = true;
-  let nextCursorStr = "";
-  let error;
+    // keep getting responses while a next cursor exists
+    let nextCursorExists = true;
+    let nextCursorStr = "";
+    let error;
 
-  while (nextCursorExists) {
-    // get the next set of conversations based on the current cursor
-    let conversationListResponse = await app.client.conversations.list({
-      types: "public_channel,private_channel",
-      cursor: nextCursorStr,
-    });
+    while (nextCursorExists) {
+      // get the next set of conversations based on the current cursor
+      let conversationListResponse = await app.client.conversations.list({
+        types: "public_channel,private_channel",
+        cursor: nextCursorStr,
+      });
 
-    // check if response is ok before adding to people's list
-    if (conversationListResponse["ok"]) {
-      conversationsList = conversationsList.concat(conversationListResponse.channels);
+      // check if response is ok before adding to people's list
+      if (conversationListResponse["ok"]) {
+        conversationsList = conversationsList.concat(conversationListResponse.channels);
 
-      // get next cursor
-      nextCursorStr = conversationListResponse["response_metadata"]["next_cursor"];
-      nextCursorExists = nextCursorStr !== "";
-    } else {
-      error = conversationListResponse;
-      nextCursorExists = false;
+        // get next cursor
+        nextCursorStr = conversationListResponse["response_metadata"]["next_cursor"];
+        nextCursorExists = nextCursorStr !== "";
+      } else {
+        error = conversationListResponse;
+        nextCursorExists = false;
+      }
     }
-  }
 
-  // return response
-  if (error !== undefined) {
-    res.json(error)
-  } else {
+    // check if we had any errors
+    if (error !== undefined) {
+      throw new Error(error);
+    }
+
+    // return response
     res.json(conversationsList);
+  } catch (error) {
+    let msg = `Error in /slack/getAllChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -56,38 +74,45 @@ slackRouter.get("/getAllChannels", async (req, res) => {
  * Get all people in the team.
  */
 slackRouter.get("/getAllPeople", async (req, res) => {
-  let peopleList = [];
+  try {
+    let peopleList = [];
 
-  // keep getting responses while a next cursor exists
-  let nextCursorExists = true;
-  let nextCursorStr = "";
-  let error;
+    // keep getting responses while a next cursor exists
+    let nextCursorExists = true;
+    let nextCursorStr = "";
+    let error;
 
-  while (nextCursorExists) {
-    // get the next set of people based on the current cursor
-    let peopleListResponse = await app.client.users.list({
-      include_locale: true,
-      cursor: nextCursorStr
-    });
+    while (nextCursorExists) {
+      // get the next set of people based on the current cursor
+      let peopleListResponse = await app.client.users.list({
+        include_locale: true,
+        cursor: nextCursorStr
+      });
 
-    // check if response is ok before adding to people's list
-    if (peopleListResponse["ok"]) {
-      peopleList = peopleList.concat(peopleListResponse.members);
+      // check if response is ok before adding to people's list
+      if (peopleListResponse["ok"]) {
+        peopleList = peopleList.concat(peopleListResponse.members);
 
-      // get next cursor
-      nextCursorStr = peopleListResponse["response_metadata"]["next_cursor"];
-      nextCursorExists = nextCursorStr !== "";
-    } else {
-      error = peopleListResponse;
-      nextCursorExists = false;
+        // get next cursor
+        nextCursorStr = peopleListResponse["response_metadata"]["next_cursor"];
+        nextCursorExists = nextCursorStr !== "";
+      } else {
+        error = peopleListResponse;
+        nextCursorExists = false;
+      }
     }
-  }
 
-  // return response
-  if (error !== undefined) {
-    res.json(error)
-  } else {
+    // check if we had any errors
+    if (error !== undefined) {
+      throw new Error(error);
+    }
+
+    // return response
     res.json(peopleList);
+  } catch (error) {
+    let msg = `Error in /slack/getAllPeople: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
@@ -95,62 +120,184 @@ slackRouter.get("/getAllPeople", async (req, res) => {
  * Sends a message to all project channels.
  */
 // TODO: this should really call the same function that sends data to a single project channel.
-slackRouter.post("/sendMessageToAllProjChannels", async (req, res) => {
-  // parse inputs
-  let message = (req.body.message ?? "").trim();
+slackRouter.post("/messageAllProjectChannels", async (req, res) => {
+  try {
+    // parse inputs
+    let message = (req.body.message ?? "").trim();
 
-  // fetch project info
-  let allProjects = await Project.find({}).populate('students');
-  if (allProjects === null) {
-    throw new Error(`no projects found`);
+    // fetch project info
+    let allProjects = await Project.find({}).populate('students');
+    if (allProjects === null) {
+      throw new Error(`no projects found`);
+    }
+
+    // iterate over each project and send message
+    let messagesToSend = [];
+    for (let project of allProjects) {
+      // get channel name
+      let channelName = project.slack_channel;
+
+      // get people and their names
+      let students = project.students.map((student) => {
+        return {
+          name: student.name,
+          slack_id: student.slack_id
+        }
+      });
+
+      // create promises to send message to channel
+      messagesToSend.push(messageChannel(
+        channelName,
+        formatPeopleForSlackMessage(students),
+        message
+      ));
+    }
+
+    // send messages, and return result to caller
+    res.json(await Promise.all(messagesToSend));
+  } catch (error) {
+    let msg = `Error in /slack/messageAllProjectChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
-
-  // iterate over each project and send message
-  let messagesToSend = [];
-  for (let project of allProjects) {
-    // get channel name
-    let channelName = project.slack_channel;
-
-    // get people and their names
-    let students = project.students.map((student) => {
-      return {
-        name: student.name,
-        slack_id: student.slack_id
-      }
-    });
-
-    // send message to channel
-    messagesToSend.push(app.client.chat.postMessage({
-      channel: channelName,
-      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
-    }));
-  }
-
-  res.json(await Promise.all(messagesToSend));
 });
 
 /**
  * Sends a message to all SIG channels.
  */
 // TODO: this should really call the same function that sends data to a single sig channel.
-slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
-  // parse inputs
-  let message = (req.body.message ?? "").trim();
+slackRouter.post("/messageAllSigChannels", async (req, res) => {
+  try {
+    // parse inputs
+    let message = (req.body.message ?? "").trim();
 
-  // fetch project info
-  let allSigs = await SIG.find({}).populate("sig_members");
-  if (allSigs === null) {
-    throw new Error(`no projects found`);
+    // fetch project info
+    let allSigs = await SigStructure.find({})
+      .populate("members")
+      .populate("sig_head");
+    if (allSigs === null) {
+      throw new Error(`no projects found`);
+    }
+
+    // iterate over each project and send message
+    let messagesToSend = [];
+    for (let sig of allSigs) {
+      // get channel name
+      let channelName = sig.slack_channel;
+
+      // get students who are in the SIG, and their names
+      let students = sig.members.map((student) => {
+        return {
+          name: student.name,
+          slack_id: student.slack_id
+        }
+      });
+
+      // create promises to send message to channel
+      messagesToSend.push(messageChannel(
+        channelName,
+        formatPeopleForSlackMessage(students),
+        message
+      ));
+    }
+
+    // send messages, and return result to caller
+    res.json(await Promise.all(messagesToSend));
+  } catch (error) {
+    let msg = `Error in /slack/messageAllSigChannels: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
+});
 
-  // iterate over each project and send message
-  let messagesToSend = [];
-  for (let sig of allSigs) {
+/**
+ * Sends message to a project's Slack Channel.
+ */
+// TODO: factor this out into a controller
+slackRouter.post("/messageProjectChannel", async (req, res) => {
+  try {
+    // TODO: check if inputs are valid
+    // parse inputs
+    let projName = (req.body.projName ?? "").trim();
+    let message = (req.body.message ?? "").trim();
+
+    // fetch project info
+    let relevantProject = await Project.findOne( { name: projName })
+      .populate('students')
+      .populate('sig_head')
+      .populate('faculty_mentor');
+    if (relevantProject === null) {
+      throw new Error(`no project found for ${ projName }`);
+    }
+
     // get channel name
-    let channelName = sig.slack_channel;
+    let channelName = relevantProject.slack_channel;
 
     // get people and their names
-    let students = sig.sig_members.map((student) => {
+    let students = relevantProject.students.map((student) => {
+      return {
+        name: student.name,
+        slack_id: student.slack_id
+      }
+    });
+
+    let sigHead = {
+      name: relevantProject.sig_head.name,
+      slack_id: relevantProject.sig_head.slack_id
+    };
+
+    let facultyMentor = {
+      name: relevantProject.faculty_mentor.name,
+      slack_id: relevantProject.faculty_mentor.slack_id
+    };
+
+    // send message to channel
+    const result = await messageChannel(
+      channelName,
+      formatPeopleForSlackMessage(students),
+      message
+    );
+
+    // return result of slack message
+    res.json(result);
+  } catch (error) {
+    let msg = `Error in /slack/messageProjectChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
+ * Sends message to a SIG's Slack channel.
+ */
+// TODO: factor this out into a controller
+slackRouter.post("/messageSigChannel", async (req, res) => {
+  try {
+    // TODO: check if inputs are valid
+    // parse inputs
+    let sigName = (req.body.sigName ?? "").trim();
+    let message = (req.body.message ?? "").trim();
+
+    // TODO: replace this with the SIG social structure
+    // get SIG info for project name
+    let relevantSigVenueInfo = await SigStructure.findOne(
+      {
+        name: {
+          "$regex": sigName,
+          "$options": "i"
+        }
+      })
+      .populate("sig_head")
+      .populate("members");
+
+    if (relevantSigVenueInfo === null) {
+      throw new Error(`no SIG found for ${ sigName }`);
+    }
+
+    let channelName = relevantSigVenueInfo.slack_channel;
+
+    // get students and their names
+    let students = relevantSigVenueInfo.members.map((student) => {
       return {
         name: student.name,
         slack_id: student.slack_id
@@ -158,118 +305,39 @@ slackRouter.post("/sendMessageToAllSigChannels", async (req, res) => {
     });
 
     // send message to channel
-    messagesToSend.push(app.client.chat.postMessage({
-      channel: channelName,
-      text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
-    }));
+    const result = await messageChannel(
+      channelName,
+      formatPeopleForSlackMessage(students),
+      message
+    );
+
+    // return result of slack message
+    res.json(result);
+  } catch (error) {
+    let msg = `Error in /slack/messageSigChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
-
-  res.json(await Promise.all(messagesToSend));
-});
-
-/**
- * Sends message to a project's Slack Channel.
- */
-// TODO: factor this out into a controller
-slackRouter.post("/sendMessageToProjChannel", async (req, res) => {
-  // TODO: check if inputs are valid
-  // parse inputs
-  let projName = (req.body.projName ?? "").trim();
-  let message = (req.body.message ?? "").trim();
-
-  // fetch project info
-  let relevantProject = await Project.findOne( { name: projName })
-    .populate('students')
-    .populate('sig_head')
-    .populate('faculty_mentor');
-  if (relevantProject === null) {
-    throw new Error(`no project found for ${ projName }`);
-  }
-
-  // get channel name
-  let channelName = relevantProject.slack_channel;
-
-  // get people and their names
-  let students = relevantProject.students.map((student) => {
-    return {
-      name: student.name,
-      slack_id: student.slack_id
-    }
-  });
-
-  let sigHead = {
-    name: relevantProject.sig_head.name,
-    slack_id: relevantProject.sig_head.slack_id
-  };
-
-  let facultyMentor = {
-    name: relevantProject.faculty_mentor.name,
-    slack_id: relevantProject.faculty_mentor.slack_id
-  };
-
-  // send message to channel
-  const result = await app.client.chat.postMessage({
-    channel: channelName,
-    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
-  });
-
-  // return result of slack message
-  res.json(result);
-});
-
-/**
- * Sends message to a SIG's Slack channel.
- */
-// TODO: factor this out into a controller
-slackRouter.post("/sendMessageToSigChannel", async (req, res) => {
-  // TODO: check if inputs are valid
-  // parse inputs
-  let sigName = (req.body.sigName ?? "").trim();
-  let message = (req.body.message ?? "").trim();
-
-  // get SIG info for project name
-  let relevantSigVenueInfo = await SIG.findOne({
-    name: {
-      "$regex": sigName,
-      "$options": "i"
-    }
-  }).populate("sig_head").populate("sig_members");
-  if (relevantSigVenueInfo === null) {
-    throw new Error(`no SIG found for ${ sigName }`);
-  }
-
-  let channelName = relevantSigVenueInfo.slack_channel;
-
-  // get people and their names
-  let students = relevantSigVenueInfo.sig_members.map((student) => {
-    return {
-      name: student.name,
-      slack_id: student.slack_id
-    }
-  });
-
-  // send message to channel
-  const result = await app.client.chat.postMessage({
-    channel: channelName,
-    text: `Hey ${formatPeopleForSlackMessage(students)}! ${ message }`
-  });
-
-  // return result of slack message
-  res.json(result);
 });
 
 /**
  * TODO: implement
  * Sends message to a committee's Slack Channel.
  */
-slackRouter.post("/sendMessageToCommitteeChannel", async (req, res) => {
-  res.json({});
+slackRouter.post("/messageCommitteeChannel", async (req, res) => {
+  try {
+    res.json({});
+  } catch (error) {
+    let msg = `Error in /slack/messageCommitteeChannel: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
 });
 
 /**
  * Send a direct message (or a group direct message) to a list of people.
  */
-slackRouter.post("/sendMessageToPeople", async (req, res) => {
+slackRouter.post("/messagePeople", async (req, res) => {
   try {
     // parse inputs from request
     let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
@@ -300,28 +368,91 @@ slackRouter.post("/sendMessageToPeople", async (req, res) => {
     // send the message from the request to the MPIM channel
     if (conversationForPeopleResponse["ok"]) {
       const channelId =  conversationForPeopleResponse["channel"]["id"];
-      const result = await app.client.chat.postMessage({
-        channel: channelId,
-        text: `Hey ${formatPeopleForSlackMessage(peopleSlackIds)}! ${ message }`
-      });
+
+      // send message to channel
+      const result = await messageChannel(
+        channelId,
+        formatPeopleForSlackMessage(peopleSlackIds),
+        message
+      );
 
       // return result of slack message
       res.json(result);
     }
   } catch (error) {
-    // return error if any issues occur
-    res.json(`Error in /sendMessageToPeople: ${ error }`);
+    let msg = `Error in /slack/messagePeople: ${ error }`;
+    console.error(msg)
+    res.send(msg);
   }
 });
 
+/**
+ * Presents a set of strategy options to a person which they can choose to have the system track.
+ */
+slackRouter.post("/presentOptionsToPerson", async (req, res) => {
+  try {
+    // TODO: check if any params are not included
+    // parse inputs from request
+    let people = JSON.parse(req.body.people ?? "[]").map(person => { return person.trim() });
+    let message = (req.body.message ?? "").trim();
+    let options = JSON.parse(req.body.options ?? "[]");
+    let selectType = (req.body.selectType ?? "checkbox").trim();
+
+    // TODO: sorting like this is fine for now, but may want to have more control over user order
+    // get slack ids for people
+    const allPeople = await Person.find({
+      "name": {
+        "$in": people
+      }
+    }).sort("role name");
+
+    const peopleSlackIds = allPeople.map(person => {
+      return {
+        name: person.name,
+        slack_id: person.slack_id
+      }
+    });
+
+    // open a multi-person direct message (MPIM) channel
+    // api documentation: https://api.slack.com/methods/conversations.open
+    let conversationForPeopleResponse = await app.client.conversations.open({
+      return_im: true,
+      users: peopleSlackIds.map(person => { return person.slack_id }).join(",")
+    });
+
+    // send the message from the request to the MPIM channel
+    if (conversationForPeopleResponse["ok"]) {
+      const channelId =  conversationForPeopleResponse["channel"]["id"];
+
+      // send message to channel
+      const result = await messagePersonWithOptions(
+        channelId,
+        formatPeopleForSlackMessage(peopleSlackIds),
+        message,
+        options,
+        selectType
+      );
+
+      // return result of slack message
+      res.json(result);
+    }
+  } catch (error) {
+    let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
 
 /**
- * Returns a list of slack id's when provided a list of people objects, which can be used to ping each person in a channel or direct message in Slack.
- * @param peopleList list of people objects. each person must contain a slack_id field.
- * @returns {string} string with each person's slack_id concatenated together.
+ * Presents a summary to a person, given an list of objects to include.
+ * TODO: implement
  */
-const formatPeopleForSlackMessage = (peopleList) => {
-  return peopleList.map((person) => {
-    return `<@${ person.slack_id }>`
-  }).join(" ");
-}
+slackRouter.post("/presentSummaryToPerson", async (req, res) => {
+  try {
+      res.json({});
+  } catch (error) {
+    let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});

@@ -1,99 +1,129 @@
 import { Venue } from "../venues/venue.js";
-import { SIG } from "../venues/sig.js";
-import { Studio } from "../venues/studio.js";
+import { SigMeeting } from "../venues/sigMeeting.js";
+import { StudioMeeting } from "../venues/studioMeeting.js";
 import { OfficeHours } from "../venues/officeHours.js";
 
 import { Person } from "../people/person.js";
 
-import { studioData, sigData, officeHoursData } from "./data/venueFixtures.js";
+import { studioData, sigMeetingData, officeHoursData } from "./data/venueFixtures.js";
 import { Project } from "../project/project.js";
 
 /**
- * Creates an array of Promises that, when resolved, create Studio documents.
+ * Inserts documents for the Studio venue.
  * @return {Promise<unknown[]>}
  */
 const createStudioDocuments = async () => {
-  // store all promises that we need to save
-  let studioDocumentPromises = [];
+  // store all documents that we need to insert
+  let studioDocuments = [];
 
-  // loop over each document and save
-  for (const studio of studioData) {
-    let currStudioDocument = new Studio({
-      name: studio.name,
-      description: studio.description,
-      day_of_week: studio.day_of_week,
-      start_time: studio.start_time,
-      end_time: studio.end_time,
-      timezone: studio.timezone,
-      slack_channel: studio.slack_channel
+  // loop over all data and create documents
+  for (const currStudioData of studioData) {
+    // get attendees
+    let memberPromises = [];
+    for (const member of currStudioData.attendees) {
+      memberPromises.push(Person.findOne({ name: member }));
+    }
+    let memberIds = (await Promise.all(memberPromises))
+      .map((member) => { return member._id; });
+
+    // create document for current data
+    studioDocuments.push({
+      name: currStudioData.name,
+      description: currStudioData.description,
+      day_of_week: currStudioData.day_of_week,
+      start_time: currStudioData.start_time,
+      end_time: currStudioData.end_time,
+      timezone: currStudioData.timezone,
+      attendees: memberIds
     });
-    studioDocumentPromises.push(currStudioDocument.save());
   }
 
-  return Promise.all(studioDocumentPromises);
+  // save documents
+  return StudioMeeting.insertMany(studioDocuments);
 };
 
 /**
- * Creates an array of Promises that, when resolved, create SIG documents.
+ * Inserts documents for the SIG venue.
  * @return {Promise<unknown[]>}
  */
 const createSigDocuments = async () => {
-  // store all promises that we need to save
-  let sigDocumentPromises = [];
+  // store all documents that we need to insert
+  let sigMeetingDocuments = [];
 
-  // loop over each document and save
-  for (const sig of sigData) {
-    // get sig head
-    let sigHead = await Person.findOne({ name: sig.sig_head });
-
-    // get members of sig
-    let studentPromises = [];
-    for (const studentName of sig.sig_members) {
-      studentPromises.push(Person.findOne({ name: studentName }));
+  // loop over all data and create documents
+  for (const currSigMeetingData of sigMeetingData) {
+    // get attendees of sig
+    let memberPromises = [];
+    for (const member of currSigMeetingData.attendees) {
+      memberPromises.push(Person.findOne({ name: member }));
     }
-    let students = await Promise.all(studentPromises);
-    let studentIds = students.map((student) => { return student._id; });
+    let memberIds = (await Promise.all(memberPromises))
+      .map((member) => { return member._id; });
 
-    // create document
-    let currsigDocument = new SIG({
-      name: sig.name,
-      description: sig.description,
-      day_of_week: sig.day_of_week,
-      start_time: sig.start_time,
-      end_time: sig.end_time,
-      timezone: sig.timezone,
-      sig_head: sigHead._id,
-      sig_members: studentIds,
-      slack_channel: sig.slack_channel
+    // get projects of sig
+    let projectPromises = [];
+    for (const projectName of currSigMeetingData.projects) {
+      projectPromises.push(Project.findOne({ name: projectName }));
+    }
+    let projectIds = (await Promise.all(projectPromises))
+      .map((project) => { return project._id });
+
+    // create documents
+    sigMeetingDocuments.push({
+      name: currSigMeetingData.name,
+      description: currSigMeetingData.description,
+      day_of_week: currSigMeetingData.day_of_week,
+      start_time: currSigMeetingData.start_time,
+      end_time: currSigMeetingData.end_time,
+      timezone: currSigMeetingData.timezone,
+      attendees: memberIds,
+      projects: projectIds
     });
-    sigDocumentPromises.push(currsigDocument.save());
   }
 
-  return Promise.all(sigDocumentPromises);
+  // save documents
+  return SigMeeting.insertMany(sigMeetingDocuments);
 };
 
 /**
- * Creates an array of Promises that, when resolved, create Office Hours documents.
+ * Inserts documents for the Office Hours venue.
  * @return {Promise<unknown[]>}
  */
 const createOfficeHoursDocuments = async () => {
-  // store all promises that we need to save
-  let officeHoursDocumentPromises = [];
+  // store all documents that we need to insert
+  let officeHoursDocuments = [];
 
-  // loop over each document and save
-  for (const officeHours of officeHoursData) {
-    let currOfficeHoursDocument = new OfficeHours({
-      name: officeHours.name,
-      description: officeHours.description,
-      day_of_week: officeHours.day_of_week,
-      start_time: officeHours.start_time,
-      end_time: officeHours.end_time,
-      timezone: officeHours.timezone,
+  for (const currOfficeHoursData of officeHoursData) {
+    // get projects of sig
+    let projectPromises = [];
+    for (const projectName of currOfficeHoursData.projects) {
+      projectPromises.push(Project.findOne({ name: projectName }).populate("students"));
+    }
+    let projectObjects = await Promise.all(projectPromises);
+    let projectIds = projectObjects.map((project) => { return project._id });
+
+    // get attendees of sig
+    let memberIds = projectObjects
+      .map((project) => {
+        return project.students.map(student => { return student._id })
+      })
+      .reduce((acc, val) => acc.concat(val), []);
+
+    // create documents
+    officeHoursDocuments.push({
+      name: currOfficeHoursData.name,
+      description: currOfficeHoursData.description,
+      day_of_week: currOfficeHoursData.day_of_week,
+      start_time: currOfficeHoursData.start_time,
+      end_time: currOfficeHoursData.end_time,
+      timezone: currOfficeHoursData.timezone,
+      attendees: memberIds,
+      projects: projectIds
     });
-    officeHoursDocumentPromises.push(currOfficeHoursDocument.save());
   }
 
-  return Promise.all(officeHoursDocumentPromises);
+  // save documents
+  return OfficeHours.insertMany(officeHoursDocuments);
 };
 
 /**
