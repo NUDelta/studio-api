@@ -22,9 +22,9 @@ export const sigMeetingData = [
   {
     name: "Agile Research Studios SIG Meeting",
     description: "Weekly SIG meeting for ARS SIG",
-    day_of_week: "Monday",
-    start_time: "13:00:00",
-    end_time: "14:00:00",
+    day_of_week: "Tuesday",
+    start_time: "12:30:00",
+    end_time: "13:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Agile Research Studios"),
     projects: [
@@ -34,9 +34,9 @@ export const sigMeetingData = [
   {
     name: "Networked Orchestration Technologies SIG Meeting",
     description: "Weekly SIG meeting for NOT SIG",
-    day_of_week: "Monday",
-    start_time: "15:00:00",
-    end_time: "16:00:00",
+    day_of_week: "Tuesday",
+    start_time: "13:00:00",
+    end_time: "14:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Networked Orchestration Technologies"),
     projects: [
@@ -48,8 +48,8 @@ export const sigMeetingData = [
     name: "Collective Experiences SIG Meeting",
     description: "Weekly SIG meeting for CE SIG",
     day_of_week: "Monday",
-    start_time: "16:00:00",
-    end_time: "17:00:00",
+    start_time: "09:00:00",
+    end_time: "10:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Collective Experiences"),
     projects: [

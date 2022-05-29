@@ -39,6 +39,9 @@ const createProjectDocuments = async () => {
       sig_head: sigHead._id,
       faculty_mentor: facultyMentor._id,
       sprint_log: project.sprint_log,
+      practical_research_canvas: project.practical_research_canvas,
+      research_research_canvas: project.research_research_canvas,
+      eoq_checklist: project.eoq_checklist,
       slack_channel: project.slack_channel,
       status_update_date: project.status_update_date
     });

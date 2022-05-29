@@ -48,7 +48,10 @@ const createPhdStudentDocuments = async () => {
       slack_id: phdStudent.slack_id,
       sig_lead: phdStudent.sig_lead,
       sig_member: phdStudent.sig_member,
-      sig_head: sigHead._id
+      sig_head: sigHead._id,
+      individual_progress_map: phdStudent.individual_progress_map,
+      mid_quarter_check_in: phdStudent.mid_quarter_check_in,
+      eoq_self_assessment: phdStudent.eoq_self_assessment,
     });
     phdStudentDocumentPromises.push(currPhdStudentDocument.save());
   }
@@ -76,6 +79,9 @@ const createNonPhdStudentDocuments = async () => {
       slack_id: nonPhdStudent.slack_id,
       sig_member: nonPhdStudent.sig_member,
       sig_head: sigHead._id,
+      individual_progress_map: nonPhdStudent.individual_progress_map,
+      mid_quarter_check_in: nonPhdStudent.mid_quarter_check_in,
+      eoq_self_assessment: nonPhdStudent.eoq_self_assessment,
     });
     nonPhdStudentDocumentPromises.push(currNonPhdStudentDocument.save());
   }
