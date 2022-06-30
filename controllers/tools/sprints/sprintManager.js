@@ -7,6 +7,8 @@ import { googleDriveAuth } from "../../../imports/utils/googleAuth.js"
 import { SprintLog } from "./sprintLogParser.js";
 import { fetchCurrentSprint } from "../../processes/sprints/fetch.js";
 
+// TODO: there should probably be a generic google spreadsheet tool class
+// this would provide an interface for all the functions related to tools, and implementations for htings like checking last update
 /**
  * Fetches a sprint log for a project, given a person's name.
  * @param personName

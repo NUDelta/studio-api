@@ -110,7 +110,7 @@ export const fetchProjectForPerson = async (personName, shouldPopulateTools= fal
     console.error(`Error in fetchProjectForPerson: ${ error }`);
     return error;
   }
-}
+};
 
 /**
  * Populates data from tools linked in the project model.
