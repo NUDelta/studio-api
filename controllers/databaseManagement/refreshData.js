@@ -6,7 +6,7 @@ import createVenueFixtures, { isVenueEmpty } from "../../models/fixtures/populat
 import createSocialStructureFixtures, { isSocialStructureEmpty } from "../../models/fixtures/populateSocialStructures.js";
 
 // pre-population of the sprint cache
-import { prepopulateSprintCache } from "../tools/sprints/sprintManager.js";
+import { prepopulateSprintCache } from "../tools/sprintLog/sprintManager.js";
 
 /**
  * Refreshes all data using local fixtures.

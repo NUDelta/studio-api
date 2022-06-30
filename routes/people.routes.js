@@ -7,7 +7,7 @@ import {
   fetchNonPhdStudents,
   fetchPhdStudents, fetchPersonByName
 } from "../controllers/people/fetch.js";
-import { getSprintLogForPerson } from "../controllers/tools/sprints/sprintManager.js";
+import { getSprintLogForPerson } from "../controllers/tools/sprintLog/sprintManager.js";
 
 export const peopleRouter = new Router();
 

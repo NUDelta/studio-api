@@ -9,7 +9,7 @@ import bodyParser from "body-parser";
 import { Project } from "../models/project/project.js";
 import {
   getSprintLogForProjectName
-} from "../controllers/tools/sprints/sprintManager.js";
+} from "../controllers/tools/sprintLog/sprintManager.js";
 
 // TODO: return error codes with error messages
 export const projectRouter = new Router();

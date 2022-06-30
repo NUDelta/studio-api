@@ -3,7 +3,7 @@
  */
 
 import { Project } from "../../models/project/project.js";
-import { getSprintLogForProjectName } from "../tools/sprints/sprintManager.js";
+import { getSprintLogForProjectName } from "../tools/sprintLog/sprintManager.js";
 import { Person } from "../../models/people/person.js";
 
 /**
@@ -124,6 +124,9 @@ const populateProjectTools = async (project) => {
 
   // populate sprint log data
   clonedProject["sprint_log"] = await getSprintLogForProjectName(clonedProject["name"]);
+
+  // TODO: populate data from microboard for graduate students
+  // will need to include previous and current
 
   // return cloned project with data from tools loaded in
   return clonedProject;
