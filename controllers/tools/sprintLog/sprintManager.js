@@ -81,6 +81,7 @@ const getSprintLogForProject = async (project) => {
     let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
     // console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
 
+    // TODO: this should be a generic caching function of a parent class
     // check cache first for the sprint log
     let cachedSprintLog = await getCachedSprintLog(project);
     if (cachedSprintLog !== undefined) {
@@ -171,7 +172,7 @@ const addSprintToCache = async (projectId, sprintLogData, lastUpdated) => {
 };
 
 /**
- * Updates an cache object for a project's sprint log.
+ * Updates a cache object for a project's sprint log.
  * @param cachedSprintLog
  * @param updatedData
  * @param updatedDate
