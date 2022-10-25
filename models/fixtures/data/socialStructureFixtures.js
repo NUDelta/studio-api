@@ -3,14 +3,6 @@ import { getAllMembersForSig } from "./utils.js";
 
 export const sigSocialStructuresData = [
   {
-    name: "Agile Research Studios",
-    description: "The Agile Research Studios (ARS) SIG develops novel processes, social structures, and intelligent tools that work together to support learning within a community of researchers by developing students' regulation skills---cognitive, motivational, emotional, metacognitive, and strategic behaviors for reaching desired goals and outcomes---and by distributing support across an entire learning community.",
-    members: getAllMembersForSig(projectData, "Agile Research Studios"),
-    abbreviation: "ARS",
-    slack_channel: "sig-ars",
-    sig_head: "Leesha Maliakal Shah",
-  },
-  {
     name: "Networked Orchestration Technologies",
     description: "The Networked Orchestration Technologies (NOT) SIG develops novel interactions and technologies that will help learners and workers develop effective strategies for orchestrating work in networked communities and organizations.",
     members: getAllMembersForSig(projectData, "Networked Orchestration Technologies"),
@@ -40,7 +32,7 @@ export const sigSocialStructuresData = [
     members: getAllMembersForSig(projectData, "Contextually-Aware Metacognitive Practice"),
     abbreviation: "CAMP",
     slack_channel: "sig-camp",
-    sig_head: "Harrison Kwik",
+    sig_head: "Haoqi Zhang",
   },
   {
     name: "Summer BBQ",
@@ -52,23 +44,48 @@ export const sigSocialStructuresData = [
   }
 ];
 
+// TODO: update
 export const onboardingPairData = [
   {
     name: "",
     description: "",
     mentor: "Cindy Hu",
-    mentee: "Alexandra Andreiu"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Jason Friedman",
-    mentee: "Amy Guo"
+    mentee: "Dani Zhang"
   },
   {
     name: "",
     description: "",
     mentor: "Parveen Dhanoa",
-    mentee: "Lauren Bichelmeir"
+    mentee: "Yabi Ayele"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Richard Lam",
+    mentee: "Mieraf Mulat"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Ryan Louie",
+    mentee: "Chase Duvall"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Gobi Dasu",
+    mentee: "Alex Feng"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Alexandra Andreiu",
+    mentee: "Rawan Mohamed"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Amy Guo",
+    mentee: "Victoria Tran"
   },
 ];

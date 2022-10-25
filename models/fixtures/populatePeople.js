@@ -70,7 +70,7 @@ const createNonPhdStudentDocuments = async () => {
   // loop over each document and save
   for (const nonPhdStudent of nonPhdStudentData) {
     // get sig head
-    let sigHead = await PhdStudent.findOne({ name: nonPhdStudent.sig_head });
+    let sigHead = await Person.findOne({ name: nonPhdStudent.sig_head });
 
     // create non-phd student document
     let currNonPhdStudentDocument = new NonPhdStudent({

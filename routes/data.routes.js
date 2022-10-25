@@ -11,7 +11,7 @@ dataRouter.get("/refreshData", async (req, res) => {
     await populateData(true);
     res.send("Data refreshed.");
   } catch (error) {
-    let msg = `Error in /data/refreshData: ${ error }`;
+    let msg = `Error in /data/refreshData: ${ error.stack }`;
     console.error(msg)
     res.send(msg);
   }
