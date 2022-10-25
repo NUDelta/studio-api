@@ -7,8 +7,8 @@ export const studioData = [
     name: "Studio Meeting",
     description: "Weekly studio meeting with all members of the community.",
     day_of_week: "Friday",
-    start_time: "13:00:00",
-    end_time: "16:00:00",
+    start_time: "12:00:00",
+    end_time: "15:00:00",
     timezone: "America/Chicago",
     attendees: [
       facultyData.map(person => { return person.name }),
@@ -18,38 +18,27 @@ export const studioData = [
   }
 ];
 
+// TODO: update
 export const sigMeetingData = [
-  {
-    name: "Agile Research Studios SIG Meeting",
-    description: "Weekly SIG meeting for ARS SIG",
-    day_of_week: "Tuesday",
-    start_time: "12:30:00",
-    end_time: "13:00:00",
-    timezone: "America/Chicago",
-    attendees: getAllMembersForSig(projectData, "Agile Research Studios"),
-    projects: [
-      "MindYoga"
-    ],
-  },
   {
     name: "Networked Orchestration Technologies SIG Meeting",
     description: "Weekly SIG meeting for NOT SIG",
-    day_of_week: "Tuesday",
-    start_time: "13:00:00",
-    end_time: "14:00:00",
+    day_of_week: "Monday",
+    start_time: "16:00:00",
+    end_time: "17:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Networked Orchestration Technologies"),
     projects: [
       "Orchestration Scripting Environments",
-      "Interactive SOAP Notes"
+      "Orchestrating Planning and Reflection"
     ],
   },
   {
     name: "Collective Experiences SIG Meeting",
     description: "Weekly SIG meeting for CE SIG",
-    day_of_week: "Monday",
-    start_time: "09:00:00",
-    end_time: "10:00:00",
+    day_of_week: "Wednesday",
+    start_time: "14:00:00",
+    end_time: "15:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Collective Experiences"),
     projects: [
@@ -60,9 +49,9 @@ export const sigMeetingData = [
   {
     name: "Readily Available Learning Experiences SIG Meeting",
     description: "Weekly SIG meeting for RALE SIG",
-    day_of_week: "Thursday",
-    start_time: "13:00:00",
-    end_time: "14:00:00",
+    day_of_week: "Monday",
+    start_time: "14:00:00",
+    end_time: "15:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Readily Available Learning Experiences"),
     projects: [
@@ -73,13 +62,12 @@ export const sigMeetingData = [
   {
     name: "Contextually-Aware Metacognitive Practice SIG Meeting",
     description: "Weekly SIG meeting for CAMP SIG",
-    day_of_week: "Tuesday",
-    start_time: "16:00:00",
-    end_time: "17:00:00",
+    day_of_week: "Friday",
+    start_time: "10:00:00",
+    end_time: "10:30:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Contextually-Aware Metacognitive Practice"),
     projects: [
-      "Cardinal",
       "Path"
     ],
   },
@@ -87,16 +75,14 @@ export const sigMeetingData = [
     name: "Summer BBQ SIG Meeting",
     description: "Weekly SIG meeting for BBQ SIG",
     day_of_week: "Friday",
-    start_time: "16:00:00",
-    end_time: "17:00:00",
+    start_time: "15:00:00",
+    end_time: "16:00:00",
     timezone: "America/Chicago",
     attendees: getAllMembersForSig(projectData, "Summer BBQ"),
     projects: [
-      "Compass",
       "Gobi Proj",
       "Ryan Proj",
       "Kapil Proj",
-      "Harrison Proj"
     ],
   }
 ];
@@ -104,34 +90,23 @@ export const sigMeetingData = [
 // TODO: be able to encode ad-hoc office hours
 export const officeHoursData = [
   {
-    name: "Agile Research Studios Office Hours",
-    description: "Weekly office hours for ARS SIG",
-    day_of_week: "Wednesday",
+    name: "Networked Orchestration Technologies Office Hours",
+    description: "Weekly office hours for NOT SIG",
+    day_of_week: "Thursday",
     start_time: "13:00:00",
     end_time: "14:00:00",
     timezone: "America/Chicago",
     projects: [
-      "MindYoga"
-    ]
-  },
-  {
-    name: "Networked Orchestration Technologies Office Hours",
-    description: "Weekly office hours for NOT SIG",
-    day_of_week: "Wednesday",
-    start_time: "15:00:00",
-    end_time: "16:00:00",
-    timezone: "America/Chicago",
-    projects: [
       "Orchestration Scripting Environments",
-      "Interactive SOAP Notes"
-    ]
+      "Orchestrating Planning and Reflection"
+    ],
   },
   {
     name: "Collective Experiences SIG Office Hours for Collective Narrative",
     description: "Weekly office hours for CE SIG's Collective Narrative project",
-    day_of_week: "Wednesday",
-    start_time: "09:00:00",
-    end_time: "10:00:00",
+    day_of_week: "Tuesday",
+    start_time: "13:00:00",
+    end_time: "13:45:00",
     timezone: "America/Chicago",
     projects: [
       "Collective Narrative"
@@ -140,24 +115,12 @@ export const officeHoursData = [
   {
     name: "Collective Experiences SIG Office Hours for Collective Experiences Relationship Dev",
     description: "Weekly office hours for CE SIG's Collective Experiences Relationship Dev project",
-    day_of_week: "Thursday",
-    start_time: "14:00:00",
-    end_time: "15:00:00",
+    day_of_week: "Tuesday",
+    start_time: "17:00:00",
+    end_time: "17:45:00",
     timezone: "America/Chicago",
     projects: [
       "CE for Relationship Development"
     ]
   },
-  {
-    name: "Contextually-Aware Metacognitive Practice SIG",
-    description: "Weekly office hours for CAMP SIG",
-    day_of_week: "Thursday",
-    start_time: "11:00:00",
-    end_time: "13:30:00",
-    timezone: "America/Chicago",
-    projects: [
-      "Cardinal",
-      "Path"
-    ]
-  }
 ];
