@@ -76,6 +76,7 @@ export const prepopulateSprintCache = async () => {
  */
 const getSprintLogForProject = async (project) => {
   try {
+    // TODO: maybe turn this check off for dev so that it goes faster
     // get sprint url from project and last edit timestamp
     let sprintUrl = project["sprint_log"];
     let lastEditDate = await getSprintLogLastUpdate(sprintUrl);

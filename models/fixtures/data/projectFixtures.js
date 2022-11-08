@@ -12,7 +12,7 @@ export const projectData = [
     sig_head: "Kapil Garg",
     faculty_mentor: "Haoqi Zhang",
     sprint_log: (process.env.NODE_ENV === "development") ?
-      "https://docs.google.com/spreadsheets/d/1ikJ2PZix-5VSJ0iUPp0SD9RC8gTlU8B0FQ1BedH2LSI" :
+      "https://docs.google.com/spreadsheets/d/1F6zIPtO7acEtG7l-ju5nByvBLKOhALj9MgEp0blNs3o" :
       "https://docs.google.com/spreadsheets/d/1ikJ2PZix-5VSJ0iUPp0SD9RC8gTlU8B0FQ1BedH2LSI",
     practical_research_canvas: "https://docs.google.com/spreadsheets/d/1IYDaFNGJFuAD2LyVP2XM1QMLiz-WKeqxeJ51syZUai0",
     research_research_canvas: "https://docs.google.com/spreadsheets/d/1QrhTA2vDjvfaXG25Leq1apjkTFqXiPqYRR3pkwffgBk",
@@ -27,7 +27,7 @@ export const projectData = [
     sig_head: "Kapil Garg",
     faculty_mentor: "Haoqi Zhang",
     sprint_log: (process.env.NODE_ENV === "development") ?
-      "https://docs.google.com/spreadsheets/d/1t8GYyiVd46XHeTVIA2694wtZMBxQ6KlR0ZBdaToaUuQ" :
+      "https://docs.google.com/spreadsheets/d/1NkAfUNxhmq0dwtlZAB_pUks8W6gSF2yS4FstJi6t_NA" :
       "https://docs.google.com/spreadsheets/d/1t8GYyiVd46XHeTVIA2694wtZMBxQ6KlR0ZBdaToaUuQ",
     practical_research_canvas: "",
     research_research_canvas: "",
@@ -108,7 +108,7 @@ export const projectData = [
     sig_head: "Haoqi Zhang",
     faculty_mentor: "Haoqi Zhang",
     sprint_log: (process.env.NODE_ENV === "development") ?
-      "https://docs.google.com/spreadsheets/d/1vVS3N744F5qrDH7xm6-xvoB1fUIm7OaRnEuUoaOB0Ks" :
+      "https://docs.google.com/spreadsheets/d/1T4dsdvX9jZxhnpyXsj1mwzz-cntXqqo34nV71IwxUmc" :
       "https://docs.google.com/spreadsheets/d/1vVS3N744F5qrDH7xm6-xvoB1fUIm7OaRnEuUoaOB0Ks",
     practical_research_canvas: "https://docs.google.com/spreadsheets/d/1ezRwGGN_pSvAlxa6FK9zdy9B1F_oX8ECBXKDSVDTMRU/edit?usp=sharing",
     research_research_canvas: "https://docs.google.com/spreadsheets/d/11HPks7WPD_TSW-3pF4FI1FyOp0M6Pv4wumoNVYNw9CQ/edit?usp=sharing",
