@@ -8,6 +8,7 @@ export const Project = mongoose.model('Project',
           sig_head: { type: mongoose.Schema.Types.ObjectId, ref: 'Person' }, // phd students can have faculty mentor SIG heads
           faculty_mentor: { type: mongoose.Schema.Types.ObjectId, ref: 'Faculty' }, // should enable a list if there could be multiple faculty mentors for a student
           sprint_log: { type: String, required: true },
+          compass: { type: String, required: false },
           practical_research_canvas: { type: String, required: false },
           research_research_canvas: { type: String, required: false },
           eoq_checklist: { type: String, required: false },
