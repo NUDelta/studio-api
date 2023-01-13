@@ -44,48 +44,29 @@ export const sigSocialStructuresData = [
   }
 ];
 
-// TODO: update
 export const onboardingPairData = [
   {
     name: "",
     description: "",
-    mentor: "Cindy Hu",
-    mentee: "Dani Zhang"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Parveen Dhanoa",
-    mentee: "Yabi Ayele"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Richard Lam",
-    mentee: "Mieraf Mulat"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Ryan Louie",
-    mentee: "Chase Duvall"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Gobi Dasu",
-    mentee: "Alex Feng"
-  },
-  {
-    name: "",
-    description: "",
-    mentor: "Alexandra Andreiu",
-    mentee: "Rawan Mohamed"
+    mentor: "Alex Feng",
+    mentee: "Lev Rosenberg"
   },
   {
     name: "",
     description: "",
     mentor: "Amy Guo",
-    mentee: "Victoria Tran"
+    mentee: "Pablo Gupta"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Dani Zhang",
+    mentee: "Grace Wang"
+  },
+  {
+    name: "",
+    description: "",
+    mentor: "Victoria Tran",
+    mentee: "Li Tan"
   },
 ];
