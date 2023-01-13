@@ -4,9 +4,6 @@ import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
 
-// slack responses
-import slackResponses from "./imports/slack/cannedResponses.js"
-
 // routes
 import { peopleRouter } from "./routes/people.routes.js";
 import { socialStructureRouter } from "./routes/socialStructures.routes.js";
@@ -41,11 +38,6 @@ const receiver = new Slack.ExpressReceiver({
 export const app = new Slack.App({
   token: process.env.SLACK_BOT_TOKEN,
   receiver: receiver
-});
-
-// add canned slack responses
-slackResponses.map((responseObject) => {
-  app.message(responseObject.cue, responseObject.response);
 });
 
 // TODO: have message update the same text so multiple messages aren't coming in
