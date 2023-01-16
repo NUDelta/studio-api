@@ -48,7 +48,7 @@ export const nonPhdStudentData = [
   {
     name: "Alex Feng",
     email: "alexfeng2024@u.northwestern.edu",
-    slack_id: (process.env.NODE_ENV === "development") ? "U03EA8ADL3D" : "U03JH5TCKFC",
+    slack_id: (process.env.NODE_ENV === "development") ? "U04JADU3GUT" : "U03JH5TCKFC",
     sig_member: "Networked Orchestration Technologies",
     sig_head: "Kapil Garg",
     individual_progress_map: "https://docs.google.com/spreadsheets/d/1SCHQjFryZe8HDQlcLFRB1eh4P9v8M0hvotj0Nyub9Lg/edit",

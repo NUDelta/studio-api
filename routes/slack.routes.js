@@ -456,3 +456,109 @@ slackRouter.post("/presentSummaryToPerson", async (req, res) => {
     res.send(msg);
   }
 });
+
+
+/**
+ * Create a Slack Slash Command for creating reminders using Organizational Objects.
+ * /osRemind @Alex "test message" "before SIG"
+ * /osRemind @rawanmohamed2023 @Chase Duvall  "hey rawan/chase! check out this thing: adsasd, asdasd" "after studio"
+ * /osRemind #proj-orch-plan-reflect @Alex "test message 2323232" "before OH"
+ */
+slackRouter.post("/osRemind", async (req, res) => {
+  try {
+    // parse out request from slack user
+    const reqBody = req.body;
+    const reminderAuthor = reqBody.user_id;
+    const reminderStr = reqBody.text;
+
+    // format reminder string to replace quotes before parsing
+    const formattedReminderStr = reminderStr.replace(/“/g, '"').replace(/”/g, '"');
+
+    // parse out message and opportunity
+    const betweenQuotesRegexPattern = /(?<=((?<=[\s"]|^)["]))(?:(?=(\\?))\2.)*?(?=\1)/gu;
+    let [message, opportunity] = formattedReminderStr.match(betweenQuotesRegexPattern);
+    let matchIndices = Array.from(formattedReminderStr.matchAll(betweenQuotesRegexPattern)).map(x => x.index);
+
+    let parsedOpportunity = parseOsOpportunity(opportunity);
+
+    // parse out targets of reminder
+    let reminderTargetsArr = formattedReminderStr.slice(0, matchIndices[0] - 1).trim().split("> ");
+    const channelRegexPattern = /([#]).*([|])/u;
+    const userRegexPattern = /([@]).*([|])/u;
+    let parsedTargets = reminderTargetsArr.map(targetStr => {
+      // see if we get a channel or user match
+      let channelMatch = targetStr.match(channelRegexPattern);
+      let userMatch = targetStr.match(userRegexPattern);
+
+      if (channelMatch !== null) {
+        return {
+          "type": "channel",
+          "id": channelMatch[0].replace("|", "").replace("#", "")
+        }
+      }
+
+      if (userMatch !== null) {
+        return {
+          "type": "user",
+          "id": userMatch[0].replace("|", "").replace("@", "")
+        }
+      }
+
+      return null;
+    });
+
+    // construct final object and return
+    let engineObject = {
+      author: reminderAuthor,
+      targets: parsedTargets,
+      message: message,
+      opportunity: parsedOpportunity
+    };
+
+    res.json(engineObject);
+  } catch (error) {
+    let msg = `Error in /slack/presentOptionsToPerson: ${ error }`;
+    console.error(msg)
+    res.send(msg);
+  }
+});
+
+/**
+ * osRemind parser
+ */
+const parseOsOpportunity = (opportunity) => {
+  opportunity = opportunity.toLowerCase();
+
+  // parse when into a command using organizational objects
+  let osEngineCommand = "";
+  switch(opportunity) {
+    case "before studio":
+      osEngineCommand = `await this.morningOfVenue( 
+          await this.venues.find(this.where("name", "Studio Meeting"))
+        );`;
+      break;
+    case "before sig":
+      osEngineCommand = `await this.morningOfVenue( 
+          await this.venues.find(this.where("kind", "SigMeeting"))
+        );`;
+      break;
+    case "tomorrow":
+      // TODO: I think we'd need to write a daysAfter timeHelper for this..
+      osEngineCommand = "true";
+      break;
+    // midweek will ping mentors 4 days before SIG
+    case "midweek":
+      osEngineCommand = `await this.daysBeforeVenue( 
+          await this.venues.find(this.where("kind", "SigMeeting")), 
+          4
+        );`;
+      break;
+    default:
+      osEngineCommand = "false";
+      break;
+  }
+
+  return `async function() {
+      return ${ osEngineCommand }
+    }`
+}

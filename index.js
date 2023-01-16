@@ -97,6 +97,7 @@ app.receiver.app.use(express.urlencoded({
   extended: true
 }));
 
+// data routes
 app.receiver.app.use('/people', peopleRouter);
 app.receiver.app.use('/socialStructures', socialStructureRouter);
 app.receiver.app.use('/venues', venueRouter);
