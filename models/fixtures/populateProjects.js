@@ -1,9 +1,9 @@
-import { Project } from "../project/project.js";
-import { Person } from "../people/person.js";
-import { Faculty } from "../people/faculty.js";
+import { Project } from '../project/project.js';
+import { Person } from '../people/person.js';
+import { Faculty } from '../people/faculty.js';
 
-import { projectData } from "./data/projectFixtures.js";
-import { Process } from "../processes/process.js";
+import { projectData } from './data/projectFixtures.js';
+import { Process } from '../processes/process.js';
 
 /**
  * Creates an array of Promises that, when resolved, create Project documents.
@@ -21,7 +21,9 @@ const createProjectDocuments = async () => {
       studentPromises.push(Person.findOne({ name: studentName }));
     }
     let students = await Promise.all(studentPromises);
-    let studentIds = students.map((student) => { return student._id; });
+    let studentIds = students.map((student) => {
+      return student._id;
+    });
 
     // get sig head
     let sigHead = await Person.findOne({ name: project.sig_head });
@@ -44,7 +46,7 @@ const createProjectDocuments = async () => {
       research_research_canvas: project.research_research_canvas,
       eoq_checklist: project.eoq_checklist,
       slack_channel: project.slack_channel,
-      status_update_date: project.status_update_date
+      status_update_date: project.status_update_date,
     });
     projectDocumentPromises.push(currProjectDocument.save());
   }
@@ -71,4 +73,4 @@ export default async function main() {
 export const isProjectEmpty = async () => {
   let foundProjects = await Project.find({});
   return foundProjects.length === 0;
-}
+};

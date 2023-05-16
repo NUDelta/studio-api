@@ -8,14 +8,14 @@
  * @param isMarkdown optional boolean that specifies text is Markdown text.
  * @returns {{emoji: boolean, text, type: string}}
  */
-export const blockPlainText = (text, isMarkdown=false) => {
+export const blockPlainText = (text, isMarkdown = false) => {
   return {
-    "type": "section",
-    "text": {
-      "type": isMarkdown ? "mrkdwn" : "plain_text",
-      "text": text,
-      ...(isMarkdown ? {} : { "emoji": true })
-    }
+    type: 'section',
+    text: {
+      type: isMarkdown ? 'mrkdwn' : 'plain_text',
+      text: text,
+      ...(isMarkdown ? {} : { emoji: true }),
+    },
   };
 };
 
@@ -27,32 +27,37 @@ export const blockPlainText = (text, isMarkdown=false) => {
  * @param isMarkdown optional boolean that specifies text is Markdown text.
  * @returns {{text: {text, type: (string)}, type: string, accessory: {action_id, options: *, placeholder: {emoji: boolean, text: string, type: string}, type: string}}}
  */
-export const blockStaticSingleSelect = (descriptorText, options, actionId, isMarkdown=false) => {
+export const blockStaticSingleSelect = (
+  descriptorText,
+  options,
+  actionId,
+  isMarkdown = false
+) => {
   return {
-    "type": "section",
-    "text": {
-      "type": isMarkdown ? "mrkdwn" : "plain_text",
-      "text": descriptorText
+    type: 'section',
+    text: {
+      type: isMarkdown ? 'mrkdwn' : 'plain_text',
+      text: descriptorText,
     },
-    "accessory": {
-      "type": "static_select",
-      "placeholder": {
-        "type": "plain_text",
-        "text": "Select an item",
-        "emoji": true
+    accessory: {
+      type: 'static_select',
+      placeholder: {
+        type: 'plain_text',
+        text: 'Select an item',
+        emoji: true,
       },
-      "options": options.map(option => {
+      options: options.map((option) => {
         return {
-          "text": {
-            "type": "plain_text",
-            "text": option.text,
-            "emoji": true
+          text: {
+            type: 'plain_text',
+            text: option.text,
+            emoji: true,
           },
-          "value": option.value
-        }
+          value: option.value,
+        };
       }),
-      "action_id": actionId
-    }
+      action_id: actionId,
+    },
   };
 };
 
@@ -64,32 +69,37 @@ export const blockStaticSingleSelect = (descriptorText, options, actionId, isMar
  * @param isMarkdown optional boolean that specifies text is Markdown text.
  * @returns {{text: {text, type: (string)}, type: string, accessory: {action_id, options: *, placeholder: {emoji: boolean, text: string, type: string}, type: string}}}
  */
-export const blockStaticMultiSelect = (descriptorText, options, actionId, isMarkdown=false) => {
+export const blockStaticMultiSelect = (
+  descriptorText,
+  options,
+  actionId,
+  isMarkdown = false
+) => {
   return {
-    "type": "section",
-    "text": {
-      "type": isMarkdown ? "mrkdwn" : "plain_text",
-      "text": descriptorText
+    type: 'section',
+    text: {
+      type: isMarkdown ? 'mrkdwn' : 'plain_text',
+      text: descriptorText,
     },
-    "accessory": {
-      "type": "multi_static_select",
-      "placeholder": {
-        "type": "plain_text",
-        "text": "Select options",
-        "emoji": true
+    accessory: {
+      type: 'multi_static_select',
+      placeholder: {
+        type: 'plain_text',
+        text: 'Select options',
+        emoji: true,
       },
-      "options": options.map(option => {
+      options: options.map((option) => {
         return {
-          "text": {
-            "type": "plain_text",
-            "text": option.text,
-            "emoji": true
+          text: {
+            type: 'plain_text',
+            text: option.text,
+            emoji: true,
           },
-          "value": option.value
-        }
+          value: option.value,
+        };
       }),
-      "action_id": actionId
-    }
+      action_id: actionId,
+    },
   };
 };
 
@@ -101,36 +111,43 @@ export const blockStaticMultiSelect = (descriptorText, options, actionId, isMark
  * @param isMarkdown optional boolean that specifies text is Markdown text.
  * @returns {{text: {text, type: (string)}, type: string, accessory: {action_id, options: *, type: string}}}
  */
-export const blockCheckBoxes = (descriptorText, options, actionId, isMarkdown=false) => {
+export const blockCheckBoxes = (
+  descriptorText,
+  options,
+  actionId,
+  isMarkdown = false
+) => {
   return {
-    "type": "section",
-    "text": {
-      "type": isMarkdown ? "mrkdwn" : "plain_text",
-      "text": descriptorText
+    type: 'section',
+    text: {
+      type: isMarkdown ? 'mrkdwn' : 'plain_text',
+      text: descriptorText,
     },
-    "accessory": {
-      "type": "checkboxes",
-      "options": options.map(option => {
+    accessory: {
+      type: 'checkboxes',
+      options: options.map((option) => {
         let optionObj = {
-          "text": {
-            "type": isMarkdown ? "mrkdwn" : "plain_text",
-            "text": option.text,
+          text: {
+            type: isMarkdown ? 'mrkdwn' : 'plain_text',
+            text: option.text,
           },
-          "value": option.value
+          value: option.value,
         };
 
         // check if description is included and not empty, and add if so
-        if(option.description !== undefined &&
+        if (
+          option.description !== undefined &&
           option.description !== null &&
-          option.description !== '') {
-          optionObj["description"] = {
-            "type": isMarkdown ? "mrkdwn" : "plain_text",
-            "text": option.description
+          option.description !== ''
+        ) {
+          optionObj['description'] = {
+            type: isMarkdown ? 'mrkdwn' : 'plain_text',
+            text: option.description,
           };
         }
         return optionObj;
       }),
-      "action_id": actionId
-    }
+      action_id: actionId,
+    },
   };
 };

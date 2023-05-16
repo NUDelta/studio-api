@@ -1,9 +1,13 @@
-import { Person } from "../people/person.js"
+import { Person } from '../people/person.js';
 import { NonPhdStudent } from '../people/nonphdstudent.js';
 import { PhdStudent } from '../people/phdstudent.js';
 import { Faculty } from '../people/faculty.js';
 
-import { facultyData, phdStudentData, nonPhdStudentData } from "./data/peopleFixtures.js";
+import {
+  facultyData,
+  phdStudentData,
+  nonPhdStudentData,
+} from './data/peopleFixtures.js';
 
 /**
  * Creates an array of Promises that, when resolved, create Faculty Member documents.
@@ -20,7 +24,7 @@ const createFacultyDocuments = async () => {
       email: facultyMember.email,
       slack_id: facultyMember.slack_id,
       sig_member: facultyMember.sig_member,
-      sig_lead: facultyMember.sig_lead
+      sig_lead: facultyMember.sig_lead,
     });
     facultyDocumentPromises.push(currFacultyDocument.save());
   });
@@ -110,4 +114,4 @@ export default async function main() {
 export const isPeopleEmpty = async () => {
   let foundPeople = await Person.find({});
   return foundPeople.length === 0;
-}
+};

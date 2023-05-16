@@ -1,25 +1,26 @@
-import { Router } from "express";
+import { Router } from 'express';
 
-import { Person } from "../models/people/person.js";
+import { Person } from '../models/people/person.js';
 import {
   fetchAllPeople,
   fetchFaculty,
   fetchNonPhdStudents,
-  fetchPhdStudents, fetchPersonByName
-} from "../controllers/people/fetch.js";
-import { getSprintLogForPerson } from "../controllers/tools/sprints/sprintManager.js";
+  fetchPhdStudents,
+  fetchPersonByName,
+} from '../controllers/people/fetch.js';
+import { getSprintLogForPerson } from '../controllers/tools/sprints/sprintManager.js';
 
 export const peopleRouter = new Router();
 
 /**
  * Fetch all people.
  */
-peopleRouter.get("/", async (req, res) => {
+peopleRouter.get('/', async (req, res) => {
   try {
     res.json(await fetchAllPeople());
   } catch (error) {
-    let msg = `Error in /people/: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -31,8 +32,8 @@ peopleRouter.get('/faculty', async (req, res) => {
   try {
     res.json(await fetchFaculty());
   } catch (error) {
-    let msg = `Error in /people/faculty: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/faculty: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -44,8 +45,8 @@ peopleRouter.get('/phdstudents', async (req, res) => {
   try {
     res.json(await fetchPhdStudents());
   } catch (error) {
-    let msg = `Error in /people/phdstudents: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/phdstudents: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -57,8 +58,8 @@ peopleRouter.get('/nonphdstudents', async (req, res) => {
   try {
     res.json(await fetchNonPhdStudents());
   } catch (error) {
-    let msg = `Error in /people/nonphdstudents: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/nonphdstudents: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -71,14 +72,14 @@ peopleRouter.get('/byName', async (req, res) => {
     // fetch the person's name from the query that we want their info for
     let personName = req.query.personName;
     if (personName === undefined) {
-      throw new Error("personName parameter not specified.");
+      throw new Error('personName parameter not specified.');
     }
 
     // fetch and return person
     res.json(await fetchPersonByName(personName));
   } catch (error) {
-    let msg = `Error in /people/byName: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/byName: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -87,12 +88,12 @@ peopleRouter.get('/byName', async (req, res) => {
 /**
  * Get Sprint Log for a person.
  */
-peopleRouter.get("/fetchSprintLogForPerson", async (req, res) => {
+peopleRouter.get('/fetchSprintLogForPerson', async (req, res) => {
   try {
     // fetch the person's name from the query that we want the sprint log for, and check if valid
     let personName = req.query.personName;
     if (personName === undefined) {
-      throw new Error("personName parameter not specified.");
+      throw new Error('personName parameter not specified.');
     }
 
     // attempt to get sprint log for personName
@@ -101,8 +102,8 @@ peopleRouter.get("/fetchSprintLogForPerson", async (req, res) => {
     // return json of sprint log
     res.json(sprintLogForPerson);
   } catch (error) {
-    let msg = `Error in /people/fetchSprintLogForPerson: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/fetchSprintLogForPerson: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });
@@ -111,25 +112,25 @@ peopleRouter.get("/fetchSprintLogForPerson", async (req, res) => {
 /**
  * Get Slack ID for a person.
  */
-peopleRouter.get("/slackIdForPerson", async (req, res) => {
+peopleRouter.get('/slackIdForPerson', async (req, res) => {
   try {
     // fetch the person's name from the query that we want the slack channel for
     let personName = req.query.personName;
     if (personName === undefined) {
-      throw new Error("personName parameter not specified.");
+      throw new Error('personName parameter not specified.');
     }
 
     // get person
-    let relevantPerson = await Person.findOne( { name: personName })
+    let relevantPerson = await Person.findOne({ name: personName });
     if (relevantPerson === null) {
-      throw new Error(`no person found for ${ personName }`);
+      throw new Error(`no person found for ${personName}`);
     }
 
     // return json of slack channel for project
-    res.json(relevantPerson["slack_id"]);
+    res.json(relevantPerson['slack_id']);
   } catch (error) {
-    let msg = `Error in /people/slackIdForPerson: ${ error }`;
-    console.error(msg)
+    let msg = `Error in /people/slackIdForPerson: ${error}`;
+    console.error(msg);
     res.send(msg);
   }
 });

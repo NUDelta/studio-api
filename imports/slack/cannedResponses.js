@@ -10,23 +10,22 @@
  Introduce self to channel.
  */
 const introduceSelf = {
-  cue: "hello!",
+  cue: 'hello!',
   response: async ({ message, say }) => {
-    await say("Hello, I'm the Orchestration Bot! I will send messages throughout the week to your project and SIG channels to help you and your mentor progress your projects and learning.");
-  }
+    await say(
+      "Hello, I'm the Orchestration Bot! I will send messages throughout the week to your project and SIG channels to help you and your mentor progress your projects and learning."
+    );
+  },
 };
 
 /*
  Meaning of life.
  */
 const meaningOfLife = {
-  cue: "what is the meaning of life?",
+  cue: 'what is the meaning of life?',
   response: async ({ message, say }) => {
-    await say("42.");
-  }
-}
+    await say('42.');
+  },
+};
 
-export default [
-  introduceSelf,
-  meaningOfLife
-];
+export default [introduceSelf, meaningOfLife];

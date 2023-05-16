@@ -1,11 +1,11 @@
-import { Person } from "../../../models/people/person.js";
-import { Project } from "../../../models/project/project.js";
-import { SprintCache } from "../../../models/cache/sprintCache.js";
+import { Person } from '../../../models/people/person.js';
+import { Project } from '../../../models/project/project.js';
+import { SprintCache } from '../../../models/cache/sprintCache.js';
 
-import { google } from "googleapis";
-import { googleDriveAuth } from "../../../imports/utils/googleAuth.js"
-import { SprintLog } from "./sprintLogParser.js";
-import { fetchCurrentSprint } from "../../processes/sprints/fetch.js";
+import { google } from 'googleapis';
+import { googleDriveAuth } from '../../../imports/utils/googleAuth.js';
+import { SprintLog } from './sprintLogParser.js';
+import { fetchCurrentSprint } from '../../processes/sprints/fetch.js';
 
 // TODO: there should probably be a generic google spreadsheet tool class
 // this would provide an interface for all the functions related to tools, and implementations for htings like checking last update
@@ -18,13 +18,15 @@ export const getSprintLogForPerson = async (personName) => {
   // attempt to get a project from the db that matches the given project name
   let relevantPerson = await Person.findOne({ name: personName }).exec();
   if (relevantPerson === null) {
-    throw new Error(`person not found for ${ personName }`);
+    throw new Error(`person not found for ${personName}`);
   }
 
   // get a project for the person
-  let relevantProject = await Project.findOne({ students: relevantPerson._id }).exec();
+  let relevantProject = await Project.findOne({
+    students: relevantPerson._id,
+  }).exec();
   if (relevantProject === null) {
-    throw new Error(`no project found for ${ personName }`);
+    throw new Error(`no project found for ${personName}`);
   }
 
   // get sprint log for the relevant project
@@ -40,7 +42,7 @@ export const getSprintLogForProjectName = async (projectName) => {
   // attempt to get a project from the db that matches the given project name
   let relevantProject = await Project.findOne({ name: projectName });
   if (relevantProject === null) {
-    throw new Error(`no project found for ${ projectName }`);
+    throw new Error(`no project found for ${projectName}`);
   }
 
   // get sprint log for the relevant project
@@ -52,7 +54,7 @@ export const getSprintLogForProjectName = async (projectName) => {
  * @return {Promise<void>}
  */
 export const prepopulateSprintCache = async () => {
-  console.log("Populating sprint log cache...");
+  console.log('Populating sprint log cache...');
 
   // clear current cache
   await SprintCache.deleteMany({}).exec();
@@ -61,11 +63,11 @@ export const prepopulateSprintCache = async () => {
   let allProjects = await Project.find({}).exec();
 
   // create an array of promises to execute
-  let cacheUpdatePromises = allProjects.map(project => {
+  let cacheUpdatePromises = allProjects.map((project) => {
     return getSprintLogForProject(project);
   });
   await Promise.all(cacheUpdatePromises);
-  console.log("Sprint log cache populated.");
+  console.log('Sprint log cache populated.');
 };
 
 /**
@@ -78,7 +80,7 @@ const getSprintLogForProject = async (project) => {
   try {
     // TODO: maybe turn this check off for dev so that it goes faster
     // get sprint url from project and last edit timestamp
-    let sprintUrl = project["sprint_log"];
+    let sprintUrl = project['sprint_log'];
     let lastEditDate = await getSprintLogLastUpdate(sprintUrl);
     // console.log(`Last Edit Date for ${ project["name"] } Sprint Log: ${ lastEditDate }`);
 
@@ -94,13 +96,13 @@ const getSprintLogForProject = async (project) => {
         // console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
 
         // add current sprint
-        cacheData["current_sprint"] = await getDataForCurrentSprint(cacheData);
+        cacheData['current_sprint'] = await getDataForCurrentSprint(cacheData);
         return cacheData;
       }
     }
 
     // cache miss -- get parsed sprint log
-    console.log(`Sprint Cache MISS for project ${ project['name'] }`);
+    console.log(`Sprint Cache MISS for project ${project['name']}`);
 
     // attempt to get sprint log, retrying up to 5 times with 60s in between
     let parsedSprintLog = undefined;
@@ -112,25 +114,35 @@ const getSprintLogForProject = async (project) => {
 
       // if undefined, wait 60 seconds and try again
       if (parsedSprintLog === undefined) {
-        console.log(`getSprintLog(${ project['name'] }) -- Rate limit hit. Waiting 60 seconds before trying again. Retries left: ${ retryCount }`);
-        await new Promise(resolve => setTimeout(resolve, 60 * 1000));
-        console.log(`getSprintLog(${ project['name'] }) -- Attempting to get sprint log again.`);
+        console.log(
+          `getSprintLog(${project['name']}) -- Rate limit hit. Waiting 60 seconds before trying again. Retries left: ${retryCount}`
+        );
+        await new Promise((resolve) => setTimeout(resolve, 60 * 1000));
+        console.log(
+          `getSprintLog(${project['name']}) -- Attempting to get sprint log again.`
+        );
         retryCount -= 1;
       }
     }
 
     // add to cache
     if (cachedSprintLog !== undefined) {
-      await updateCachedSprintLog(cachedSprintLog, parsedSprintLog, lastEditDate);
+      await updateCachedSprintLog(
+        cachedSprintLog,
+        parsedSprintLog,
+        lastEditDate
+      );
     } else {
       await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
     }
 
     // add current sprint, and return parsed sprint log if successful
-    parsedSprintLog["current_sprint"] = await getDataForCurrentSprint(parsedSprintLog);
+    parsedSprintLog['current_sprint'] = await getDataForCurrentSprint(
+      parsedSprintLog
+    );
     return parsedSprintLog;
   } catch (error) {
-    console.error(`Error in getSprintLogForProject: ${ error }`);
+    console.error(`Error in getSprintLogForProject: ${error}`);
     return error;
   }
 };
@@ -146,7 +158,9 @@ const getSprintLogForProject = async (project) => {
  */
 const getCachedSprintLog = async (project) => {
   // check if exists
-  let cachedSprintLog = await SprintCache.findOne({ project: project._id }).exec();
+  let cachedSprintLog = await SprintCache.findOne({
+    project: project._id,
+  }).exec();
   if (cachedSprintLog !== null) {
     return cachedSprintLog;
   }
@@ -165,7 +179,7 @@ const addSprintToCache = async (projectId, sprintLogData, lastUpdated) => {
   let newSprintCacheEntry = new SprintCache({
     project: projectId,
     data: sprintLogData,
-    last_modified: lastUpdated
+    last_modified: lastUpdated,
   });
 
   return newSprintCacheEntry.save();
@@ -178,7 +192,11 @@ const addSprintToCache = async (projectId, sprintLogData, lastUpdated) => {
  * @param updatedDate
  * @return {Promise<*>}
  */
-const updateCachedSprintLog = async (cachedSprintLog, updatedData, updatedDate) => {
+const updateCachedSprintLog = async (
+  cachedSprintLog,
+  updatedData,
+  updatedDate
+) => {
   cachedSprintLog.data = updatedData;
   cachedSprintLog.last_modified = updatedDate;
   return cachedSprintLog.save();
@@ -192,7 +210,9 @@ const updateCachedSprintLog = async (cachedSprintLog, updatedData, updatedDate) 
 const getSprintLogLastUpdate = async (fileUrl) => {
   // TODO: this will break if "/edit" is included in the url
   // parse out fileId
-  let sprintLogFileId = fileUrl.split('https://docs.google.com/spreadsheets/d/')[1];
+  let sprintLogFileId = fileUrl.split(
+    'https://docs.google.com/spreadsheets/d/'
+  )[1];
 
   // create a google drive instance
   let drive = google.drive('v3');
@@ -202,16 +222,15 @@ const getSprintLogLastUpdate = async (fileUrl) => {
     let fileInfo = await drive.files.get({
       auth: googleDriveAuth,
       fileId: sprintLogFileId,
-      fields: "*"
+      fields: '*',
     });
 
     return new Date(fileInfo['data']['modifiedTime']);
   } catch (error) {
-    console.error(`Error in getSprintLogLastUpdate: ${ error }`);
+    console.error(`Error in getSprintLogLastUpdate: ${error}`);
     return error;
   }
 };
-
 
 /**
  * Gets the data for the current sprint, based on the current date.
@@ -225,16 +244,20 @@ const getDataForCurrentSprint = async (allSprintLogData) => {
     let currentSprint = await fetchCurrentSprint();
 
     // check if empty sprint log
-    if (currentSprint &&
+    if (
+      currentSprint &&
       Object.keys(currentSprint).length === 0 &&
-      Object.getPrototypeOf(currentSprint) === Object.prototype) {
+      Object.getPrototypeOf(currentSprint) === Object.prototype
+    ) {
       return null;
     }
 
     // get data for current sprint
-    let relevantData = allSprintLogData["sprints"].filter(currentSprintData => {
-      return currentSprintData["name"] === currentSprint["name"];
-    });
+    let relevantData = allSprintLogData['sprints'].filter(
+      (currentSprintData) => {
+        return currentSprintData['name'] === currentSprint['name'];
+      }
+    );
 
     // check if sprint data was found, and return if so. otherwise, null.
     if (relevantData.length > 0) {
@@ -242,7 +265,7 @@ const getDataForCurrentSprint = async (allSprintLogData) => {
     }
     return null;
   } catch (error) {
-    console.error(`Error in getDataForCurrentSprint: ${ error }`);
+    console.error(`Error in getDataForCurrentSprint: ${error}`);
     return error;
   }
 };

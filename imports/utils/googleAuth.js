@@ -1,11 +1,11 @@
-import { google } from "googleapis";
+import { google } from 'googleapis';
 
 /*
   Fetch information for service account.
  */
 export const googleServiceAccountInfo = {
-  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ?? "",
-  private_key: process.env.GOOGLE_PRIVATE_KEY ?? ""
+  client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL ?? '',
+  private_key: process.env.GOOGLE_PRIVATE_KEY ?? '',
 };
 
 /*
@@ -19,13 +19,14 @@ export const googleDriveAuth = new google.auth.JWT(
     'https://www.googleapis.com/auth/drive',
     'https://www.googleapis.com/auth/drive.file',
     'https://www.googleapis.com/auth/drive.appdata',
-    'https://www.googleapis.com/auth/drive.metadata'
-  ]);
+    'https://www.googleapis.com/auth/drive.metadata',
+  ]
+);
 
 googleDriveAuth.authorize(function (err, tokens) {
   if (err) {
-    console.log(`Error when authorizing Google Drive: ${ err }`);
+    console.log(`Error when authorizing Google Drive: ${err}`);
   } else {
-    console.log("Google Drive successfully authorized.");
+    console.log('Google Drive successfully authorized.');
   }
 });

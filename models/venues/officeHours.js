@@ -1,8 +1,9 @@
-import mongoose from "mongoose";
-import { Venue } from "./venue.js";
+import mongoose from 'mongoose';
+import { Venue } from './venue.js';
 
-export const OfficeHours = Venue.discriminator("OfficeHours",
+export const OfficeHours = Venue.discriminator(
+  'OfficeHours',
   new mongoose.Schema({
-    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }]
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Project' }],
   })
 );

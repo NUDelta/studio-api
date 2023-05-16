@@ -3,8 +3,8 @@
  * such as a SIG meeting in the second week of the quarter.
  */
 
-import { Sprint } from "../../models/processes/sprints.js";
-import { DateTime, Info } from "luxon";
+import { Sprint } from '../../models/processes/sprints.js';
+import { DateTime, Info } from 'luxon';
 
 /**
  * Computes the date and time for a venue in a given week.
@@ -18,26 +18,26 @@ const computeInstanceOfVenueDuringWeek = (venue, week) => {
 
   // shift to day of week based on whn SIG is
   let dayOfFirstSig = weekOfFirstSig.set({
-    weekday: Info.weekdays().indexOf(venue.day_of_week) + 1}
-  );
+    weekday: Info.weekdays().indexOf(venue.day_of_week) + 1,
+  });
 
   // add timezone info
   let venueTz = venue.timezone;
   let timezoneShiftedSigDay = dayOfFirstSig.setZone(venueTz);
 
   // create dates with start and end time
-  let [startHours, startMinutes, startSeconds] = venue.start_time.split(":");
+  let [startHours, startMinutes, startSeconds] = venue.start_time.split(':');
   let firstSigStartTime = timezoneShiftedSigDay.set({
     hour: startHours,
     minute: startMinutes,
-    second: startSeconds
+    second: startSeconds,
   });
 
-  let [endHours, endMinutes, endSeconds] = venue.end_time.split(":");
+  let [endHours, endMinutes, endSeconds] = venue.end_time.split(':');
   let firstSigEndTime = timezoneShiftedSigDay.set({
     hour: endHours,
     minute: endMinutes,
-    second: endSeconds
+    second: endSeconds,
   });
 
   // format and return
@@ -45,7 +45,7 @@ const computeInstanceOfVenueDuringWeek = (venue, week) => {
     name: venue.name,
     start_time: firstSigStartTime.toUTC().toJSDate(),
     end_time: firstSigEndTime.toUTC().toJSDate(),
-    timezone: venue.timezone
+    timezone: venue.timezone,
   };
 };
 
@@ -57,18 +57,18 @@ const computeInstanceOfVenueDuringWeek = (venue, week) => {
  */
 export const getFirstInstanceOfVenue = async (venue) => {
   // check what type of venue it is to determine if we should use sprint 0 or sprint 1
-  let relevantSprint = venue.kind === "StudioMeeting" ? "Sprint 0" : "Sprint 1";
+  let relevantSprint = venue.kind === 'StudioMeeting' ? 'Sprint 0' : 'Sprint 1';
 
   // get processes to figure out when last sprint starts
   let relevantProcess = await Sprint.findOne({
-    name: relevantSprint
+    name: relevantSprint,
   });
   if (relevantProcess === null) {
-    throw new Error(`no sprint info found for ${ relevantSprint }`);
+    throw new Error(`no sprint info found for ${relevantSprint}`);
   }
 
   // compute and return specific date
-  return computeInstanceOfVenueDuringWeek(venue, relevantProcess.start_day)
+  return computeInstanceOfVenueDuringWeek(venue, relevantProcess.start_day);
 };
 
 /**
@@ -81,12 +81,12 @@ export const getLastInstanceOfVenue = async (venue) => {
   // TODO: I think there's an edge case with Sprint 5 in Fall since there are multiple weeks.
   // get processes to figure out when last sprint starts
   let relevantProcess = await Sprint.findOne({
-    name: "Sprint 5"
+    name: 'Sprint 5',
   });
   if (relevantProcess === null) {
     throw new Error(`no sprint info found for Sprint 5`);
   }
 
   // compute and return specific date
-  return computeInstanceOfVenueDuringWeek(venue, relevantProcess.start_day)
+  return computeInstanceOfVenueDuringWeek(venue, relevantProcess.start_day);
 };

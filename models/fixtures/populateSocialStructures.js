@@ -1,10 +1,13 @@
-import { SocialStructure } from "../social-structures/socialStructure.js";
-import { SigStructure } from "../social-structures/sig.js";
-import { CommitteeStructure } from "../social-structures/committee.js";
-import { OnboardingPairing } from "../social-structures/onboardingPairing.js";
+import { SocialStructure } from '../social-structures/socialStructure.js';
+import { SigStructure } from '../social-structures/sig.js';
+import { CommitteeStructure } from '../social-structures/committee.js';
+import { OnboardingPairing } from '../social-structures/onboardingPairing.js';
 
-import { onboardingPairData, sigSocialStructuresData } from "./data/socialStructureFixtures.js";
-import { Person } from "../people/person.js";
+import {
+  onboardingPairData,
+  sigSocialStructuresData,
+} from './data/socialStructureFixtures.js';
+import { Person } from '../people/person.js';
 
 /**
  * Creates the SIG Social Structure.
@@ -22,7 +25,9 @@ const createSigSocialStructureDocuments = async () => {
       membersPromises.push(Person.findOne({ name: memberName }));
     }
     let members = await Promise.all(membersPromises);
-    let memberIds = members.map(member => { return member._id });
+    let memberIds = members.map((member) => {
+      return member._id;
+    });
 
     // get SIG head
     let sigHead = await Person.findOne({ name: sigStruct.sig_head });
@@ -57,8 +62,8 @@ const createOnboardingPairsDocuments = async () => {
 
     // create document
     onboardingPairsDocuments.push({
-      name: `${ onboardingStruct.mentor } - ${ onboardingStruct.mentee } onboarding pairing`,
-      description: `Mentor-Mentee pairing for ${ onboardingStruct.mentor } and ${ onboardingStruct.mentee }`,
+      name: `${onboardingStruct.mentor} - ${onboardingStruct.mentee} onboarding pairing`,
+      description: `Mentor-Mentee pairing for ${onboardingStruct.mentor} and ${onboardingStruct.mentee}`,
       mentor: mentor._id,
       mentee: mentee._id,
     });
@@ -87,4 +92,4 @@ export default async function main() {
 export const isSocialStructureEmpty = async () => {
   let foundSocialStructures = await SocialStructure.find({});
   return foundSocialStructures.length === 0;
-}
+};

@@ -1,8 +1,8 @@
-import { Process } from "../processes/process.js";
-import { Sprint } from "../processes/sprints.js";
+import { Process } from '../processes/process.js';
+import { Sprint } from '../processes/sprints.js';
 
-import { sprintProcessData } from "./data/processFixtures.js";
-import { Person } from "../people/person.js";
+import { sprintProcessData } from './data/processFixtures.js';
+import { Person } from '../people/person.js';
 
 /**
  * Creates an array of Promises that, when resolved, create Sprint Process documents.
@@ -17,7 +17,7 @@ const createSprintProcessDocuments = async () => {
     let currSprintProcessDocument = new Sprint({
       name: sprintProcess.name,
       start_day: sprintProcess.start_day,
-      end_day:sprintProcess.end_day
+      end_day: sprintProcess.end_day,
     });
     sprintProcessDocumentPromises.push(currSprintProcessDocument.save());
   });
@@ -44,4 +44,4 @@ export default async function main() {
 export const isProcessEmpty = async () => {
   let foundProcesses = await Process.find({});
   return foundProcesses.length === 0;
-}
+};

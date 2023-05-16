@@ -2,16 +2,19 @@
  * This file is responsible for fetching venues from the database.
  */
 
-import { Venue } from "../../models/venues/venue.js";
-import { SigMeeting } from "../../models/venues/sigMeeting.js";
-import { StudioMeeting } from "../../models/venues/studioMeeting.js";
-import { OfficeHours } from "../../models/venues/officeHours.js";
+import { Venue } from '../../models/venues/venue.js';
+import { SigMeeting } from '../../models/venues/sigMeeting.js';
+import { StudioMeeting } from '../../models/venues/studioMeeting.js';
+import { OfficeHours } from '../../models/venues/officeHours.js';
 
-import { Person } from "../../models/people/person.js";
-import { Project } from "../../models/project/project.js";
-import { SigStructure } from "../../models/social-structures/sig.js";
+import { Person } from '../../models/people/person.js';
+import { Project } from '../../models/project/project.js';
+import { SigStructure } from '../../models/social-structures/sig.js';
 
-import { getFirstInstanceOfVenue, getLastInstanceOfVenue } from "./computeSpecificInstance.js";
+import {
+  getFirstInstanceOfVenue,
+  getLastInstanceOfVenue,
+} from './computeSpecificInstance.js';
 
 /**
  * Fetches all venues.
@@ -20,13 +23,15 @@ import { getFirstInstanceOfVenue, getLastInstanceOfVenue } from "./computeSpecif
 export const fetchAllVenues = async () => {
   try {
     // get all venues
-    return (await Promise.all([
-      fetchSigMeetings(),
-      fetchOfficeHours(),
-      fetchStudioMeetings(),
-    ])).flat();
+    return (
+      await Promise.all([
+        fetchSigMeetings(),
+        fetchOfficeHours(),
+        fetchStudioMeetings(),
+      ])
+    ).flat();
   } catch (error) {
-    console.error(`Error in fetchAllVenues: ${ error }`);
+    console.error(`Error in fetchAllVenues: ${error}`);
     return error;
   }
 };
@@ -36,14 +41,14 @@ export const fetchAllVenues = async () => {
  * @param filters optional parameter for filters to pass to the query.
  * @returns {Promise<>} promise that if resolved, returns a list of SIG meetings.
  */
-export const fetchSigMeetings = async (filters={}) => {
+export const fetchSigMeetings = async (filters = {}) => {
   try {
     // get all SIG Meetings
     return await SigMeeting.find(filters)
-      .populate("attendees")
-      .populate("projects");
+      .populate('attendees')
+      .populate('projects');
   } catch (error) {
-    console.error(`Error in fetchSigMeetings: ${ error }`);
+    console.error(`Error in fetchSigMeetings: ${error}`);
     return error;
   }
 };
@@ -53,14 +58,14 @@ export const fetchSigMeetings = async (filters={}) => {
  * @param filters optional parameter for filters to pass to the query.
  * @returns {Promise<>} promise that if resolved, returns a list of Office Hours.
  */
-export const fetchOfficeHours = async (filters={}) => {
+export const fetchOfficeHours = async (filters = {}) => {
   try {
     // get all Office Hours
     return await OfficeHours.find(filters)
-      .populate("attendees")
-      .populate("projects");
+      .populate('attendees')
+      .populate('projects');
   } catch (error) {
-    console.error(`Error in fetchOfficeHours: ${ error }`);
+    console.error(`Error in fetchOfficeHours: ${error}`);
     return error;
   }
 };
@@ -70,13 +75,12 @@ export const fetchOfficeHours = async (filters={}) => {
  * @param filters optional parameter for filters to pass to the query.
  * @returns {Promise<>} promise that if resolved, returns a list of studio meetings.
  */
-export const fetchStudioMeetings = async (filters={}) => {
+export const fetchStudioMeetings = async (filters = {}) => {
   try {
     // get all Studio Meetings
-    return await StudioMeeting.find(filters)
-      .populate("attendees");
+    return await StudioMeeting.find(filters).populate('attendees');
   } catch (error) {
-    console.error(`Error in fetchStudioMeetings: ${ error }`);
+    console.error(`Error in fetchStudioMeetings: ${error}`);
     return error;
   }
 };
@@ -89,23 +93,25 @@ export const fetchStudioMeetings = async (filters={}) => {
 export const fetchVenuesForPerson = async (personName) => {
   try {
     // get the person object, given their name
-    let relevantPerson = await Person.findOne( { name: personName })
+    let relevantPerson = await Person.findOne({ name: personName });
     if (relevantPerson === null) {
-      throw new Error(`no person found for ${ personName }`);
+      throw new Error(`no person found for ${personName}`);
     }
 
     // get all social structures that have the person using optional filter
-    return (await Promise.all([
-      fetchSigMeetings({
-        attendees: relevantPerson._id
-      }),
-      fetchOfficeHours({
-        attendees: relevantPerson._id
-      }),
-      fetchStudioMeetings()
-    ])).flat();
+    return (
+      await Promise.all([
+        fetchSigMeetings({
+          attendees: relevantPerson._id,
+        }),
+        fetchOfficeHours({
+          attendees: relevantPerson._id,
+        }),
+        fetchStudioMeetings(),
+      ])
+    ).flat();
   } catch (error) {
-    console.error(`Error in fetchVenuesForPerson: ${ error }`);
+    console.error(`Error in fetchVenuesForPerson: ${error}`);
     return error;
   }
 };
@@ -118,23 +124,25 @@ export const fetchVenuesForPerson = async (personName) => {
 export const fetchVenuesForProject = async (projectName) => {
   try {
     // get the project object, given its name
-    let relevantProject = await Project.findOne( { name: projectName })
+    let relevantProject = await Project.findOne({ name: projectName });
     if (relevantProject === null) {
-      throw new Error(`no project found for ${ projectName }`);
+      throw new Error(`no project found for ${projectName}`);
     }
 
     // get all social structures that have the person using optional filter
-    return (await Promise.all([
-      fetchSigMeetings({
-        projects: relevantProject._id
-      }),
-      fetchOfficeHours({
-        projects: relevantProject._id
-      }),
-      fetchStudioMeetings()
-    ])).flat();
+    return (
+      await Promise.all([
+        fetchSigMeetings({
+          projects: relevantProject._id,
+        }),
+        fetchOfficeHours({
+          projects: relevantProject._id,
+        }),
+        fetchStudioMeetings(),
+      ])
+    ).flat();
   } catch (error) {
-    console.error(`Error in fetchVenuesForProject: ${ error }`);
+    console.error(`Error in fetchVenuesForProject: ${error}`);
     return error;
   }
 };
@@ -147,27 +155,31 @@ export const fetchVenuesForProject = async (projectName) => {
 export const fetchVenuesForSig = async (sigName) => {
   try {
     // get all projects in the SIG
-    let relevantSig = await SigStructure.findOne({ name: sigName }).populate("members");
+    let relevantSig = await SigStructure.findOne({ name: sigName }).populate(
+      'members'
+    );
     if (relevantSig === null) {
-      throw new Error(`no project found for ${ sigName }`);
+      throw new Error(`no project found for ${sigName}`);
     }
 
     // get all social structures that have found projects using optional filter
-    return (await Promise.all([
-      fetchSigMeetings({
-        attendees: {
-          $in: relevantSig.members
-        }
-      }),
-      fetchOfficeHours({
-        attendees: {
-          $in: relevantSig.members
-        }
-      }),
-      fetchStudioMeetings()
-    ])).flat();
+    return (
+      await Promise.all([
+        fetchSigMeetings({
+          attendees: {
+            $in: relevantSig.members,
+          },
+        }),
+        fetchOfficeHours({
+          attendees: {
+            $in: relevantSig.members,
+          },
+        }),
+        fetchStudioMeetings(),
+      ])
+    ).flat();
   } catch (error) {
-    console.error(`Error in fetchVenuesForSig: ${ error }`);
+    console.error(`Error in fetchVenuesForSig: ${error}`);
     return error;
   }
 };
@@ -182,13 +194,13 @@ export const firstInstanceOfVenue = async (venueName) => {
     // get venue by name
     let relevantVenue = await Venue.findOne({ name: venueName });
     if (relevantVenue === null) {
-      throw new Error(`no project found for ${ venueName }`);
+      throw new Error(`no project found for ${venueName}`);
     }
 
     // compute and return first instance of the venue
     return await getFirstInstanceOfVenue(relevantVenue);
   } catch (error) {
-    console.error(`Error in firstInstanceOfVenue: ${ error }`);
+    console.error(`Error in firstInstanceOfVenue: ${error}`);
     return error;
   }
 };
@@ -203,13 +215,13 @@ export const lastInstanceOfVenue = async (venueName) => {
     // get venue by name
     let relevantVenue = await Venue.findOne({ name: venueName });
     if (relevantVenue === null) {
-      throw new Error(`no project found for ${ venueName }`);
+      throw new Error(`no project found for ${venueName}`);
     }
 
     // compute and return first instance of the venue
     return await getLastInstanceOfVenue(relevantVenue);
   } catch (error) {
-    console.error(`Error in firstInstanceOfVenue: ${ error }`);
+    console.error(`Error in firstInstanceOfVenue: ${error}`);
     return error;
   }
 };

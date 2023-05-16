@@ -2,10 +2,10 @@
  * This file is responsible for fetching people from the database and returning them as JSON.
  */
 
-import { Person } from "../../models/people/person.js";
-import { Faculty } from "../../models/people/faculty.js";
-import { PhdStudent } from "../../models/people/phdstudent.js";
-import { NonPhdStudent } from "../../models/people/nonphdstudent.js";
+import { Person } from '../../models/people/person.js';
+import { Faculty } from '../../models/people/faculty.js';
+import { PhdStudent } from '../../models/people/phdstudent.js';
+import { NonPhdStudent } from '../../models/people/nonphdstudent.js';
 
 /**
  * Fetches all people.
@@ -16,13 +16,15 @@ export const fetchAllPeople = async () => {
   try {
     // combine data from faculty, phd students, and non-phd students
     // doing this method since those are discriminators of the person model
-    return (await Promise.all([
-      fetchNonPhdStudents(),
-      fetchPhdStudents(),
-      fetchFaculty()
-    ])).flat();
+    return (
+      await Promise.all([
+        fetchNonPhdStudents(),
+        fetchPhdStudents(),
+        fetchFaculty(),
+      ])
+    ).flat();
   } catch (error) {
-    console.error(`Error in fetchAllPeople: ${ error }`);
+    console.error(`Error in fetchAllPeople: ${error}`);
     return error;
   }
 };
@@ -36,7 +38,7 @@ export const fetchFaculty = async () => {
   try {
     return await Faculty.find().lean();
   } catch (error) {
-    console.error(`Error in fetchAllPeople: ${ error }`);
+    console.error(`Error in fetchAllPeople: ${error}`);
     return error;
   }
 };
@@ -48,11 +50,9 @@ export const fetchFaculty = async () => {
  */
 export const fetchPhdStudents = async () => {
   try {
-    return await PhdStudent.find()
-      .populate("sig_head")
-      .lean();
+    return await PhdStudent.find().populate('sig_head').lean();
   } catch (error) {
-    console.error(`Error in fetchAllPeople: ${ error }`);
+    console.error(`Error in fetchAllPeople: ${error}`);
     return error;
   }
 };
@@ -64,11 +64,9 @@ export const fetchPhdStudents = async () => {
  */
 export const fetchNonPhdStudents = async () => {
   try {
-    return await NonPhdStudent.find()
-      .populate("sig_head")
-      .lean();
+    return await NonPhdStudent.find().populate('sig_head').lean();
   } catch (error) {
-    console.error(`Error in fetchAllPeople: ${ error }`);
+    console.error(`Error in fetchAllPeople: ${error}`);
     return error;
   }
 };
@@ -83,7 +81,7 @@ export const fetchNonPhdStudents = async () => {
 export const fetchPersonByName = async (personName) => {
   try {
     let relevantPerson = await Person.findOne({
-      name: personName
+      name: personName,
     });
 
     // check if a person was found
@@ -92,15 +90,15 @@ export const fetchPersonByName = async (personName) => {
     }
 
     // check role and populate fields accordingly before returning
-    switch(relevantPerson["role"]) {
-      case "Faculty":
+    switch (relevantPerson['role']) {
+      case 'Faculty':
         return relevantPerson;
-      case "NonPhdStudent":
-      case "PhdStudent":
-        return relevantPerson.populate("sig_head");
+      case 'NonPhdStudent':
+      case 'PhdStudent':
+        return relevantPerson.populate('sig_head');
     }
   } catch (error) {
-    console.error(`Error in getPersonByName: ${ error }`);
+    console.error(`Error in getPersonByName: ${error}`);
     return error;
   }
 };

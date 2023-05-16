@@ -1,19 +1,29 @@
 // import fixtures
-import createPeopleFixtures, { isPeopleEmpty } from "../../models/fixtures/populatePeople.js";
-import createProcessFixtures, { isProcessEmpty } from "../../models/fixtures/populateProcesses.js";
-import createProjectFixtures, { isProjectEmpty } from "../../models/fixtures/populateProjects.js";
-import createVenueFixtures, { isVenueEmpty } from "../../models/fixtures/populateVenues.js";
-import createSocialStructureFixtures, { isSocialStructureEmpty } from "../../models/fixtures/populateSocialStructures.js";
+import createPeopleFixtures, {
+  isPeopleEmpty,
+} from '../../models/fixtures/populatePeople.js';
+import createProcessFixtures, {
+  isProcessEmpty,
+} from '../../models/fixtures/populateProcesses.js';
+import createProjectFixtures, {
+  isProjectEmpty,
+} from '../../models/fixtures/populateProjects.js';
+import createVenueFixtures, {
+  isVenueEmpty,
+} from '../../models/fixtures/populateVenues.js';
+import createSocialStructureFixtures, {
+  isSocialStructureEmpty,
+} from '../../models/fixtures/populateSocialStructures.js';
 
 // pre-population of the sprint cache
-import { prepopulateSprintCache } from "../tools/sprints/sprintManager.js";
+import { prepopulateSprintCache } from '../tools/sprints/sprintManager.js';
 
 /**
  * Refreshes all data using local fixtures.
  * @param asyncSprintCacheRefresh optional boolean for if the sprint caching should be done asynchronously.
  * @returns {Promise<void>}
  */
-export const populateData = async (asyncSprintCacheRefresh=false) => {
+export const populateData = async (asyncSprintCacheRefresh = false) => {
   // clear existing data and refresh with fixtures
   await createPeopleFixtures();
   await createProcessFixtures();
@@ -35,11 +45,13 @@ export const populateData = async (asyncSprintCacheRefresh=false) => {
  * @returns {Promise<>} promise that, when resolved, return whether all databases are empty.
  */
 export const allDatabasesAreEmpty = async () => {
-  return (await Promise.all([
-    isPeopleEmpty(),
-    isProcessEmpty(),
-    isProjectEmpty(),
-    isVenueEmpty(),
-    isSocialStructureEmpty()
-  ])).every(Boolean);
+  return (
+    await Promise.all([
+      isPeopleEmpty(),
+      isProcessEmpty(),
+      isProjectEmpty(),
+      isVenueEmpty(),
+      isSocialStructureEmpty(),
+    ])
+  ).every(Boolean);
 };

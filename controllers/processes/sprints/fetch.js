@@ -2,7 +2,7 @@
  * This file is responsible for fetching information about the sprint process.
  */
 
-import { Sprint } from "../../../models/processes/sprints.js";
+import { Sprint } from '../../../models/processes/sprints.js';
 
 /**
  * Fetches all sprint processes.
@@ -13,7 +13,7 @@ export const fetchAllSprints = async () => {
   try {
     return await Sprint.find();
   } catch (error) {
-    console.error(`Error in fetchAllSprints: ${ error }`);
+    console.error(`Error in fetchAllSprints: ${error}`);
     return error;
   }
 };
@@ -33,7 +33,7 @@ export const fetchSprintByName = async (sprintName) => {
 
     return relevantSprint;
   } catch (error) {
-    console.error(`Error in fetchAllSprints: ${ error }`);
+    console.error(`Error in fetchAllSprints: ${error}`);
     return error;
   }
 };
@@ -49,11 +49,11 @@ export const fetchSprintByDate = async (date) => {
     // find the sprint based on the date parameter
     let relevantSprint = await Sprint.findOne({
       start_day: {
-        $lte: date
+        $lte: date,
       },
       end_day: {
-        $gte: date
-      }
+        $gte: date,
+      },
     });
 
     // check if no sprint was found
@@ -63,7 +63,7 @@ export const fetchSprintByDate = async (date) => {
 
     return relevantSprint;
   } catch (error) {
-    console.error(`Error in fetchSprintByDate: ${ error }`);
+    console.error(`Error in fetchSprintByDate: ${error}`);
     return error;
   }
 };
@@ -81,11 +81,11 @@ export const fetchCurrentSprint = async () => {
     // find the sprint that we're currently in based on the current date
     let relevantSprint = await Sprint.findOne({
       start_day: {
-        $lte: currDate
+        $lte: currDate,
       },
       end_day: {
-        $gte: currDate
-      }
+        $gte: currDate,
+      },
     });
 
     // check if no sprint was found
@@ -95,7 +95,7 @@ export const fetchCurrentSprint = async () => {
 
     return relevantSprint;
   } catch (error) {
-    console.error(`Error in fetchCurrentSprint: ${ error }`);
+    console.error(`Error in fetchCurrentSprint: ${error}`);
     return error;
   }
 };

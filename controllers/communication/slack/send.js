@@ -1,13 +1,13 @@
 /**
  * This module is used to send messages over Slack, including to channels and people.
  */
-import { app } from "../../../index.js";
+import { app } from '../../../index.js';
 import {
   blockPlainText,
   blockStaticSingleSelect,
   blockStaticMultiSelect,
-  blockCheckBoxes
-} from "./blockWrapper.js";
+  blockCheckBoxes,
+} from './blockWrapper.js';
 
 /**
  * Messages a channel with a plain-text message.
@@ -17,13 +17,11 @@ import {
  * @returns {Promise<ChatPostMessageResponse>} message promise from slack API.
  */
 export const messageChannel = (channel, peopleIds, message) => {
-  let completeMessage = `Hey ${ peopleIds }! ${ message }`;
+  let completeMessage = `Hey ${peopleIds}! ${message}`;
   return app.client.chat.postMessage({
     channel: channel,
-    blocks: [
-      blockPlainText(completeMessage, true)
-    ],
-    text: completeMessage
+    blocks: [blockPlainText(completeMessage, true)],
+    text: completeMessage,
   });
 };
 
@@ -36,31 +34,37 @@ export const messageChannel = (channel, peopleIds, message) => {
  * @param selectType string type of selection message to send.
  * @returns {Promise<ChatPostMessageResponse>} message promise from slack API.
  */
-export const messagePersonWithOptions = (channel, peopleIds, message, options, selectType) => {
-  let completeMessage = `Hey ${ peopleIds }! ${ message }`;
+export const messagePersonWithOptions = (
+  channel,
+  peopleIds,
+  message,
+  options,
+  selectType
+) => {
+  let completeMessage = `Hey ${peopleIds}! ${message}`;
 
   // generate message payload based on select type
   let optionBlock = null;
   switch (selectType) {
-    case "single-select":
+    case 'single-select':
       optionBlock = blockStaticSingleSelect(
-        "Please select a strategy for me to monitor for and execute from the dropdown list.",
+        'Please select a strategy for me to monitor for and execute from the dropdown list.',
         options,
         selectType,
         true
       );
       break;
-    case "multi-select":
+    case 'multi-select':
       optionBlock = blockStaticMultiSelect(
-        "Please select one or more strategies for me to monitor for and execute from the dropdown list.",
+        'Please select one or more strategies for me to monitor for and execute from the dropdown list.',
         options,
         selectType,
         true
       );
       break;
-    case "checkbox":
-      optionBlock =  blockCheckBoxes(
-        "Please select one or more options from the checklist below.",
+    case 'checkbox':
+      optionBlock = blockCheckBoxes(
+        'Please select one or more options from the checklist below.',
         options,
         selectType,
         true
@@ -68,9 +72,7 @@ export const messagePersonWithOptions = (channel, peopleIds, message, options, s
       break;
   }
 
-  let payloadBlocks = [
-    blockPlainText(completeMessage, true),
-  ];
+  let payloadBlocks = [blockPlainText(completeMessage, true)];
 
   if (optionBlock !== null) {
     payloadBlocks.push(optionBlock);
@@ -80,6 +82,6 @@ export const messagePersonWithOptions = (channel, peopleIds, message, options, s
   return app.client.chat.postMessage({
     channel: channel,
     blocks: payloadBlocks,
-    text: completeMessage
+    text: completeMessage,
   });
 };

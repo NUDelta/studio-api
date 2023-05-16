@@ -5,11 +5,15 @@
  * @returns {*[]} list of people's names that are members of the sig.
  */
 export const getAllMembersForSig = (allProjects, sigName) => {
-  return Array.from(new Set(
-    allProjects.filter(project => {
-      return project.sig_name === sigName;
-    }).reduce((previousValue, currentValue) => {
-      return [...previousValue, ...currentValue.students];
-    }, [])
-  ));
+  return Array.from(
+    new Set(
+      allProjects
+        .filter((project) => {
+          return project.sig_name === sigName;
+        })
+        .reduce((previousValue, currentValue) => {
+          return [...previousValue, ...currentValue.students];
+        }, [])
+    )
+  );
 };

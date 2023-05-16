@@ -2,9 +2,9 @@
  * This file is responsible for fetching projects from the database and returning them as JSON.
  */
 
-import { Project } from "../../models/project/project.js";
-import { getSprintLogForProjectName } from "../tools/sprints/sprintManager.js";
-import { Person } from "../../models/people/person.js";
+import { Project } from '../../models/project/project.js';
+import { getSprintLogForProjectName } from '../tools/sprints/sprintManager.js';
+import { Person } from '../../models/people/person.js';
 
 /**
  * Fetches all projects and their data.
@@ -12,7 +12,7 @@ import { Person } from "../../models/people/person.js";
  * @param shouldPopulateTools optional boolean for if tools should be populated (e.g., sprint log).
  * @returns {Promise} promise that if resolved, returns a list of projects. if rejected, error.
  */
-export const fetchAllProjects = async (shouldPopulateTools= false) => {
+export const fetchAllProjects = async (shouldPopulateTools = false) => {
   try {
     // get all projects from database
     let allProjs = await Project.find()
@@ -23,15 +23,17 @@ export const fetchAllProjects = async (shouldPopulateTools= false) => {
 
     // populate tool data, if specified
     if (shouldPopulateTools) {
-      return await Promise.all(allProjs.map(project => {
-        return populateProjectTools(project);
-      }));
+      return await Promise.all(
+        allProjs.map((project) => {
+          return populateProjectTools(project);
+        })
+      );
     }
 
     // otherwise, return all projects with links to tools
     return allProjs;
   } catch (error) {
-    console.error(`Error in fetchAllProjects: ${ error }`);
+    console.error(`Error in fetchAllProjects: ${error}`);
     return error;
   }
 };
@@ -42,11 +44,14 @@ export const fetchAllProjects = async (shouldPopulateTools= false) => {
  * @param shouldPopulateTools optional boolean for if tools should be populated (e.g., sprint log).
  * @returns {Promise} promise that if resolved, returns a project. if rejected, error
  */
-export const fetchProjectByName = async (projName, shouldPopulateTools= false) => {
+export const fetchProjectByName = async (
+  projName,
+  shouldPopulateTools = false
+) => {
   try {
     // find project with projName
     let relevantProj = await Project.findOne({
-      name: projName
+      name: projName,
     })
       .populate('students')
       .populate('sig_head')
@@ -66,7 +71,7 @@ export const fetchProjectByName = async (projName, shouldPopulateTools= false) =
     // otherwise, return all projects with links to tools
     return relevantProj;
   } catch (error) {
-    console.error(`Error in fetchProjectByName: ${ error }`);
+    console.error(`Error in fetchProjectByName: ${error}`);
     return error;
   }
 };
@@ -77,17 +82,20 @@ export const fetchProjectByName = async (projName, shouldPopulateTools= false) =
  * @param shouldPopulateTools optional boolean for if tools should be populated (e.g., sprint log).
  * @returns {Promise} promise that if resolved, returns a project. if rejected, error
  */
-export const fetchProjectForPerson = async (personName, shouldPopulateTools= false) => {
+export const fetchProjectForPerson = async (
+  personName,
+  shouldPopulateTools = false
+) => {
   try {
     // get id for person
     let relevantPerson = await Person.findOne({ name: personName }).exec();
     if (relevantPerson === null) {
-      throw new Error(`person not found for ${ personName }`);
+      throw new Error(`person not found for ${personName}`);
     }
 
     // find project where relevantPerson is a student on the project
     let relevantProj = await Project.findOne({
-      students: relevantPerson._id
+      students: relevantPerson._id,
     })
       .populate('students')
       .populate('sig_head')
@@ -107,7 +115,7 @@ export const fetchProjectForPerson = async (personName, shouldPopulateTools= fal
     // otherwise, return all projects with links to tools
     return relevantProj;
   } catch (error) {
-    console.error(`Error in fetchProjectForPerson: ${ error }`);
+    console.error(`Error in fetchProjectForPerson: ${error}`);
     return error;
   }
 };
@@ -123,8 +131,10 @@ const populateProjectTools = async (project) => {
   let clonedProject = JSON.parse(JSON.stringify(project));
 
   // populate sprint log data
-  clonedProject["sprint_log"] = await getSprintLogForProjectName(clonedProject["name"]);
+  clonedProject['sprint_log'] = await getSprintLogForProjectName(
+    clonedProject['name']
+  );
 
   // return cloned project with data from tools loaded in
   return clonedProject;
-}
+};
