@@ -481,6 +481,9 @@ slackRouter.post("/osRemind", async (req, res) => {
 
     let parsedOpportunity = parseOsOpportunity(opportunity);
 
+    // TODO: should add error handling if we can't parse the opportunity (say that only some things are supported right now)
+
+    // TODO: try this regex pattern for getting the initial matches
     // parse out targets of reminder
     let reminderTargetsArr = formattedReminderStr.slice(0, matchIndices[0] - 1).trim().split("> ");
     const channelRegexPattern = /([#]).*([|])/u;
@@ -506,6 +509,8 @@ slackRouter.post("/osRemind", async (req, res) => {
 
       return null;
     });
+
+    // TODO: should add some error handling if any of the targets are null
 
     // construct final object and return
     let engineObject = {
