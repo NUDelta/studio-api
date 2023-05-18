@@ -46,6 +46,9 @@
     "tzdata": "^1.0.38"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.8",
+    "@babel/eslint-parser": "^7.21.8",
+    "babel-eslint": "^10.1.0",
     "chai": "^4.3.7",
     "cloc": "^2.11.0",
     "concurrently": "^8.0.1",
