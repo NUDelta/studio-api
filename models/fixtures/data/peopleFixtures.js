@@ -51,22 +51,9 @@ export const phdStudentData = [
 export const nonPhdStudentData = [
   // SIG NOT
   {
-    name: 'Alex Feng',
-    email: 'alexfeng2024@u.northwestern.edu',
-    slack_id:
-      process.env.NODE_ENV === 'development' ? 'U03EA8ADL3D' : 'U03JH5TCKFC',
-    sig_member: 'Networked Orchestration Technologies',
-    sig_head: 'Kapil Garg',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1SCHQjFryZe8HDQlcLFRB1eh4P9v8M0hvotj0Nyub9Lg/edit',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
     name: 'Grace Wang',
     email: 'gracewang2025@u.northwestern.edu',
-    slack_id:
-      process.env.NODE_ENV === 'development' ? 'U03E7B5L1E1' : 'U04CQNKQ3TP',
+    slack_id: 'U04CQNKQ3TP',
     sig_member: 'Networked Orchestration Technologies',
     sig_head: 'Kapil Garg',
     individual_progress_map: '',
@@ -74,14 +61,12 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Rawan Mohamed',
-    email: 'rawanmohamed2023@u.northwestern.edu',
-    slack_id:
-      process.env.NODE_ENV === 'development' ? 'U03E3K10XSS' : 'U03JKH9TP6G',
+    name: 'Jordan Checkoff',
+    email: 'jordancheckoff2024@u.northwestern.edu',
+    slack_id: 'U04TQL7TWLS',
     sig_member: 'Networked Orchestration Technologies',
     sig_head: 'Kapil Garg',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1FkAB8Iwj62xDp5MpcAA6F8lreMvk3maFeZ9Ma_dvJ1M/edit',
+    individual_progress_map: '',
     mid_quarter_check_in: '',
     eoq_self_assessment: '',
   },
@@ -98,9 +83,19 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Victoria Tran',
-    email: 'victoriatran2024@u.northwestern.edu',
-    slack_id: 'U03JKHA0UE8',
+    name: 'Oscar Dong',
+    email: 'qianlidong2025@u.northwestern.edu',
+    slack_id: 'U04TMMXC9PX',
+    sig_member: 'Collective Experiences',
+    sig_head: 'Ryan Louie',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
+    name: 'Seva Suschenvskiy',
+    email: 'vvseva@u.northwestern.edu',
+    slack_id: 'U04UEAVNRQQ',
     sig_member: 'Collective Experiences',
     sig_head: 'Ryan Louie',
     individual_progress_map:
@@ -145,21 +140,53 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Amy Guo',
-    email: 'amyguo2023@u.northwestern.edu',
-    slack_id: 'U035GLAFZGE',
+    name: 'Ella Cutler',
+    email: 'ellacutler2025@u.northwestern.edu',
+    slack_id: 'U04U3953ZDF',
     sig_member: 'Contextually-Aware Metacognitive Practice',
     sig_head: 'Haoqi Zhang',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+
+  // SIG HAT
+  {
+    name: 'Alex Feng',
+    email: 'alexfeng2024@u.northwestern.edu',
+    slack_id: 'U03JH5TCKFC',
+    sig_member: 'Human-AI Tools',
+    sig_head: 'Haoqi Zhang',
     individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1pES9VqoOHYtsISF_q1loTckt8qyJPJ06rPGla82ClaI/edit',
+      'https://docs.google.com/spreadsheets/d/1SCHQjFryZe8HDQlcLFRB1eh4P9v8M0hvotj0Nyub9Lg/edit',
     mid_quarter_check_in: '',
     eoq_self_assessment: '',
   },
   {
-    name: 'Li Tan',
-    email: 'LiTan2023@u.northwestern.edu',
-    slack_id: 'U04CTM08B1Q',
-    sig_member: 'Contextually-Aware Metacognitive Practice',
+    name: 'Coumba Ka',
+    email: 'mameka2024@u.northwestern.edu',
+    slack_id: 'U04TA4HES79',
+    sig_member: 'Human-AI Tools',
+    sig_head: 'Haoqi Zhang',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
+    name: 'Suhuai Chen',
+    email: 'suhuaichen2024@u.northwestern.edu',
+    slack_id: 'U04U394RU1X',
+    sig_member: 'Human-AI Tools',
+    sig_head: 'Haoqi Zhang',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
+    name: 'Jiayi Zheng',
+    email: 'jiayizheng2024@u.northwestern.edu',
+    slack_id: 'U04TJ2FA4Q6',
+    sig_member: 'Human-AI Tools',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
     mid_quarter_check_in: '',

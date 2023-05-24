@@ -48,6 +48,15 @@ export const sigSocialStructuresData = [
     sig_head: 'Haoqi Zhang',
   },
   {
+    name: 'Human-AI Tools',
+    description:
+      'The Human-AI Tools (HAT) SIG develops tools that help people learn and work with AI systems.',
+    members: getAllMembersForSig(projectData, 'Human-AI Tools'),
+    abbreviation: 'HAT',
+    slack_channel: 'sig-human-ai-tools',
+    sig_head: 'Haoqi Zhang',
+  },
+  {
     name: 'Summer BBQ',
     description:
       "The Summer BBQ (BBQ) SIG is the Ph.D. students' SIG, which has projects that they lead in the other SIG areas.",
@@ -62,25 +71,37 @@ export const onboardingPairData = [
   {
     name: '',
     description: '',
-    mentor: 'Alex Feng',
-    mentee: 'Lev Rosenberg',
+    mentor: 'Pablo Gupta',
+    mentee: 'Jiayi Zheng',
   },
   {
     name: '',
     description: '',
-    mentor: 'Amy Guo',
-    mentee: 'Pablo Gupta',
+    mentor: 'Grace Wang',
+    mentee: 'Coumba Ka',
+  },
+  {
+    name: '',
+    description: '',
+    mentor: 'Lev Rosenberg',
+    mentee: 'Oscar Dong',
+  },
+  {
+    name: '',
+    description: '',
+    mentor: 'Alex Feng',
+    mentee: 'Jordan Checkoff',
   },
   {
     name: '',
     description: '',
     mentor: 'Dani Zhang',
-    mentee: 'Grace Wang',
+    mentee: 'Seva Suschenvskiy',
   },
   {
     name: '',
     description: '',
-    mentor: 'Victoria Tran',
-    mentee: 'Li Tan',
+    mentor: 'Mieraf Mulat',
+    mentee: 'Ella Cutler',
   },
 ];
