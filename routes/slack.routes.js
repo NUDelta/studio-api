@@ -389,12 +389,12 @@ slackRouter.post('/messagePeople', async (req, res) => {
       );
 
       // return result of slack message
-      res.status(200).json(result);
+      res.json(result);
     }
   } catch (error) {
     let msg = `Error in /slack/messagePeople: ${error}`;
     console.error(msg);
-    res.status(500).json(msg);
+    res.json(msg);
   }
 });
 
