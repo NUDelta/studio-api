@@ -343,6 +343,8 @@ slackRouter.post('/messageCommitteeChannel', async (req, res) => {
  */
 slackRouter.post('/messagePeople', async (req, res) => {
   try {
+    console.log(req.body.people);
+
     // parse inputs from request
     let people = JSON.parse(req.body.people ?? '[]').map((person) => {
       return person.trim();
@@ -387,12 +389,12 @@ slackRouter.post('/messagePeople', async (req, res) => {
       );
 
       // return result of slack message
-      res.json(result);
+      res.status(200).json(result);
     }
   } catch (error) {
     let msg = `Error in /slack/messagePeople: ${error}`;
     console.error(msg);
-    res.send(msg);
+    res.status(500).json(msg);
   }
 });
 
