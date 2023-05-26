@@ -120,8 +120,10 @@ app.receiver.app.use((req, res, next) => {
 });
 
 app.receiver.app.all('*', (request, response) => {
-  console.log('Returning a 404 from the catch-all route');
-  return response.sendStatus(404);
+  console.error(
+    `External request: ${request.url} does not exist. Returning 404 error.`
+  );
+  return response.status(404).json({ error: `${request.url} not found` });
 });
 
 /*
