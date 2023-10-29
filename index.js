@@ -3,6 +3,7 @@ import Slack from '@slack/bolt';
 import cors from 'cors';
 import express from 'express';
 import mongoose from 'mongoose';
+import { googleDriveAuth } from './imports/utils/googleAuth.js';
 
 // routes
 import { peopleRouter } from './routes/people.routes.js';

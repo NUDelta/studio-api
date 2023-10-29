@@ -373,6 +373,7 @@ export class SprintLog {
           let description = '';
           let expectedRoadblocks = '';
           let pointsAllocated = 0;
+          // TODO: maybe change to list since ppl are labeling tasks as multiple categories? need to think if this is the right way to use the sprint log though...
           let taskCategory = '';
           let assignee = '';
           let taskStatus = '';

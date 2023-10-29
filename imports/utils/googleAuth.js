@@ -25,7 +25,8 @@ export const googleDriveAuth = new google.auth.JWT(
 
 googleDriveAuth.authorize(function (err, tokens) {
   if (err) {
-    console.log(`Error when authorizing Google Drive: ${err}`);
+    console.log(`Error when authorizing Google Drive:`);
+    console.log(err);
   } else {
     console.log('Google Drive successfully authorized.');
   }
