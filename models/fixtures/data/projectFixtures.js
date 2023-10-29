@@ -54,7 +54,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1nEtswsBf_p0SO8lOFzU0xL1GwvZIlS1ejwInWajMKeA',
     eoq_checklist: '',
     slack_channel: 'proj-qa-buddy',
-    status_update_date: DateTime.fromISO('2023-05-23T12:00:00', {
+    status_update_date: DateTime.fromISO('2023-10-27T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
