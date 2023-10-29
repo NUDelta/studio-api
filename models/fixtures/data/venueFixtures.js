@@ -28,56 +28,35 @@ export const studioData = [
   },
 ];
 
-// TODO: update
 export const sigMeetingData = [
   {
     name: 'Networked Orchestration Technologies SIG Meeting',
     description: 'Weekly SIG meeting for NOT SIG',
-    day_of_week: 'Monday',
-    start_time: '17:00:00',
-    end_time: '18:00:00',
+    day_of_week: 'Tuesday',
+    start_time: '16:30:00',
+    end_time: '17:30:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(
       projectData,
       'Networked Orchestration Technologies'
     ),
-    projects: ['Orchestration Scripting Environments'],
-  },
-  {
-    name: 'Collective Experiences SIG Meeting',
-    description: 'Weekly SIG meeting for CE SIG',
-    day_of_week: 'Wednesday',
-    start_time: '14:00:00',
-    end_time: '15:00:00',
-    timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Collective Experiences'),
-    projects: ['Collective Narrative', 'CE for Relationship Development'],
-  },
-  {
-    name: 'Readily Available Learning Experiences SIG Meeting',
-    description: 'Weekly SIG meeting for RALE SIG',
-    day_of_week: 'Monday',
-    start_time: '15:30:00',
-    end_time: '16:00:00',
-    timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(
-      projectData,
-      'Readily Available Learning Experiences'
-    ),
-    projects: ['Knowledge Maps'],
+    projects: [
+      'Orchestration Scripting Environments',
+      'Situated Reflection Systems',
+    ],
   },
   {
     name: 'Contextually-Aware Metacognitive Practice SIG Meeting',
     description: 'Weekly SIG meeting for CAMP SIG',
-    day_of_week: 'Friday',
-    start_time: '11:00:00',
-    end_time: '12:00:00',
+    day_of_week: 'Wednesday',
+    start_time: '13:30:00',
+    end_time: '14:00:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(
       projectData,
       'Contextually-Aware Metacognitive Practice'
     ),
-    projects: ['Path'],
+    projects: ['Q&A Buddy'],
   },
   {
     name: 'Human-AI Tools SIG Meeting',
@@ -92,16 +71,6 @@ export const sigMeetingData = [
       'Human-AI Tools for Concept Expression',
     ],
   },
-  {
-    name: 'Summer BBQ SIG Meeting',
-    description: 'Weekly SIG meeting for BBQ SIG',
-    day_of_week: 'Friday',
-    start_time: '15:00:00',
-    end_time: '16:00:00',
-    timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Summer BBQ'),
-    projects: ['Gobi Proj', 'Ryan Proj', 'Kapil Proj'],
-  },
 ];
 
 // TODO: be able to encode ad-hoc office hours
@@ -109,30 +78,20 @@ export const officeHoursData = [
   {
     name: 'Networked Orchestration Technologies Office Hours for Scripting Envs',
     description: "Weekly office hours for NOT SIG's Orch Scripting Env project",
-    day_of_week: 'Wednesday',
+    day_of_week: 'Thursday',
     start_time: '17:00:00',
-    end_time: '18:00:00',
+    end_time: '17:30:00',
     timezone: 'America/Chicago',
     projects: ['Orchestration Scripting Environments'],
   },
   {
-    name: 'Collective Experiences SIG Office Hours for Collective Narrative',
+    name: 'Networked Orchestration Technologies Office Hours for Sit Ref',
     description:
-      "Weekly office hours for CE SIG's Collective Narrative project",
-    day_of_week: 'Monday',
-    start_time: '15:30:00',
-    end_time: '16:15:00',
-    timezone: 'America/Chicago',
-    projects: ['Collective Narrative'],
-  },
-  {
-    name: 'Collective Experiences SIG Office Hours for Collective Experiences Relationship Dev',
-    description:
-      "Weekly office hours for CE SIG's Collective Experiences Relationship Dev project",
-    day_of_week: 'Sunday',
-    start_time: '16:15:00',
+      "Weekly office hours for NOT SIG's Situated Reflection Systems",
+    day_of_week: 'Thursday',
+    start_time: '16:30:00',
     end_time: '17:00:00',
     timezone: 'America/Chicago',
-    projects: ['CE for Relationship Development'],
+    projects: ['Situated Reflection Systems'],
   },
 ];

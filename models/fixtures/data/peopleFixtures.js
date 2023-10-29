@@ -10,30 +10,6 @@ export const facultyData = [
 
 export const phdStudentData = [
   {
-    name: 'Gobi Dasu',
-    email: 'gobi@northwestern.edu',
-    slack_id: 'UCCCTJGG4',
-    sig_lead: 'Readily Available Learning Experiences',
-    sig_member: 'Summer BBQ',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1oIVc3kVQPe8fYXJc8fVqxSZxRfJg7DZjjhcEcY5jDVw/edit?usp=sharing',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Ryan Louie',
-    email: 'ryan@northwestern.edu',
-    slack_id: 'U6YKFU5UH',
-    sig_lead: 'Collective Experiences',
-    sig_member: 'Summer BBQ',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1anytwho_bmYbAAPOkURNJsYsGajRrgG5kM8tbJZ1O90/edit?usp=sharing',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
     name: 'Kapil Garg',
     email: 'kapil@northwestern.edu',
     slack_id:
@@ -61,9 +37,29 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Jordan Checkoff',
-    email: 'jordancheckoff2024@u.northwestern.edu',
-    slack_id: 'U04TQL7TWLS',
+    name: 'Linh Ly',
+    email: 'temp@temp.com',
+    slack_id: 'U05BEN0MH9N',
+    sig_member: 'Networked Orchestration Technologies',
+    sig_head: 'Kapil Garg',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
+    name: 'Ella Jones',
+    email: 'temp@temp.com',
+    slack_id: 'U05BEN0UJCQ',
+    sig_member: 'Networked Orchestration Technologies',
+    sig_head: 'Kapil Garg',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
+    name: 'Jonah Jodlowski',
+    email: 'temp@temp.com',
+    slack_id: 'U05B3L1985P',
     sig_member: 'Networked Orchestration Technologies',
     sig_head: 'Kapil Garg',
     individual_progress_map: '',
@@ -71,78 +67,11 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
 
-  // SIG CE
-  {
-    name: 'Pablo Gupta',
-    email: 'SounakGupta2024@u.northwestern.edu',
-    slack_id: 'U04CW56SBGC',
-    sig_member: 'Collective Experiences',
-    sig_head: 'Ryan Louie',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Oscar Dong',
-    email: 'qianlidong2025@u.northwestern.edu',
-    slack_id: 'U04TMMXC9PX',
-    sig_member: 'Collective Experiences',
-    sig_head: 'Ryan Louie',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Seva Suschenvskiy',
-    email: 'vvseva@u.northwestern.edu',
-    slack_id: 'U04UEAVNRQQ',
-    sig_member: 'Collective Experiences',
-    sig_head: 'Ryan Louie',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1KlvpfCvm0FyYrfFr0RWwWXo3V2fKFnxaXLBzI4N-xZA/edit',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-
-  // SIG RALE
-  {
-    name: 'Mieraf Mulat',
-    email: 'mierafmulat2023@u.northwestern.edu',
-    slack_id: 'U03JH5SFA90',
-    sig_member: 'Readily Available Learning Experiences',
-    sig_head: 'Gobi Dasu',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1up5EH1-TiJAfoBK_HCb2d3bzKhgySx9CK6CWjZVheKo/edit',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Lev Rosenberg',
-    email: 'levrosenberg2024@u.northwestern.edu',
-    slack_id: 'U04CTHY5QGK',
-    sig_member: 'Readily Available Learning Experiences',
-    sig_head: 'Gobi Dasu',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-
   // SIG CAMP
   {
-    name: 'Dani Zhang',
-    email: 'danizhang2023@u.northwestern.edu',
-    slack_id: 'U0358N1NE4F',
-    sig_member: 'Contextually-Aware Metacognitive Practice',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1aqT3wTVFdzaoipW9wYrjjlxoUTPxHkVO_hE97crdRaM/edit',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Ella Cutler',
-    email: 'ellacutler2025@u.northwestern.edu',
-    slack_id: 'U04U3953ZDF',
+    name: 'Iphigenie Bera',
+    email: 'temp@temp.com',
+    slack_id: 'U05AQT16343',
     sig_member: 'Contextually-Aware Metacognitive Practice',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
@@ -152,13 +81,12 @@ export const nonPhdStudentData = [
 
   // SIG HAT
   {
-    name: 'Alex Feng',
-    email: 'alexfeng2024@u.northwestern.edu',
-    slack_id: 'U03JH5TCKFC',
+    name: 'Nuremir Babanov',
+    email: 'temp@temp.com',
+    slack_id: 'U05B3L23A73',
     sig_member: 'Human-AI Tools',
     sig_head: 'Haoqi Zhang',
-    individual_progress_map:
-      'https://docs.google.com/spreadsheets/d/1SCHQjFryZe8HDQlcLFRB1eh4P9v8M0hvotj0Nyub9Lg/edit',
+    individual_progress_map: '',
     mid_quarter_check_in: '',
     eoq_self_assessment: '',
   },
@@ -173,9 +101,9 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Suhuai Chen',
-    email: 'suhuaichen2024@u.northwestern.edu',
-    slack_id: 'U04U394RU1X',
+    name: 'Yiran Mo',
+    email: 'temp@temp.com',
+    slack_id: 'U05ATE1NQMS',
     sig_member: 'Human-AI Tools',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',

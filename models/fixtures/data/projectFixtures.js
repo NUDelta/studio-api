@@ -8,90 +8,52 @@ export const projectData = [
   {
     name: 'Orchestration Scripting Environments',
     sig_name: 'Networked Orchestration Technologies',
-    students: ['Grace Wang', 'Jordan Checkoff'],
+    students: ['Grace Wang', 'Linh Ly'],
     sig_head: 'Kapil Garg',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1lMNZ8x4m-hFH_-JisFXi5B648gol34SsW3dme_q8vLc',
+      'https://docs.google.com/spreadsheets/d/1c8UWlf4H7Wh2nO5XaP7KGhVfdE6wFvMpnta6LLaAyHU',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1OiqwusRpaHloHPDD3uvPe1e-KCsiNLVf4yg9fSdMMOE',
     eoq_checklist: '',
     slack_channel: 'proj-os',
-    status_update_date: DateTime.fromISO('2023-05-12T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG CE
-  {
-    name: 'Collective Narrative',
-    sig_name: 'Collective Experiences',
-    students: ['Oscar Dong', 'Pablo Gupta'],
-    sig_head: 'Ryan Louie',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1N6_nmBn8VndX-qLIcub-vQy90j-asSGbG8U1bW-gj9s',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1gOKDrF9WQvrGrI7UdEiRltPD6eQBtps0Zz0r07cgd9E',
-    eoq_checklist: '',
-    slack_channel: 'proj-cn',
-    status_update_date: DateTime.fromISO('2023-04-28T12:00:00', {
+    status_update_date: DateTime.fromISO('2023-11-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
-    name: 'CE for Relationship Development',
-    sig_name: 'Collective Experiences',
-    students: ['Seva Suschenvskiy'],
-    sig_head: 'Ryan Louie',
+    name: 'Situated Reflection Systems',
+    sig_name: 'Networked Orchestration Technologies',
+    students: ['Ella Jones', 'Jonah Jodlowski'],
+    sig_head: 'Kapil Garg',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1CcscwSFPYNU4WMi37BCLPCUmCEccDGTzxA8yMEUai8M',
+      'https://docs.google.com/spreadsheets/d/1DFKReae_G2kLfCrDV6Wsr_-cdMurM1Ih8x4KAJUPSEA',
     compass: '',
     research_canvas:
-      'https://docs.google.com/presentation/d/1sni0Q9WhNh98oaYvm5tU59AZZ9bkWcOUtJt0ilmVipY',
+      'https://docs.google.com/presentation/d/1H0xMUUrymYYMdsEY3RmG3Tg70XGqdUEV_4dJmMpisqY',
     eoq_checklist: '',
-    slack_channel: 'proj-ce-api',
-    status_update_date: DateTime.fromISO('2023-04-07T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG RALE
-  {
-    name: 'Knowledge Maps',
-    sig_name: 'Readily Available Learning Experiences',
-    students: ['Mieraf Mulat', 'Lev Rosenberg'],
-    sig_head: 'Gobi Dasu',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1Rpha5twIentgutk23kMPd5kkd7y0zzrUSJxNosOE_G0',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1XTxx93EnhVW4bi5hNcwS6Ow_V0BL-udEFwZt5N7AxNc',
-    eoq_checklist: '',
-    slack_channel: 'proj-knowledge-maps',
-    status_update_date: DateTime.fromISO('2023-04-21T12:00:00', {
+    slack_channel: 'proj-situated-ref-systems',
+    status_update_date: DateTime.fromISO('2023-10-20T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
   // SIG CAMP
   {
-    name: 'Path',
+    name: 'Q&A Buddy',
     sig_name: 'Contextually-Aware Metacognitive Practice',
-    students: ['Dani Zhang', 'Ella Cutler'],
+    students: ['Iphigenie Bera'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1V4R0JuGmkg2ldnN7zqTJ2jhhR8hbn_bMOYIMlGGp9ZM',
+      'https://docs.google.com/spreadsheets/d/1lRn1WKakZsxbO_rYZBOZO-CyqOERqJrSVFswvgxJtAU',
     compass: '',
     research_canvas:
-      'https://docs.google.com/presentation/d/1bjiBikDaOME2PZYEnfCdMJAyOFvmpoB4UHgiVpRyj08',
+      'https://docs.google.com/presentation/d/1nEtswsBf_p0SO8lOFzU0xL1GwvZIlS1ejwInWajMKeA',
     eoq_checklist: '',
-    slack_channel: 'proj-path',
+    slack_channel: 'proj-qa-buddy',
     status_update_date: DateTime.fromISO('2023-05-23T12:00:00', {
       zone: 'America/Chicago',
     }),
@@ -101,67 +63,39 @@ export const projectData = [
   {
     name: 'Human-AI Tools for Concept Expression',
     sig_name: 'Human-AI Tools',
-    students: ['Alex Feng', 'Coumba Ka'],
+    students: ['Nuremir Babanov', 'Coumba Ka'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/18WrrJfu4OuqcVx3wFYqK-rvZ3U0q0L-N5rGA9xoTywE',
+      'https://docs.google.com/spreadsheets/d/1NJDzrk_0jHDF2uMzQj-bWPecf_em_8ZR5ao48asQK5k',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2023-04-14T12:00:00', {
+    status_update_date: DateTime.fromISO('2023-11-03T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
     name: 'Human-AI Tools for Accounting for Differences',
     sig_name: 'Human-AI Tools',
-    students: ['Jiayi Zheng', 'Suhuai Chen'],
+    students: ['Jiayi Zheng', 'Yiran Mo'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1YxLsLGCIzpQnNT87e6Dsk2mcTbX3SUfAAzeI7sAuh1s',
+      'https://docs.google.com/spreadsheets/d/1KJRlJ42PVS0Qr7Hp3FTPqpexeFNMGeYBJu41Ehnl1Hg',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1noBPfVFFDLwqD0g66BaFHKru_Se23DXJRIa9gZpNQpc',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2023-05-26T12:00:00', {
+    status_update_date: DateTime.fromISO('2023-11-17T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
   // SIG BBQ
-  {
-    name: 'Gobi Proj',
-    sig_name: 'Summer BBQ',
-    students: ['Gobi Dasu'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1Z2diPcnmobIazrFPHPV9k7k5v09SoMf5NWzTdEA6VE0',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1wSxNBNyzY9yOo78_FidZR7WByo7hqLISA7Sf94fEAuQ',
-    eoq_checklist: '',
-    slack_channel: 'proj-gobi',
-  },
-  {
-    name: 'Ryan Proj',
-    sig_name: 'Summer BBQ',
-    students: ['Ryan Louie'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1HLRjhj20HLXvkNfoDKaCggu6q-UMitSnhYXKI6wULjc',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1LqzKqLgpAEqOMmKu4tVPlrlV3KdE1SOQ95Y-fvPSo94',
-    eoq_checklist: '',
-    slack_channel: 'proj-ryan',
-  },
   {
     name: 'Kapil Proj',
     sig_name: 'Summer BBQ',
@@ -169,7 +103,7 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1L2v0eGxuwh-T9Q6M7k45-x9IsSHex3Fbb4N2aAlQBgs',
+      'https://docs.google.com/spreadsheets/d/1X3K50EzJRgm8RHP1IteMF3WOpi5nCGB6YDNl1n5ZYJk',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1Gh5WnF8b-UzG3B6YhmRwqw6238y7IwAC5eKMX_11AFA',

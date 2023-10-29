@@ -15,27 +15,6 @@ export const sigSocialStructuresData = [
     sig_head: 'Kapil Garg',
   },
   {
-    name: 'Collective Experiences',
-    description:
-      'The Collective Experiences (CE) SIG develops a novel platform that coordinates people in real spaces in real time to join in shared experiences with strangers and loved ones. This technology opens up a whole new area of interactions to explore the creation of experiences that create opportunistic situational contexts for people from around the world to connect with one another.',
-    members: getAllMembersForSig(projectData, 'Collective Experiences'),
-    abbreviation: 'CE',
-    slack_channel: 'sig-collective-exp',
-    sig_head: 'Ryan Louie',
-  },
-  {
-    name: 'Readily Available Learning Experiences',
-    description:
-      'The Readily Available Learning Experiences (RALE) SIG seeks to empower learners to approach every professional website as a resource for learning programming concepts. ',
-    members: getAllMembersForSig(
-      projectData,
-      'Readily Available Learning Experiences'
-    ),
-    abbreviation: 'RALE',
-    slack_channel: 'sig-rale',
-    sig_head: 'Gobi Dasu',
-  },
-  {
     name: 'Contextually-Aware Metacognitive Practice',
     description:
       'The Contextually-Aware Metacognitive Practice (CAMP) studies how people and technologies in computer science learning environments (e.g. office hours, lab sections, and online discussion boards) can help monitor, diagnose, and address the metacognitive challenges that students face when learning to program.',
@@ -71,37 +50,37 @@ export const onboardingPairData = [
   {
     name: '',
     description: '',
-    mentor: 'Pablo Gupta',
-    mentee: 'Jiayi Zheng',
+    mentor: 'Kapil Garg',
+    mentee: 'Iphigenie Bera',
   },
   {
     name: '',
     description: '',
     mentor: 'Grace Wang',
-    mentee: 'Coumba Ka',
+    mentee: 'Yiran Mo',
   },
   {
     name: '',
     description: '',
-    mentor: 'Lev Rosenberg',
-    mentee: 'Oscar Dong',
+    mentor: 'Grace Wang',
+    mentee: 'Nuremir Babanov',
   },
   {
     name: '',
     description: '',
-    mentor: 'Alex Feng',
-    mentee: 'Jordan Checkoff',
+    mentor: 'Haoqi Zhang',
+    mentee: 'Linh Ly',
   },
   {
     name: '',
     description: '',
-    mentor: 'Dani Zhang',
-    mentee: 'Seva Suschenvskiy',
+    mentor: 'Jiayi Zheng',
+    mentee: 'Ella Jones',
   },
   {
     name: '',
     description: '',
-    mentor: 'Mieraf Mulat',
-    mentee: 'Ella Cutler',
+    mentor: 'Coumba Ka',
+    mentee: 'Jonah Jodlowski',
   },
 ];
