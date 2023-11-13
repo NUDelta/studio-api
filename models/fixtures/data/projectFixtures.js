@@ -67,10 +67,10 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1NJDzrk_0jHDF2uMzQj-bWPecf_em_8ZR5ao48asQK5k',
+      'https://docs.google.com/spreadsheets/d/1J_vnqv9AemTZVhpAhcqqOfpBLYrUXMNu1G3jXV5OUEk',
     compass: '',
     research_canvas:
-      'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
+      'https://docs.google.com/presentation/d/1XoSQDmlR-4yJB_kn03I2Osf9GVBNsKqdX8Z9saAy0Kw',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-conception',
     status_update_date: DateTime.fromISO('2023-11-03T12:00:00', {
