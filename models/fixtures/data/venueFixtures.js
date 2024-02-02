@@ -32,43 +32,66 @@ export const sigMeetingData = [
   {
     name: 'Networked Orchestration Technologies SIG Meeting',
     description: 'Weekly SIG meeting for NOT SIG',
-    day_of_week: 'Tuesday',
-    start_time: '16:30:00',
-    end_time: '17:30:00',
+    day_of_week: 'Monday',
+    start_time: '17:00:00',
+    end_time: '18:00:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(
       projectData,
       'Networked Orchestration Technologies'
     ),
-    projects: [
-      'Orchestration Scripting Environments',
-      'Situated Reflection Systems',
-    ],
+    projects: ['Orchestration Scripting Environments'],
   },
   {
     name: 'Contextually-Aware Metacognitive Practice SIG Meeting',
     description: 'Weekly SIG meeting for CAMP SIG',
     day_of_week: 'Wednesday',
-    start_time: '13:30:00',
+    start_time: '13:00:00',
     end_time: '14:00:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(
       projectData,
       'Contextually-Aware Metacognitive Practice'
     ),
-    projects: ['Q&A Buddy'],
+    projects: ['Q&A Buddy', 'PATH'],
   },
   {
-    name: 'Human-AI Tools SIG Meeting',
-    description: 'Weekly SIG meeting for HAT SIG',
-    day_of_week: 'Wednesday',
-    start_time: '15:00:00',
-    end_time: '16:00:00',
+    name: 'Human-AI Tools (Expression) SIG Meeting',
+    description: 'Weekly SIG meeting for HAT-X SIG',
+    day_of_week: 'Monday',
+    start_time: '14:00:00',
+    end_time: '15:00:00',
     timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Human-AI Tools'),
+    attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Expression)'),
+    projects: [
+      'Human-AI Tools for Concept Expression',
+      'Human-AI Tools for Aligning to Machine Representations and Execution',
+    ],
+  },
+  {
+    name: 'Human-AI Tools (Differences) SIG Meeting',
+    description: 'Weekly SIG meeting for HAT-D SIG',
+    day_of_week: 'Monday',
+    start_time: '13:00:00',
+    end_time: '14:00:00',
+    timezone: 'America/Chicago',
+    attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Differences)'),
     projects: [
       'Human-AI Tools for Accounting for Differences',
-      'Human-AI Tools for Concept Expression',
+      'Reference Systems',
+    ],
+  },
+  {
+    name: 'Breaking Boundaries SIG Meeting',
+    description: 'Weekly SIG meeting for BB SIG',
+    day_of_week: 'Monday',
+    start_time: '10:00:00',
+    end_time: '11:00:00',
+    timezone: 'America/Chicago',
+    attendees: getAllMembersForSig(projectData, 'Breaking Boundaries'),
+    projects: [
+      'How Can Computers Support Dialectical Activities?',
+      'Prototyping with LLMs',
     ],
   },
 ];
@@ -76,22 +99,12 @@ export const sigMeetingData = [
 // TODO: be able to encode ad-hoc office hours
 export const officeHoursData = [
   {
-    name: 'Networked Orchestration Technologies Office Hours for Scripting Envs',
-    description: "Weekly office hours for NOT SIG's Orch Scripting Env project",
-    day_of_week: 'Thursday',
-    start_time: '17:00:00',
-    end_time: '17:30:00',
+    name: 'Networked Orchestration Technologies Office Hours',
+    description: 'Weekly office hours for NOT SIG',
+    day_of_week: 'Wednesday',
+    start_time: '11:00:00',
+    end_time: '12:00:00',
     timezone: 'America/Chicago',
     projects: ['Orchestration Scripting Environments'],
-  },
-  {
-    name: 'Networked Orchestration Technologies Office Hours for Sit Ref',
-    description:
-      "Weekly office hours for NOT SIG's Situated Reflection Systems",
-    day_of_week: 'Thursday',
-    start_time: '16:30:00',
-    end_time: '17:00:00',
-    timezone: 'America/Chicago',
-    projects: ['Situated Reflection Systems'],
   },
 ];

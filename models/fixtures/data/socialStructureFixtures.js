@@ -24,15 +24,32 @@ export const sigSocialStructuresData = [
     ),
     abbreviation: 'CAMP',
     slack_channel: 'sig-camp',
+    sig_head: 'Yinmiao Li',
+  },
+  {
+    name: 'Human-AI Tools (Expression)',
+    description:
+      'The Human-AI Tools (HAT) SIG develops tools that help people learn and work with AI systems.',
+    members: getAllMembersForSig(projectData, 'Human-AI Tools (Expression)'),
+    abbreviation: 'HAT-X',
+    slack_channel: 'sig-human-ai-tools',
     sig_head: 'Haoqi Zhang',
   },
   {
-    name: 'Human-AI Tools',
+    name: 'Human-AI Tools (Differences)',
     description:
       'The Human-AI Tools (HAT) SIG develops tools that help people learn and work with AI systems.',
-    members: getAllMembersForSig(projectData, 'Human-AI Tools'),
-    abbreviation: 'HAT',
-    slack_channel: 'sig-human-ai-tools',
+    members: getAllMembersForSig(projectData, 'Human-AI Tools (Differences)'),
+    abbreviation: 'HAT-D',
+    slack_channel: 'sig-hat-difference',
+    sig_head: 'Haoqi Zhang',
+  },
+  {
+    name: 'Breaking Boundaries',
+    description: 'Breaking Boundaries SIG',
+    members: getAllMembersForSig(projectData, 'Breaking Boundaries'),
+    abbreviation: 'BB',
+    slack_channel: 'sig-bb',
     sig_head: 'Haoqi Zhang',
   },
   {
@@ -44,43 +61,21 @@ export const sigSocialStructuresData = [
     slack_channel: 'sig-summer-bbq',
     sig_head: 'Haoqi Zhang',
   },
+  {
+    name: 'Summer Beach',
+    description: 'Summer Beach',
+    members: getAllMembersForSig(projectData, 'Summer Beach'),
+    abbreviation: 'BBQ',
+    slack_channel: 'sig-summer-beach',
+    sig_head: "Nell O'Rourke",
+  },
 ];
 
 export const onboardingPairData = [
-  {
-    name: '',
-    description: '',
-    mentor: 'Kapil Garg',
-    mentee: 'Iphigenie Bera',
-  },
-  {
-    name: '',
-    description: '',
-    mentor: 'Grace Wang',
-    mentee: 'Yiran Mo',
-  },
-  {
-    name: '',
-    description: '',
-    mentor: 'Grace Wang',
-    mentee: 'Nuremir Babanov',
-  },
-  {
-    name: '',
-    description: '',
-    mentor: 'Haoqi Zhang',
-    mentee: 'Linh Ly',
-  },
-  {
-    name: '',
-    description: '',
-    mentor: 'Jiayi Zheng',
-    mentee: 'Ella Jones',
-  },
-  {
-    name: '',
-    description: '',
-    mentor: 'Coumba Ka',
-    mentee: 'Jonah Jodlowski',
-  },
+  // {
+  //   name: '',
+  //   description: '',
+  //   mentor: '',
+  //   mentee: '',
+  // },
 ];
