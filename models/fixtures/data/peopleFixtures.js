@@ -76,19 +76,9 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Sara Bouftas',
+    name: 'Billy Kirchgessner',
     email: 'temp@temp.com',
-    slack_id: 'U067XR1A7DH',
-    sig_member: 'Contextually-Aware Metacognitive Practice',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Archie Silverstein',
-    email: 'temp@temp.com',
-    slack_id: 'U0680BTKUJY',
+    slack_id: 'U06P4FVN9LZ',
     sig_member: 'Contextually-Aware Metacognitive Practice',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
@@ -98,9 +88,9 @@ export const nonPhdStudentData = [
 
   // SIG HAT - Experession
   {
-    name: 'Nuremir Babanov',
+    name: 'Gustavo Mercier',
     email: 'temp@temp.com',
-    slack_id: 'U05B3L23A73',
+    slack_id: 'U06MWHATLFL',
     sig_member: 'Human-AI Tools (Expression)',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
@@ -108,29 +98,9 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
-    name: 'Coumba Ka',
-    email: 'mameka2024@u.northwestern.edu',
-    slack_id: 'U04TA4HES79',
-    sig_member: 'Human-AI Tools (Expression)',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Jiho Kwak',
+    name: 'Ryan Chu',
     email: 'temp@temp.com',
-    slack_id: 'U067R94Q38E',
-    sig_member: 'Human-AI Tools (Expression)',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Harita Duggirala',
-    email: 'temp@temp.com',
-    slack_id: 'U067XTYU9DY',
+    slack_id: 'U06NKAYKVU0',
     sig_member: 'Human-AI Tools (Expression)',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
@@ -140,9 +110,9 @@ export const nonPhdStudentData = [
 
   // SIG HAT - Difference
   {
-    name: 'Jiayi Zheng',
-    email: 'jiayizheng2024@u.northwestern.edu',
-    slack_id: 'U04TJ2FA4Q6',
+    name: 'Edward Chen',
+    email: 'temp@temp.com',
+    slack_id: 'U06MZ184NA0',
     sig_member: 'Human-AI Tools (Differences)',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',

@@ -12,13 +12,13 @@ export const projectData = [
     sig_head: 'Kapil Garg',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1QvPGtkLOnoxs3dV5sEaIOQZ-rPMJPYRKyIF273bw_is',
+      'https://docs.google.com/spreadsheets/d/1xeqRbvQAVwOKUcZ0Di6cs2lsH_2hxQ5DgQNvttwQyng',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1OiqwusRpaHloHPDD3uvPe1e-KCsiNLVf4yg9fSdMMOE',
     eoq_checklist: '',
     slack_channel: 'proj-os',
-    status_update_date: DateTime.fromISO('2024-03-01T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-04-12T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -27,70 +27,53 @@ export const projectData = [
   {
     name: 'Q&A Buddy',
     sig_name: 'Contextually-Aware Metacognitive Practice',
-    students: ['Archie Silverstein'],
+    students: ['Billy Kirchgessner'],
     sig_head: 'Yinmiao Li',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1GcmND4gZ9qKHJ15A8nEAIn2E0paVYV5NmhtM6Nla1mA',
+      'https://docs.google.com/spreadsheets/d/1eTLxu5BNzaeIJU5zUo1LyV6sGNuHIRK6N6NLkvJ4JDo',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1nEtswsBf_p0SO8lOFzU0xL1GwvZIlS1ejwInWajMKeA',
     eoq_checklist: '',
     slack_channel: 'proj-qa-buddy',
-    status_update_date: DateTime.fromISO('2024-01-26T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-04-26T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
     name: 'PATH',
     sig_name: 'Contextually-Aware Metacognitive Practice',
-    students: ['Ella Cutler', 'Sara Bouftas'],
+    students: ['Ella Cutler'],
     sig_head: 'Yinmiao Li',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1X3kaaj_Av6-whmJr2REBp8GtR9J9Yw3-8cX0uwJclMo',
+      'https://docs.google.com/spreadsheets/d/1iyCd5xDHViC_7Gvjpt8o5dahc6kJeDA1tDdyf4sJFA4',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1bjiBikDaOME2PZYEnfCdMJAyOFvmpoB4UHgiVpRyj08',
     eoq_checklist: '',
     slack_channel: 'proj-path',
-    status_update_date: DateTime.fromISO('2024-01-19T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-24T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
   // SIG HAT - Experession
   {
-    name: 'Human-AI Tools for Concept Expression',
+    name: 'Human-AI Tools for Conception',
     sig_name: 'Human-AI Tools (Expression)',
-    students: ['Nuremir Babanov', 'Coumba Ka'],
+    students: ['Gustavo Mercier', 'Ryan Chu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1KzqiHiCtkFxlCBYmUbGZGrWRWdRvypIdS9Gf1kT5mpI',
+      'https://docs.google.com/spreadsheets/d/1PCj7jsF6cJlcagenP8v_jWv4Gs5ZUJ9e1_s0hq4VBjA',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2024-01-12T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-  {
-    name: 'Human-AI Tools for Aligning to Machine Representations and Execution',
-    sig_name: 'Human-AI Tools (Expression)',
-    students: ['Harita Duggirala', 'Jiho Kwak'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1rpaPqFjKdcDxfwmIrmPpQBfHNekjg1budCcaIrdXbRk',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1L-516cZFxnPH_JuT_XFOLw6Oahm-yZWH3oK7PMpXolY',
-    eoq_checklist: '',
-    slack_channel: 'proj-human-ai-align',
-    status_update_date: DateTime.fromISO('2024-02-02T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-17T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -99,17 +82,17 @@ export const projectData = [
   {
     name: 'Human-AI Tools for Accounting for Differences',
     sig_name: 'Human-AI Tools (Differences)',
-    students: ['Jiayi Zheng'],
+    students: ['Edward Chen'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1WiBTfzCsLy1i253HPct4JCKcrfOmFwEp3pFs8yo-99s',
+      'https://docs.google.com/spreadsheets/d/1o4b4e7N24VzKt3MtcfIjMhQkGmIJo1OOVFCDRQxQ5FI',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1noBPfVFFDLwqD0g66BaFHKru_Se23DXJRIa9gZpNQpc',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2024-02-23T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-03T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -120,13 +103,13 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/15GlqmEkwNsPxiD_7KUjf9lNzW5DOb3nTVj6ttpWzbSk',
+      'https://docs.google.com/spreadsheets/d/1wymM7OIz8k8DxbBFtLtDg8ghdilHms2UEV_P6IAiwe0',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1N3x2aAgKGYGqryWIPoKknjVuO4Zp81b6Q-2IGiWTxKk',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-reference',
-    status_update_date: DateTime.fromISO('2024-02-09T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-31T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -139,13 +122,13 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1KcN1uBFnA237h_t9gMRBvtsT16ObPWHzXQAIWeCbYOc',
+      'https://docs.google.com/spreadsheets/d/1tGuFSYTJQvIY-BGS58eUXOc8L64wqLZ8d230uW5C8uE',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1m0_bV9rSQJptme5F0a8bqHItyNIW3wgRYsRs_Mq-yfQ',
     eoq_checklist: '',
     slack_channel: 'proj-dialectical',
-    status_update_date: DateTime.fromISO('2024-03-08T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-04-19T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -156,13 +139,13 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1Z60ICxuH7QlY4AQgOuXsC9Q4aVTCw_9XP4I6s_UN-HM',
+      'https://docs.google.com/spreadsheets/d/1pgGp-49Pq6eXa0JJv51SDlvj8TcoHdSqPcrTtnaCR-k',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1pjdhWMA8v7U4ZqrquCm5h9ZDAbS4e6A9lFVRGIbtxA4',
     eoq_checklist: '',
     slack_channel: 'proj-prototype-llms',
-    status_update_date: DateTime.fromISO('2024-02-16T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -175,12 +158,30 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1grSIDBC9usy1A14rjywz__8hQfzXwDA7qhncTlQbhUI',
+      'https://docs.google.com/spreadsheets/d/1dEWi4etdnTaQvwDQl3ux3hcQiaWKtJSDr1HwkbP6a70',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1Gh5WnF8b-UzG3B6YhmRwqw6238y7IwAC5eKMX_11AFA',
     research_research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-kapil',
+    status_update_date: DateTime.fromISO('2024-04-05T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+  {
+    name: 'Yinmiao Proj',
+    sig_name: 'Summer Beach',
+    students: ['Yinmiao Li'],
+    sig_head: "Nell O'Rourke",
+    faculty_mentor: "Nell O'Rourke",
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1gHRE9AEFVp5gERWXvxChBUvSlxbueZhuZ2Cvz9H-FEg',
+    compass: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1Gh5WnF8b-UzG3B6YhmRwqw6238y7IwAC5eKMX_11AFA',
+    research_research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-yinmiao',
   },
 ];
