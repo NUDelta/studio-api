@@ -55,19 +55,19 @@ export const sigMeetingData = [
     ),
     projects: ['Q&A Buddy', 'PATH'],
   },
-  {
-    name: 'Human-AI Tools (Expression) SIG Meeting',
-    description: 'Weekly SIG meeting for HAT-X SIG',
-    day_of_week: 'Friday',
-    start_time: '11:00:00',
-    end_time: '11:30:00',
-    timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Expression)'),
-    projects: [
-      'Human-AI Tools for Conception',
-      // 'Human-AI Tools for Aligning to Machine Representations and Execution',
-    ],
-  },
+  // {
+  //   name: 'Human-AI Tools (Expression) SIG Meeting',
+  //   description: 'Weekly SIG meeting for HAT-X SIG',
+  //   day_of_week: 'Friday',
+  //   start_time: '11:00:00',
+  //   end_time: '11:30:00',
+  //   timezone: 'America/Chicago',
+  //   attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Expression)'),
+  //   projects: [
+  //     'Human-AI Tools for Conception',
+  //     // 'Human-AI Tools for Aligning to Machine Representations and Execution',
+  //   ],
+  // },
   {
     name: 'Human-AI Tools (Differences) SIG Meeting',
     description: 'Weekly SIG meeting for HAT-D SIG',

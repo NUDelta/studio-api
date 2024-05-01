@@ -87,26 +87,6 @@ export const nonPhdStudentData = [
   },
 
   // SIG HAT - Experession
-  {
-    name: 'Gustavo Mercier',
-    email: 'temp@temp.com',
-    slack_id: 'U06MWHATLFL',
-    sig_member: 'Human-AI Tools (Expression)',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Ryan Chu',
-    email: 'temp@temp.com',
-    slack_id: 'U06NKAYKVU0',
-    sig_member: 'Human-AI Tools (Expression)',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
 
   // SIG HAT - Difference
   {

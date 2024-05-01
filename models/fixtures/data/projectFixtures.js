@@ -31,7 +31,7 @@ export const projectData = [
     sig_head: 'Yinmiao Li',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1eTLxu5BNzaeIJU5zUo1LyV6sGNuHIRK6N6NLkvJ4JDo',
+      'https://docs.google.com/spreadsheets/d/12Wsr1nR94vpC11XbySrPa16O3b9OwUFRuf6w3h6f10s',
     compass: '',
     research_canvas:
       'https://docs.google.com/presentation/d/1nEtswsBf_p0SO8lOFzU0xL1GwvZIlS1ejwInWajMKeA',
@@ -60,23 +60,23 @@ export const projectData = [
   },
 
   // SIG HAT - Experession
-  {
-    name: 'Human-AI Tools for Conception',
-    sig_name: 'Human-AI Tools (Expression)',
-    students: ['Gustavo Mercier', 'Ryan Chu'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1PCj7jsF6cJlcagenP8v_jWv4Gs5ZUJ9e1_s0hq4VBjA',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
-    eoq_checklist: '',
-    slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2024-05-17T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
+  // {
+  //   name: 'Human-AI Tools for Conception',
+  //   sig_name: 'Human-AI Tools (Expression)',
+  //   students: ['Gustavo Mercier', 'Ryan Chu'],
+  //   sig_head: 'Haoqi Zhang',
+  //   faculty_mentor: 'Haoqi Zhang',
+  //   sprint_log:
+  //     'https://docs.google.com/spreadsheets/d/1PCj7jsF6cJlcagenP8v_jWv4Gs5ZUJ9e1_s0hq4VBjA',
+  //   compass: '',
+  //   research_canvas:
+  //     'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
+  //   eoq_checklist: '',
+  //   slack_channel: 'proj-human-ai-conception',
+  //   status_update_date: DateTime.fromISO('2024-05-17T12:00:00', {
+  //     zone: 'America/Chicago',
+  //   }),
+  // },
 
   // SIG HAT - Differences
   {
