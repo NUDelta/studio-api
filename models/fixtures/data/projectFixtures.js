@@ -92,7 +92,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1noBPfVFFDLwqD0g66BaFHKru_Se23DXJRIa9gZpNQpc',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2024-05-03T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-31T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -109,7 +109,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1N3x2aAgKGYGqryWIPoKknjVuO4Zp81b6Q-2IGiWTxKk',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-reference',
-    status_update_date: DateTime.fromISO('2024-05-31T12:00:00', {
+    status_update_date: DateTime.fromISO('2024-05-03T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
