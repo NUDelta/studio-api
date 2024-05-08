@@ -107,24 +107,6 @@ export const officeHoursData = [
     timezone: 'America/Chicago',
     projects: ['Orchestration Scripting Environments'],
   },
-  // {
-  //   name: 'CAMP Q&A Buddy Office Hours',
-  //   description: 'Weekly office hours for Q&A Buddy project',
-  //   day_of_week: 'Wednesday',
-  //   start_time: '14:00:00',
-  //   end_time: '14:45:00',
-  //   timezone: 'America/Chicago',
-  //   projects: ['PATH'],
-  // },
-  // {
-  //   name: 'CAMP Q&A Buddy Office Hours',
-  //   description: 'Weekly office hours for Q&A Buddy project',
-  //   day_of_week: 'Monday',
-  //   start_time: '15:00:00',
-  //   end_time: '16:00:00',
-  //   timezone: 'America/Chicago',
-  //   projects: ['Q&A Buddy'],
-  // },
 ];
 
 // TODO: add mysore
