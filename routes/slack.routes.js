@@ -359,6 +359,12 @@ slackRouter.post('/messagePeople', async (req, res) => {
       },
     }).sort('role name');
 
+    // get Kapil separately to always have as a recipient
+    const kapil = await Person.findOne({ name: 'Kapil Garg' });
+    const kapilSlackId = {
+      name: kapil.name,
+      slack_id: kapil.slack_id,
+    };
     const peopleSlackIds = allPeople.map((person) => {
       return {
         name: person.name,
@@ -370,7 +376,7 @@ slackRouter.post('/messagePeople', async (req, res) => {
     // api documentation: https://api.slack.com/methods/conversations.open
     let conversationForPeopleResponse = await app.client.conversations.open({
       return_im: true,
-      users: peopleSlackIds
+      users: [...peopleSlackIds, kapilSlackId]
         .map((person) => {
           return person.slack_id;
         })
