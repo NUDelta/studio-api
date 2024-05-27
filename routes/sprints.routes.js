@@ -17,9 +17,9 @@ export const sprintRouter = new Router();
  */
 sprintRouter.get('/', async (req, res) => {
   try {
-    res.json(await fetchAllSprints());
+    return res.status(200).json(await fetchAllSprints());
   } catch (error) {
-    res.send(`Error when fetching all sprints: ${error}`);
+    return res.status(400).send(`Error when fetching all sprints: ${error}`);
   }
 });
 
@@ -29,10 +29,11 @@ sprintRouter.get('/', async (req, res) => {
 sprintRouter.get('/currentSprint', async (req, res) => {
   try {
     // return sprint if found
-    res.json(await fetchCurrentSprint());
+    return res.status(200).json(await fetchCurrentSprint());
   } catch (error) {
-    res.json(`Error when fetching current sprint: ${error}`);
+    return res.status(400).json(`Error when fetching current sprint: ${error}`);
   }
+  4;
 });
 
 /**
@@ -47,9 +48,9 @@ sprintRouter.get('/byName', async (req, res) => {
     }
 
     // return sprint if found
-    res.json(await fetchSprintByName(sprintName));
+    return res.status(200).json(await fetchSprintByName(sprintName));
   } catch (error) {
-    res.send(`Error when fetching sprint by name: ${error}`);
+    return res.status(400).send(`Error when fetching sprint by name: ${error}`);
   }
 });
 
@@ -61,17 +62,20 @@ sprintRouter.get('/byDate', async (req, res) => {
     // check to see if a date was provided
     let dateString = req.query.timestamp;
     let dateObj;
+    dateObj = DateTime.fromISO(dateString);
+    if (!dateObj.isValid) {
+      throw new Error('Invalid date provided');
+    }
 
-    // try to parse a DateTime from the string; otherwise, get the current date/time
-    try {
-      dateObj = DateTime.fromISO(dateString);
-    } catch (error) {
-      throw new Error('timestamp parameter not defined');
+    let data = await fetchSprintByDate(dateObj);
+    if (data === null) {
+      throw new Error('No sprint found for the given date');
     }
 
     // return sprint if found
-    res.json(await fetchSprintByDate(dateObj));
+    return res.status(200).json(data);
   } catch (error) {
-    res.json(`Error when fetching sprint by date: ${error}`);
+    console.error(`Error in /byDate: ${error}`);
+    return res.status(400).json(`Error when fetching sprint by date: ${error}`);
   }
 });

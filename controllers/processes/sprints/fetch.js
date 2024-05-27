@@ -64,7 +64,7 @@ export const fetchSprintByDate = async (date) => {
     return relevantSprint;
   } catch (error) {
     console.error(`Error in fetchSprintByDate: ${error}`);
-    return error;
+    return null;
   }
 };
 
