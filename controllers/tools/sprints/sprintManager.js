@@ -95,6 +95,9 @@ const getSprintLogForProject = async (project) => {
       if (lastEditDate <= cacheDate) {
         // console.log(`Sprint Cache HIT for project ${ project['name'] }. Will not refresh cache.`);
 
+        // add last edit date
+        cacheData['lastUpdated'] = lastEditDate.toISOString();
+
         // add current sprint
         cacheData['current_sprint'] = await getDataForCurrentSprint(cacheData);
         return cacheData;
@@ -135,6 +138,9 @@ const getSprintLogForProject = async (project) => {
     } else {
       await addSprintToCache(project._id, parsedSprintLog, lastEditDate);
     }
+
+    // add last edit date
+    parsedSprintLog['lastUpdated'] = lastEditDate.toISOString();
 
     // add current sprint, and return parsed sprint log if successful
     parsedSprintLog['current_sprint'] = await getDataForCurrentSprint(

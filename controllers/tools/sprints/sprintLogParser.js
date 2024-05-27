@@ -10,6 +10,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
  * SprintLog {
  *   url: "String"                           // link to Google Drive Spreadsheet
  *   documentId: "String"                    // ID of document parsed from URL
+ *   lastUpdated: "String"                   // ISO date the sprint log was last updated
  *   people: [String]                        // student names
  *   sprints: [                              // list of SprintPlans for each sprint in the qtr
  *     SprintPlan {
@@ -74,6 +75,7 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 export class SprintLog {
   url = ''; // Google Drive URL for Sprint Log
   documentId = ''; // Google Drive spreadsheet id for the current sprint log
+  lastUpdated = ''; // date the sprint log was last updated. populated by the sprintManager
 
   people = []; // list of people the sprint is for
   sprints = []; // list of Sprint objects associated with the sprint log
