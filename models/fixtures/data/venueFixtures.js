@@ -30,83 +30,64 @@ export const studioData = [
 
 export const sigMeetingData = [
   {
-    name: 'Networked Orchestration Technologies SIG Meeting',
-    description: 'Weekly SIG meeting for NOT SIG',
-    day_of_week: 'Monday',
+    name: 'Regulation Informed Practice SIG Meeting',
+    description: 'Weekly SIG meeting for RIP SIG',
+    day_of_week: 'Wednesday',
     start_time: '17:00:00',
     end_time: '18:00:00',
     timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(
-      projectData,
-      'Networked Orchestration Technologies'
-    ),
-    projects: ['Orchestration Scripting Environments'],
+    attendees: getAllMembersForSig(projectData, 'Regulation Informed Practice'),
+    projects: ['PATH', 'Regulation Coaching'],
   },
   {
-    name: 'Contextually-Aware Metacognitive Practice SIG Meeting',
-    description: 'Weekly SIG meeting for CAMP SIG',
-    day_of_week: 'Wednesday',
-    start_time: '13:00:00',
-    end_time: '14:00:00',
-    timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(
-      projectData,
-      'Contextually-Aware Metacognitive Practice'
-    ),
-    projects: ['Q&A Buddy', 'PATH'],
-  },
-  // {
-  //   name: 'Human-AI Tools (Expression) SIG Meeting',
-  //   description: 'Weekly SIG meeting for HAT-X SIG',
-  //   day_of_week: 'Friday',
-  //   start_time: '11:00:00',
-  //   end_time: '11:30:00',
-  //   timezone: 'America/Chicago',
-  //   attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Expression)'),
-  //   projects: [
-  //     'Human-AI Tools for Conception',
-  //     // 'Human-AI Tools for Aligning to Machine Representations and Execution',
-  //   ],
-  // },
-  {
-    name: 'Human-AI Tools (Differences) SIG Meeting',
-    description: 'Weekly SIG meeting for HAT-D SIG',
+    name: 'Situated Practice Systems SIG Meeting',
+    description: 'Weekly SIG meeting for SPS SIG',
     day_of_week: 'Wednesday',
     start_time: '10:00:00',
     end_time: '11:00:00',
     timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Human-AI Tools (Differences)'),
-    projects: [
-      'Human-AI Tools for Accounting for Differences',
-      'Reference Systems',
-    ],
+    attendees: getAllMembersForSig(projectData, 'Situated Practice Systems'),
+    projects: ['Scaling and Improving Coaching with LLMs', 'CAP Notes'],
   },
   {
-    name: 'Breaking Boundaries SIG Meeting',
-    description: 'Weekly SIG meeting for BB SIG',
-    day_of_week: 'Wednesday',
+    name: 'Human-AI Tools SIG Meeting',
+    description: 'Weekly SIG meeting for HAT SIG',
+    day_of_week: 'Friday',
     start_time: '11:00:00',
     end_time: '12:00:00',
     timezone: 'America/Chicago',
-    attendees: getAllMembersForSig(projectData, 'Breaking Boundaries'),
+    attendees: getAllMembersForSig(projectData, 'Human-AI Tools'),
     projects: [
-      'How Can Computers Support Dialectical Activities?',
+      'Human-AI tools for concept expression',
       'Prototyping with LLMs',
     ],
+  },
+  {
+    name: 'Experential Computing SIG Meeting',
+    description: 'Weekly SIG meeting for HAT-D SIG',
+    day_of_week: 'Friday',
+    start_time: '10:00:00',
+    end_time: '11:00:00',
+    timezone: 'America/Chicago',
+    attendees: getAllMembersForSig(projectData, 'Experential Computing'),
+    projects: [
+      'Human-AI tools for accounting for differences',
+      'Experiential Computing Platform',
+    ],
+  },
+  {
+    name: 'Dialectical Technologies SIG Meeting',
+    description: 'Weekly SIG meeting for DT SIG',
+    day_of_week: 'Wednesday',
+    start_time: '13:00:00',
+    end_time: '14:00:00',
+    timezone: 'America/Chicago',
+    attendees: getAllMembersForSig(projectData, 'Dialectical Technologies'),
+    projects: ['Dialectical Technologies'],
   },
 ];
 
 // TODO: be able to encode ad-hoc office hours
-export const officeHoursData = [
-  {
-    name: 'Networked Orchestration Technologies Office Hours',
-    description: 'Weekly office hours for NOT SIG',
-    day_of_week: 'Wednesday',
-    start_time: '17:00:00',
-    end_time: '18:00:00',
-    timezone: 'America/Chicago',
-    projects: ['Orchestration Scripting Environments'],
-  },
-];
+export const officeHoursData = [];
 
 // TODO: add mysore

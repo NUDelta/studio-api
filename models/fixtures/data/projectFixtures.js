@@ -4,184 +4,157 @@ import { DateTime } from 'luxon';
 // TODO: I think the SIG head and faculty mentor should be inferred from which SIG the project is associated with
 // TODO: update dev links
 export const projectData = [
-  // SIG NOT
+  // SIG RIP
   {
-    name: 'Orchestration Scripting Environments',
-    sig_name: 'Networked Orchestration Technologies',
+    name: 'Regulation Coaching',
+    sig_name: 'Regulation Informed Practice',
     students: ['Grace Wang', 'Linh Ly'],
-    sig_head: 'Kapil Garg',
+    sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1xeqRbvQAVwOKUcZ0Di6cs2lsH_2hxQ5DgQNvttwQyng',
+      'https://docs.google.com/spreadsheets/d/1-JzomNWX2wyIOXoTTUacXhPWrSg6d3_yf55gxSlrYvY',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1OiqwusRpaHloHPDD3uvPe1e-KCsiNLVf4yg9fSdMMOE',
+    research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-os',
-    status_update_date: DateTime.fromISO('2024-04-12T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG CAMP
-  {
-    name: 'Q&A Buddy',
-    sig_name: 'Contextually-Aware Metacognitive Practice',
-    students: ['Billy Kirchgessner'],
-    sig_head: 'Yinmiao Li',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/12Wsr1nR94vpC11XbySrPa16O3b9OwUFRuf6w3h6f10s',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1nEtswsBf_p0SO8lOFzU0xL1GwvZIlS1ejwInWajMKeA',
-    eoq_checklist: '',
-    slack_channel: 'proj-qa-buddy',
-    status_update_date: DateTime.fromISO('2024-04-26T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-05-09T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
     name: 'PATH',
-    sig_name: 'Contextually-Aware Metacognitive Practice',
-    students: ['Ella Cutler'],
-    sig_head: 'Yinmiao Li',
+    sig_name: 'Regulation Informed Practice',
+    students: ['Jessica Sun', 'Henry Lee'],
+    sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1iyCd5xDHViC_7Gvjpt8o5dahc6kJeDA1tDdyf4sJFA4',
+      'https://docs.google.com/spreadsheets/d/1xpWuj0yTdLD6nLQLHBVvsu8yrK2ejb5cFgr04KKvhgA',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1bjiBikDaOME2PZYEnfCdMJAyOFvmpoB4UHgiVpRyj08',
+    research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-path',
-    status_update_date: DateTime.fromISO('2024-05-24T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-04-18T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
-  // SIG HAT - Experession
-  // {
-  //   name: 'Human-AI Tools for Conception',
-  //   sig_name: 'Human-AI Tools (Expression)',
-  //   students: ['Gustavo Mercier', 'Ryan Chu'],
-  //   sig_head: 'Haoqi Zhang',
-  //   faculty_mentor: 'Haoqi Zhang',
-  //   sprint_log:
-  //     'https://docs.google.com/spreadsheets/d/1PCj7jsF6cJlcagenP8v_jWv4Gs5ZUJ9e1_s0hq4VBjA',
-  //   compass: '',
-  //   research_canvas:
-  //     'https://docs.google.com/presentation/d/1clDc7dQePzrQmiuUH2K-ocHGxpt8osFyC7BJNtupltc',
-  //   eoq_checklist: '',
-  //   slack_channel: 'proj-human-ai-conception',
-  //   status_update_date: DateTime.fromISO('2024-05-17T12:00:00', {
-  //     zone: 'America/Chicago',
-  //   }),
-  // },
-
-  // SIG HAT - Differences
+  // SIG SPS
   {
-    name: 'Human-AI Tools for Accounting for Differences',
-    sig_name: 'Human-AI Tools (Differences)',
-    students: ['Edward Chen'],
+    name: 'Scaling and Improving Coaching with LLMs',
+    sig_name: 'Situated Practice Systems',
+    students: ['Terry Chen', 'Allyson Lee'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1o4b4e7N24VzKt3MtcfIjMhQkGmIJo1OOVFCDRQxQ5FI',
+      'https://docs.google.com/spreadsheets/d/1-WIXECaFPL1TTUHE9_q29mi5D10H--keSewajyN5AYA',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1noBPfVFFDLwqD0g66BaFHKru_Se23DXJRIa9gZpNQpc',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2024-05-17T12:00:00', {
+    slack_channel: 'sig-sps',
+    status_update_date: DateTime.fromISO('2025-04-11T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
-    name: 'Reference Systems',
-    sig_name: 'Human-AI Tools (Differences)',
-    students: ['Shirley Zhang', 'Jackie He'],
+    name: 'CAP Notes',
+    sig_name: 'Situated Practice Systems',
+    students: ['Sasha Boico'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1wymM7OIz8k8DxbBFtLtDg8ghdilHms2UEV_P6IAiwe0',
+      'https://docs.google.com/spreadsheets/d/1-d3aQpc932ZTwzLJhVt6gHFhdrE5A8GCvXjBJtt4hcM',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1N3x2aAgKGYGqryWIPoKknjVuO4Zp81b6Q-2IGiWTxKk',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-human-ai-reference',
-    status_update_date: DateTime.fromISO('2024-05-03T12:00:00', {
+    slack_channel: 'proj-cap-notes',
+    status_update_date: DateTime.fromISO('2025-06-06T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
-  // SIG BB
+  // SIG HAT
   {
-    name: 'How Can Computers Support Dialectical Activities?',
-    sig_name: 'Breaking Boundaries',
-    students: ['Maalvika Bhat'],
+    name: 'Human-AI tools for concept expression',
+    sig_name: 'Human-AI Tools',
+    students: ['Diana Whealan', 'Rohit Katakam'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1tGuFSYTJQvIY-BGS58eUXOc8L64wqLZ8d230uW5C8uE',
+      'https://docs.google.com/spreadsheets/d/1OBM9EbXWUTAcC0TOIKC3oYiLMzEw7Mu0otaqlURhAZE',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1m0_bV9rSQJptme5F0a8bqHItyNIW3wgRYsRs_Mq-yfQ',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-dialectical',
-    status_update_date: DateTime.fromISO('2024-04-19T12:00:00', {
+    slack_channel: 'proj-human-ai-conception',
+    status_update_date: DateTime.fromISO('2025-05-16T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
     name: 'Prototyping with LLMs',
-    sig_name: 'Breaking Boundaries',
-    students: ['Jason Jewell', 'Arya Bulusu'],
+    sig_name: 'Human-AI Tools',
+    students: ['Sally So', 'Mahima Ramesh'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1pgGp-49Pq6eXa0JJv51SDlvj8TcoHdSqPcrTtnaCR-k',
+      'https://docs.google.com/spreadsheets/d/1OGRxypxAS0n2Vi-wgNA7WQ1Z_rIYDBuhFAAhFmr4WqM',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1pjdhWMA8v7U4ZqrquCm5h9ZDAbS4e6A9lFVRGIbtxA4',
+    research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-prototype-llms',
-    status_update_date: DateTime.fromISO('2024-05-10T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-05-02T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
-  // SIG BBQ
+  // SIG HAT-D
   {
-    name: 'Kapil Proj',
-    sig_name: 'Summer BBQ',
-    students: ['Kapil Garg'],
+    name: 'Human-AI tools for accounting for differences',
+    sig_name: 'Experential Computing',
+    students: ['Elara Liu', 'Medini Chopra'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1dEWi4etdnTaQvwDQl3ux3hcQiaWKtJSDr1HwkbP6a70',
+      'https://docs.google.com/spreadsheets/d/1WSZbma9M8pJwkVtBSyqTCQ_dSq-GnjU6eSstvDFoxYc',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1Gh5WnF8b-UzG3B6YhmRwqw6238y7IwAC5eKMX_11AFA',
-    research_research_canvas: '',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-kapil',
-    status_update_date: DateTime.fromISO('2024-04-05T12:00:00', {
+    slack_channel: 'proj-human-ai-difference',
+    status_update_date: DateTime.fromISO('2025-04-25T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
-    name: 'Yinmiao Proj',
-    sig_name: 'Summer Beach',
-    students: ['Yinmiao Li'],
-    sig_head: "Nell O'Rourke",
-    faculty_mentor: "Nell O'Rourke",
+    name: 'Experiential Computing Platform',
+    sig_name: 'Experential Computing',
+    students: ['Rama Naboulsi', 'Yong-yu Huang'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1gHRE9AEFVp5gERWXvxChBUvSlxbueZhuZ2Cvz9H-FEg',
+      'https://docs.google.com/spreadsheets/d/1i3F-fv3sGdoMOW40fx3NFQ3Nc9s_KG4B0hGKw9d9n9k',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1Gh5WnF8b-UzG3B6YhmRwqw6238y7IwAC5eKMX_11AFA',
-    research_research_canvas: '',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-yinmiao',
+    slack_channel: 'proj-exp-computing',
+    status_update_date: DateTime.fromISO('2025-05-23T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+
+  // SIG DT
+  {
+    name: 'Dialectical Technologies',
+    sig_name: 'Dialectical Technologies',
+    students: ['Jay Jeon', 'Nicole Lu'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1w-A8MYlMwQ-7skBj7voJGY9jJ9sdt7ceM-4bW1I8DyU',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-dialectical',
+    status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
+      zone: 'America/Chicago',
+    }),
   },
 ];
