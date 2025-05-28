@@ -85,6 +85,16 @@ export const sigMeetingData = [
     attendees: getAllMembersForSig(projectData, 'Dialectical Technologies'),
     projects: ['Dialectical Technologies'],
   },
+  // {
+  //   name: 'Summer BBQ SIG Meeting',
+  //   description: 'Weekly SIG meeting for BBQ SIG',
+  //   day_of_week: 'Friday',
+  //   start_time: '15:00:00',
+  //   end_time: '16:00:00',
+  //   timezone: 'America/Chicago',
+  //   attendees: getAllMembersForSig(projectData, 'Summer BBQ'),
+  //   projects: ['Kapil Proj'],
+  // },
 ];
 
 // TODO: be able to encode ad-hoc office hours

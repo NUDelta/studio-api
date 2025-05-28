@@ -157,4 +157,19 @@ export const projectData = [
       zone: 'America/Chicago',
     }),
   },
+
+  // {
+  //   name: 'Kapil Proj',
+  //   sig_name: 'Summer BBQ',
+  //   students: ['Kapil Garg'],
+  //   sig_head: 'Haoqi Zhang',
+  //   faculty_mentor: 'Haoqi Zhang',
+  //   sprint_log: '',
+  //   practical_research_canvas:
+  //     'https://drive.google.com/open?id=1wDWcmQ06Ir5d3nRuM-v7TavdrNuuUkPzrRApQ0xhIF8',
+  //   research_research_canvas:
+  //     'https://drive.google.com/open?id=1V5cbxOdwk73ilzjK67gH8ebc2FDUpl_GESZClKCWRhw',
+  //   eoq_checklist: '',
+  //   slack_channel: 'proj-kapil',
+  // },
 ];

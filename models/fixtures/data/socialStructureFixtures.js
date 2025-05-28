@@ -42,6 +42,15 @@ export const sigSocialStructuresData = [
     slack_channel: 'sig-bb',
     sig_head: 'Haoqi Zhang',
   },
+  // {
+  //   name: 'Summer BBQ',
+  //   description:
+  //     "The Summer BBQ (BBQ) SIG is the Ph.D. students' SIG, which has projects that they lead in the other SIG areas.",
+  //   members: getAllMembersForSig(projectData, 'Summer BBQ'),
+  //   abbreviation: 'BBQ',
+  //   slack_channel: 'sig-summer-bbq',
+  //   sig_head: 'Haoqi Zhang',
+  // },
 ];
 
 export const onboardingPairData = [

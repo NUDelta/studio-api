@@ -14,7 +14,21 @@ export const facultyData = [
   },
 ];
 
-export const phdStudentData = [];
+export const phdStudentData = [
+  {
+    name: 'Kapil Garg',
+    email: 'kapil@northwestern.edu',
+    slack_id:
+      process.env.NODE_ENV === 'development' ? 'U033BDY8A1E' : 'U0G17CVCZ',
+    sig_lead: 'Networked Orchestration Technologies',
+    sig_member: 'Summer BBQ',
+    sig_head: 'Haoqi Zhang',
+    individual_progress_map:
+      'https://docs.google.com/spreadsheets/d/1xEJ3dDYqNA9SlufiD3GF4mN3DzvXg_JMc3D25rUjSHA/edit?usp=sharing',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+];
 
 export const nonPhdStudentData = [
   // SIG RIP
