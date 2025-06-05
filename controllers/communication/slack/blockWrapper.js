@@ -1,4 +1,23 @@
 /**
+ * Splits a long text into multiple plain text section blocks, each ≤ 3000 chars.
+ * @param text string text to include in the blocks.
+ * @param isMarkdown optional boolean that specifies text is Markdown text.
+ * @returns {Array} Array of Slack section blocks.
+ */
+export const blockPlainTextSplit = (text, isMarkdown = false) => {
+  const MAX_LENGTH = 3000;
+  if (!text || text.length <= MAX_LENGTH) {
+    return [blockPlainText(text, isMarkdown)];
+  }
+  const blocks = [];
+  let i = 0;
+  while (i < text.length) {
+    blocks.push(blockPlainText(text.slice(i, i + MAX_LENGTH), isMarkdown));
+    i += MAX_LENGTH;
+  }
+  return blocks;
+};
+/**
  * This module wraps Slack's Block Kit components for easier composition of messages.
  */
 

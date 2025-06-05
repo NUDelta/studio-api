@@ -1,12 +1,6 @@
 /**
  * This module composes the message payload to send using the Slack API.
  */
-import {
-  blockPlainText,
-  blockStaticSingleSelect,
-  blockStaticMultiSelect,
-  blockCheckBoxes,
-} from './blockWrapper.js';
 
 /**
  * Returns a list of slack id's when provided a list of people objects, which can be used to ping each person in a channel or direct message in Slack.
