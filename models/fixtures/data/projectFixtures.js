@@ -6,117 +6,52 @@ import { DateTime } from 'luxon';
 export const projectData = [
   // SIG RIP
   {
-    name: 'Regulation Coaching',
-    sig_name: 'Regulation Informed Practice',
-    students: ['Grace Wang', 'Linh Ly'],
+    name: 'PATH',
+    sig_name: 'Regulation-Informed Learning',
+    students: ['Sarah Carley', 'Henry Lee'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1-JzomNWX2wyIOXoTTUacXhPWrSg6d3_yf55gxSlrYvY',
+      'https://docs.google.com/spreadsheets/d/1uagLJ4q-QaBHAVy4JTqFg5kagRCnKROKMEYG7OR60PI',
     compass: '',
-    research_canvas: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1KA__dzATJLQFVssDRCyPmmh8-OfhDbqsQphtp-gPDCo',
     eoq_checklist: '',
-    slack_channel: 'proj-os',
+    slack_channel: 'proj-path',
     status_update_date: DateTime.fromISO('2025-05-09T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
-    name: 'PATH',
-    sig_name: 'Regulation Informed Practice',
-    students: ['Jessica Sun', 'Henry Lee'],
+    name: 'Understanding regulation-informed coaching',
+    sig_name: 'Regulation-Informed Learning',
+    students: ['Justina Wang'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1xpWuj0yTdLD6nLQLHBVvsu8yrK2ejb5cFgr04KKvhgA',
+      'https://docs.google.com/spreadsheets/d/1BMS7Dpp3AhDUZATNNn-mdCjLQ4RJcwW28toL3piqcKA',
     compass: '',
-    research_canvas: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
     eoq_checklist: '',
-    slack_channel: 'proj-path',
+    slack_channel: 'sig-rip',
     status_update_date: DateTime.fromISO('2025-04-18T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
-  // SIG SPS
-  {
-    name: 'Scaling and Improving Coaching with LLMs',
-    sig_name: 'Situated Practice Systems',
-    students: ['Terry Chen', 'Allyson Lee'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1-WIXECaFPL1TTUHE9_q29mi5D10H--keSewajyN5AYA',
-    compass: '',
-    research_canvas: '',
-    eoq_checklist: '',
-    slack_channel: 'sig-sps',
-    status_update_date: DateTime.fromISO('2025-04-11T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-  {
-    name: 'CAP Notes',
-    sig_name: 'Situated Practice Systems',
-    students: ['Sasha Boico'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1-d3aQpc932ZTwzLJhVt6gHFhdrE5A8GCvXjBJtt4hcM',
-    compass: '',
-    research_canvas: '',
-    eoq_checklist: '',
-    slack_channel: 'proj-cap-notes',
-    status_update_date: DateTime.fromISO('2025-06-06T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG HAT
-  {
-    name: 'Human-AI tools for concept expression',
-    sig_name: 'Human-AI Tools',
-    students: ['Diana Whealan', 'Rohit Katakam'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1OBM9EbXWUTAcC0TOIKC3oYiLMzEw7Mu0otaqlURhAZE',
-    compass: '',
-    research_canvas: '',
-    eoq_checklist: '',
-    slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2025-05-16T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-  {
-    name: 'Prototyping with LLMs',
-    sig_name: 'Human-AI Tools',
-    students: ['Sally So', 'Mahima Ramesh'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1OGRxypxAS0n2Vi-wgNA7WQ1Z_rIYDBuhFAAhFmr4WqM',
-    compass: '',
-    research_canvas: '',
-    eoq_checklist: '',
-    slack_channel: 'proj-prototype-llms',
-    status_update_date: DateTime.fromISO('2025-05-02T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG HAT-D
+  // SIG Experential Computing
   {
     name: 'Human-AI tools for accounting for differences',
     sig_name: 'Experential Computing',
-    students: ['Elara Liu', 'Medini Chopra'],
+    students: ['Elara Liu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1WSZbma9M8pJwkVtBSyqTCQ_dSq-GnjU6eSstvDFoxYc',
+      'https://docs.google.com/spreadsheets/d/1HOgeVSVV0pDgzy2FBDsjfM7oHk0szxJEUF21zk_nLEw',
     compass: '',
-    research_canvas: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1ZXgi3VDkohVMRZ1wzGmwlzV2_AyhphmXqL8w5TcXhe0',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-difference',
     status_update_date: DateTime.fromISO('2025-04-25T12:00:00', {
@@ -126,13 +61,14 @@ export const projectData = [
   {
     name: 'Experiential Computing Platform',
     sig_name: 'Experential Computing',
-    students: ['Rama Naboulsi', 'Yong-yu Huang'],
+    students: ['Yimin Huang'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1i3F-fv3sGdoMOW40fx3NFQ3Nc9s_KG4B0hGKw9d9n9k',
+      'https://docs.google.com/spreadsheets/d/1OBOcxpMfY9fQtu1nQVmIdofAQIUNLdaOYEo8Bi2U2dI',
     compass: '',
-    research_canvas: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1m60WtK8cvkiGu1gXet22XskMEA_kRnZ_qBGKxyPKXYE',
     eoq_checklist: '',
     slack_channel: 'proj-exp-computing',
     status_update_date: DateTime.fromISO('2025-05-23T12:00:00', {
@@ -140,17 +76,35 @@ export const projectData = [
     }),
   },
 
-  // SIG DT
+  // SIG Human Learning
+  {
+    name: 'Scaling and Improving Coaching with LLMs',
+    sig_name: 'Human Learning',
+    students: ['Terry Chen', 'Allyson Lee'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1PnqG2lrpThOYxX1rM5FEM_xkHwdWcWEkTZ26-KS8IBU',
+    compass: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
+    eoq_checklist: '',
+    slack_channel: 'sig-sps',
+    status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
   {
     name: 'Dialectical Technologies',
-    sig_name: 'Dialectical Technologies',
+    sig_name: 'Human Learning',
     students: ['Jay Jeon', 'Nicole Lu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1w-A8MYlMwQ-7skBj7voJGY9jJ9sdt7ceM-4bW1I8DyU',
+      'https://docs.google.com/spreadsheets/d/1xnJ4N6K-VTmQ7dGXlXah_izK7jrpDx2K_O0vZdm75wU',
     compass: '',
-    research_canvas: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1nWN9ojagqZWRlXxokrETLs130k8X3IEZgs_r4nBv6JY',
     eoq_checklist: '',
     slack_channel: 'proj-dialectical',
     status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
@@ -158,18 +112,22 @@ export const projectData = [
     }),
   },
 
-  // {
-  //   name: 'Kapil Proj',
-  //   sig_name: 'Summer BBQ',
-  //   students: ['Kapil Garg'],
-  //   sig_head: 'Haoqi Zhang',
-  //   faculty_mentor: 'Haoqi Zhang',
-  //   sprint_log: '',
-  //   practical_research_canvas:
-  //     'https://drive.google.com/open?id=1wDWcmQ06Ir5d3nRuM-v7TavdrNuuUkPzrRApQ0xhIF8',
-  //   research_research_canvas:
-  //     'https://drive.google.com/open?id=1V5cbxOdwk73ilzjK67gH8ebc2FDUpl_GESZClKCWRhw',
-  //   eoq_checklist: '',
-  //   slack_channel: 'proj-kapil',
-  // },
+  // SIG HAT
+  {
+    name: 'Human-AI tools for concept expression',
+    sig_name: 'Human-AI Tools',
+    students: ['Diana Whealan', 'Sofia Flores'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1GqVsciVK8LCsrnfU2wRc0vxQhzjjXgzSZ244ATlmsNk',
+    compass: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/18Kv6p_EvHOs09YLwPnJiDFgnpOC2pTp8E7O9EgHgzQ0',
+    eoq_checklist: '',
+    slack_channel: 'proj-human-ai-conception',
+    status_update_date: DateTime.fromISO('2025-05-16T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
 ];
