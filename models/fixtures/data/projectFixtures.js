@@ -34,7 +34,7 @@ export const projectData = [
     research_canvas:
       'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
     eoq_checklist: '',
-    slack_channel: 'sig-rip',
+    slack_channel: 'proj-coaching-regulation',
     status_update_date: DateTime.fromISO('2025-04-18T12:00:00', {
       zone: 'America/Chicago',
     }),
@@ -89,7 +89,7 @@ export const projectData = [
     research_canvas:
       'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
     eoq_checklist: '',
-    slack_channel: 'sig-sps',
+    slack_channel: 'proj-coaching-llms',
     status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
       zone: 'America/Chicago',
     }),
