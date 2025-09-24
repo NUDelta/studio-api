@@ -4,6 +4,7 @@
 import { app } from '../../../index.js';
 import {
   blockPlainText,
+  blockPlainTextSplit,
   blockStaticSingleSelect,
   blockStaticMultiSelect,
   blockCheckBoxes,
@@ -20,7 +21,7 @@ export const messageChannel = (channel, peopleIds, message) => {
   let completeMessage = `Hey ${peopleIds}! ${message}`;
   return app.client.chat.postMessage({
     channel: channel,
-    blocks: [blockPlainText(completeMessage, true)],
+    blocks: blockPlainTextSplit(completeMessage, true),
     text: completeMessage,
   });
 };
@@ -72,7 +73,7 @@ export const messagePersonWithOptions = (
       break;
   }
 
-  let payloadBlocks = [blockPlainText(completeMessage, true)];
+  let payloadBlocks = blockPlainTextSplit(completeMessage, true);
 
   if (optionBlock !== null) {
     payloadBlocks.push(optionBlock);
