@@ -28,10 +28,16 @@ export const blockPlainTextSplit = (text, isMarkdown = false) => {
  * @returns {{emoji: boolean, text, type: string}}
  */
 export const blockPlainText = (text, isMarkdown = false) => {
+  if (isMarkdown) {
+    return {
+      type: 'markdown',
+      text: text,
+    };
+  }
   return {
     type: 'section',
     text: {
-      type: isMarkdown ? 'mrkdwn' : 'plain_text',
+      type: 'plain_text',
       text: text,
       ...(isMarkdown ? {} : { emoji: true }),
     },
