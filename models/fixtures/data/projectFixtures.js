@@ -18,7 +18,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1KA__dzATJLQFVssDRCyPmmh8-OfhDbqsQphtp-gPDCo',
     eoq_checklist: '',
     slack_channel: 'proj-path',
-    status_update_date: DateTime.fromISO('2025-05-09T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-11-07T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -35,7 +35,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
     eoq_checklist: '',
     slack_channel: 'proj-coaching-regulation',
-    status_update_date: DateTime.fromISO('2025-04-18T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-11-14T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -54,7 +54,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1ZXgi3VDkohVMRZ1wzGmwlzV2_AyhphmXqL8w5TcXhe0',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2025-04-25T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-10-31T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -71,7 +71,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1m60WtK8cvkiGu1gXet22XskMEA_kRnZ_qBGKxyPKXYE',
     eoq_checklist: '',
     slack_channel: 'proj-exp-computing',
-    status_update_date: DateTime.fromISO('2025-05-23T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-10-17T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -90,7 +90,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
     eoq_checklist: '',
     slack_channel: 'proj-coaching-llms',
-    status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-10-03T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -107,7 +107,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/1nWN9ojagqZWRlXxokrETLs130k8X3IEZgs_r4nBv6JY',
     eoq_checklist: '',
     slack_channel: 'proj-dialectical',
-    status_update_date: DateTime.fromISO('2025-05-30T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-10-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -126,7 +126,7 @@ export const projectData = [
       'https://docs.google.com/presentation/d/18Kv6p_EvHOs09YLwPnJiDFgnpOC2pTp8E7O9EgHgzQ0',
     eoq_checklist: '',
     slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2025-05-16T12:00:00', {
+    status_update_date: DateTime.fromISO('2025-10-24T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
