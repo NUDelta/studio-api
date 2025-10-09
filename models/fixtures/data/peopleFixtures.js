@@ -75,6 +75,16 @@ export const nonPhdStudentData = [
     eoq_self_assessment: '',
   },
   {
+    name: 'Medini Chopra',
+    email: 'temp@temp.com',
+    slack_id: 'U0839FPJUGP',
+    sig_member: 'Experential Computing',
+    sig_head: 'Haoqi Zhang',
+    individual_progress_map: '',
+    mid_quarter_check_in: '',
+    eoq_self_assessment: '',
+  },
+  {
     name: 'Yimin Huang',
     email: 'temp@temp.com',
     slack_id: 'U08V1RFCZSS',

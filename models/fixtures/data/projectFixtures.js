@@ -44,7 +44,7 @@ export const projectData = [
   {
     name: 'Human-AI tools for accounting for differences',
     sig_name: 'Experential Computing',
-    students: ['Elara Liu'],
+    students: ['Elara Liu', 'Medini Chopra'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
