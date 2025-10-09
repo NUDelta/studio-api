@@ -6,8 +6,44 @@ import { DateTime } from 'luxon';
 export const projectData = [
   // SIG RIP
   {
-    name: 'PATH',
+    name: 'Understanding regulation-informed coaching',
     sig_name: 'Regulation-Informed Learning',
+    students: ['Justina Wang'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1BMS7Dpp3AhDUZATNNn-mdCjLQ4RJcwW28toL3piqcKA',
+    compass: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
+    eoq_checklist: '',
+    slack_channel: 'proj-coaching-regulation',
+    status_update_date: DateTime.fromISO('2025-11-14T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+  {
+    name: 'Scaling and Improving Coaching with LLMs',
+    sig_name: 'Regulation-Informed Learning',
+    students: ['Terry Chen', 'Allyson Lee'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1PnqG2lrpThOYxX1rM5FEM_xkHwdWcWEkTZ26-KS8IBU',
+    compass: '',
+    research_canvas:
+      'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
+    eoq_checklist: '',
+    slack_channel: 'proj-coaching-llms',
+    status_update_date: DateTime.fromISO('2025-10-03T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+
+  // SIG Human Learning
+  {
+    name: 'PATH',
+    sig_name: 'Human Learning',
     students: ['Sarah Carley', 'Henry Lee'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
@@ -23,19 +59,19 @@ export const projectData = [
     }),
   },
   {
-    name: 'Understanding regulation-informed coaching',
-    sig_name: 'Regulation-Informed Learning',
-    students: ['Justina Wang'],
+    name: 'Dialectical Technologies',
+    sig_name: 'Human Learning',
+    students: ['Jay Jeon', 'Nicole Lu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1BMS7Dpp3AhDUZATNNn-mdCjLQ4RJcwW28toL3piqcKA',
+      'https://docs.google.com/spreadsheets/d/1xnJ4N6K-VTmQ7dGXlXah_izK7jrpDx2K_O0vZdm75wU',
     compass: '',
     research_canvas:
-      'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
+      'https://docs.google.com/presentation/d/1nWN9ojagqZWRlXxokrETLs130k8X3IEZgs_r4nBv6JY',
     eoq_checklist: '',
-    slack_channel: 'proj-coaching-regulation',
-    status_update_date: DateTime.fromISO('2025-11-14T12:00:00', {
+    slack_channel: 'proj-dialectical',
+    status_update_date: DateTime.fromISO('2025-10-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -72,42 +108,6 @@ export const projectData = [
     eoq_checklist: '',
     slack_channel: 'proj-exp-computing',
     status_update_date: DateTime.fromISO('2025-10-17T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG Human Learning
-  {
-    name: 'Scaling and Improving Coaching with LLMs',
-    sig_name: 'Human Learning',
-    students: ['Terry Chen', 'Allyson Lee'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1PnqG2lrpThOYxX1rM5FEM_xkHwdWcWEkTZ26-KS8IBU',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
-    eoq_checklist: '',
-    slack_channel: 'proj-coaching-llms',
-    status_update_date: DateTime.fromISO('2025-10-03T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-  {
-    name: 'Dialectical Technologies',
-    sig_name: 'Human Learning',
-    students: ['Jay Jeon', 'Nicole Lu'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1xnJ4N6K-VTmQ7dGXlXah_izK7jrpDx2K_O0vZdm75wU',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1nWN9ojagqZWRlXxokrETLs130k8X3IEZgs_r4nBv6JY',
-    eoq_checklist: '',
-    slack_channel: 'proj-dialectical',
-    status_update_date: DateTime.fromISO('2025-10-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },

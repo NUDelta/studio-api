@@ -11,19 +11,19 @@ export const sigSocialStructuresData = [
     sig_head: 'Haoqi Zhang',
   },
   {
-    name: 'Experential Computing',
-    description: 'Experential Computing SIG',
-    members: getAllMembersForSig(projectData, 'Experential Computing'),
-    abbreviation: 'EC',
-    slack_channel: 'sig-experiential-computing',
-    sig_head: 'Haoqi Zhang',
-  },
-  {
     name: 'Human Learning',
     description: 'Human Learning SIG',
     members: getAllMembersForSig(projectData, 'Human Learning'),
     abbreviation: 'HL',
     slack_channel: 'sig-human-learning',
+    sig_head: 'Haoqi Zhang',
+  },
+  {
+    name: 'Experential Computing',
+    description: 'Experential Computing SIG',
+    members: getAllMembersForSig(projectData, 'Experential Computing'),
+    abbreviation: 'EC',
+    slack_channel: 'sig-experiential-computing',
     sig_head: 'Haoqi Zhang',
   },
   {
