@@ -4,38 +4,70 @@ import { DateTime } from 'luxon';
 // TODO: I think the SIG head and faculty mentor should be inferred from which SIG the project is associated with
 // TODO: update dev links
 export const projectData = [
-  // SIG RIP
+  // SIG BB
   {
-    name: 'Understanding regulation-informed coaching',
-    sig_name: 'Regulation-Informed Learning',
-    students: ['Justina Wang'],
+    name: 'Experiential Travel',
+    sig_name: 'Breaking Boundaries',
+    students: ['Conrad Booker', 'Ronghe Chen'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1BMS7Dpp3AhDUZATNNn-mdCjLQ4RJcwW28toL3piqcKA',
+      'https://docs.google.com/spreadsheets/d/1BFOydDJ1U6DyHXj5zZZRT6a-2xfDAhzNRso-wbIq83w',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1RP6TohoGY6XyPin7XsiJOt2Hv_ZKOs3gzTITfqGjv_M',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-coaching-regulation',
-    status_update_date: DateTime.fromISO('2025-11-14T12:00:00', {
+    slack_channel: 'proj-exp-travel',
+    status_update_date: DateTime.fromISO('2026-03-06T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
   {
-    name: 'Scaling and Improving Coaching with LLMs',
-    sig_name: 'Regulation-Informed Learning',
-    students: ['Terry Chen', 'Allyson Lee'],
+    name: 'Breaking the Jump',
+    sig_name: 'Breaking Boundaries',
+    students: ['Summon Gebrelibanos', 'Annie Liu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1PnqG2lrpThOYxX1rM5FEM_xkHwdWcWEkTZ26-KS8IBU',
+      'https://docs.google.com/spreadsheets/d/18EaoKZf96J8jl-Kmrg6_3AVTbQKFzRX38WSVfsxx2JY',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/13sJ3XFVYBm3DjESCq10YsjtgoLwERirDEpwMfiTNvBI',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-coaching-llms',
-    status_update_date: DateTime.fromISO('2025-10-03T12:00:00', {
+    slack_channel: 'proj-breaking-the-jump',
+    status_update_date: DateTime.fromISO('2026-02-20T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+
+  // SIG Experential Computing
+  {
+    name: 'Experiential Computing Platform',
+    sig_name: 'Experiential Computing',
+    students: ['Elara Liu', 'Alan Kanne'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1hBezyR_gxdvgjQ8xoYM93CgU6iKA-jnZ8SiG32J_Aks',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-human-ai-difference',
+    status_update_date: DateTime.fromISO('2026-01-30T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+  {
+    name: 'World Learning',
+    sig_name: 'Experiential Computing',
+    students: ['Yimin Huang', 'Chris Heo'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1ci4ZFTuglN3eLGei95VLm1FwoU1b-wr5FnPlto34UNc',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-world-learning',
+    status_update_date: DateTime.fromISO('2026-02-13T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -48,13 +80,12 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1uagLJ4q-QaBHAVy4JTqFg5kagRCnKROKMEYG7OR60PI',
+      'https://docs.google.com/spreadsheets/d/15tlXTO2QehS8aZ5et52d5F2QEurOEt5wttYAjskLb9Y',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1KA__dzATJLQFVssDRCyPmmh8-OfhDbqsQphtp-gPDCo',
+    research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-path',
-    status_update_date: DateTime.fromISO('2025-11-07T12:00:00', {
+    status_update_date: DateTime.fromISO('2026-01-23T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
@@ -65,68 +96,80 @@ export const projectData = [
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1xnJ4N6K-VTmQ7dGXlXah_izK7jrpDx2K_O0vZdm75wU',
+      'https://docs.google.com/spreadsheets/d/168tLNGwmmYxTfcK7EEu1f7ix3uc0cetzL90YWJyg4tE',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1nWN9ojagqZWRlXxokrETLs130k8X3IEZgs_r4nBv6JY',
+    research_canvas: '',
     eoq_checklist: '',
     slack_channel: 'proj-dialectical',
-    status_update_date: DateTime.fromISO('2025-10-10T12:00:00', {
+    status_update_date: DateTime.fromISO('2026-10-10T12:00:00', {
       zone: 'America/Chicago',
     }),
   },
 
-  // SIG Experential Computing
+  // SIG TWV
   {
-    name: 'Human-AI tools for accounting for differences',
-    sig_name: 'Experential Computing',
-    students: ['Elara Liu', 'Medini Chopra'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1HOgeVSVV0pDgzy2FBDsjfM7oHk0szxJEUF21zk_nLEw',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1ZXgi3VDkohVMRZ1wzGmwlzV2_AyhphmXqL8w5TcXhe0',
-    eoq_checklist: '',
-    slack_channel: 'proj-human-ai-difference',
-    status_update_date: DateTime.fromISO('2025-10-31T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-  {
-    name: 'Experiential Computing Platform',
-    sig_name: 'Experential Computing',
-    students: ['Yimin Huang'],
-    sig_head: 'Haoqi Zhang',
-    faculty_mentor: 'Haoqi Zhang',
-    sprint_log:
-      'https://docs.google.com/spreadsheets/d/1OBOcxpMfY9fQtu1nQVmIdofAQIUNLdaOYEo8Bi2U2dI',
-    compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/1m60WtK8cvkiGu1gXet22XskMEA_kRnZ_qBGKxyPKXYE',
-    eoq_checklist: '',
-    slack_channel: 'proj-exp-computing',
-    status_update_date: DateTime.fromISO('2025-10-17T12:00:00', {
-      zone: 'America/Chicago',
-    }),
-  },
-
-  // SIG HAT
-  {
-    name: 'Human-AI tools for concept expression',
-    sig_name: 'Human-AI Tools',
+    name: 'LLMs for Personal Transformation',
+    sig_name: 'LLMs for Transforming World Views',
     students: ['Diana Whealan', 'Sofia Flores'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
-      'https://docs.google.com/spreadsheets/d/1GqVsciVK8LCsrnfU2wRc0vxQhzjjXgzSZ244ATlmsNk',
+      'https://docs.google.com/spreadsheets/d/1fHqH1Ir4rjz6--dKXV3HGhDgArYoj56PNeHBv_0hNmc',
     compass: '',
-    research_canvas:
-      'https://docs.google.com/presentation/d/18Kv6p_EvHOs09YLwPnJiDFgnpOC2pTp8E7O9EgHgzQ0',
+    research_canvas: '',
     eoq_checklist: '',
-    slack_channel: 'proj-human-ai-conception',
-    status_update_date: DateTime.fromISO('2025-10-24T12:00:00', {
+    slack_channel: 'proj-collaborative-transformation',
+    status_update_date: DateTime.fromISO('2026-02-06T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+  {
+    name: 'LLMs for Transforming Researchers',
+    sig_name: 'LLMs for Transforming World Views',
+    students: ['Kaitlyn Chen'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1UYrXSd-aBfziAFR9cvFyGqu8ZjoJQj1QtnYfOJE9fc8',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-transforming-researchers',
+    status_update_date: DateTime.fromISO('2026-02-27T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+
+  // SIG RIP
+  {
+    name: 'Tools for Regulation Alignment and Practice',
+    sig_name: 'Regulation-Informed Practice',
+    students: ['Terry Chen', 'Allyson Lee', 'Justina Wang'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1vuUBddLuWplxrFj_kQop1c1LFBhNkDgIcmCzmwPFXT4',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-regulation-alignment',
+    status_update_date: DateTime.fromISO('2026-11-14T12:00:00', {
+      zone: 'America/Chicago',
+    }),
+  },
+  {
+    name: 'CAP Notes and Practice Agents',
+    sig_name: 'Regulation-Informed Practice',
+    students: ['Kevin Mei', 'Diego Perez-Aguilar'],
+    sig_head: 'Haoqi Zhang',
+    faculty_mentor: 'Haoqi Zhang',
+    sprint_log:
+      'https://docs.google.com/spreadsheets/d/1ZidXJjO2o7ZfEG-o83lsui-2cud9LC7V4sWym6XvQwg',
+    compass: '',
+    research_canvas: '',
+    eoq_checklist: '',
+    slack_channel: 'proj-cap-notes',
+    status_update_date: DateTime.fromISO('2026-02-27T12:00:00', {
       zone: 'America/Chicago',
     }),
   },

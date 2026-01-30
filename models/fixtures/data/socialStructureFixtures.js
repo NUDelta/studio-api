@@ -3,14 +3,6 @@ import { getAllMembersForSig } from './utils.js';
 
 export const sigSocialStructuresData = [
   {
-    name: 'Regulation-Informed Learning',
-    description: 'Regulation-Informed Learning SIG',
-    members: getAllMembersForSig(projectData, 'Regulation-Informed Learning'),
-    abbreviation: 'RIP',
-    slack_channel: 'sig-rip',
-    sig_head: 'Haoqi Zhang',
-  },
-  {
     name: 'Human Learning',
     description: 'Human Learning SIG',
     members: getAllMembersForSig(projectData, 'Human Learning'),
@@ -19,19 +11,38 @@ export const sigSocialStructuresData = [
     sig_head: 'Haoqi Zhang',
   },
   {
-    name: 'Experential Computing',
-    description: 'Experential Computing SIG',
-    members: getAllMembersForSig(projectData, 'Experential Computing'),
+    name: 'Regulation-Informed Practice',
+    description: 'Regulation-Informed Practice SIG',
+    members: getAllMembersForSig(projectData, 'Regulation-Informed Practice'),
+    abbreviation: 'RIP',
+    slack_channel: 'sig-rip',
+    sig_head: 'Haoqi Zhang',
+  },
+  {
+    name: 'Experiential Computing',
+    description: 'Experiential Computing SIG',
+    members: getAllMembersForSig(projectData, 'Experiential Computing'),
     abbreviation: 'EC',
+    slack_channel: 'sig-human-ai-tools',
+    sig_head: 'Haoqi Zhang',
+  },
+  {
+    name: 'LLMs for Transforming World Views',
+    description: 'LLMs for Transforming World Views SIG',
+    members: getAllMembersForSig(
+      projectData,
+      'LLMs for Transforming World Views'
+    ),
+    abbreviation: 'TWV',
     slack_channel: 'sig-experiential-computing',
     sig_head: 'Haoqi Zhang',
   },
   {
-    name: 'Human-AI Tools',
-    description: 'Human-AI Tools SIG',
-    members: getAllMembersForSig(projectData, 'Human-AI Tools'),
-    abbreviation: 'HAT',
-    slack_channel: 'sig-human-ai-tools',
+    name: 'Breaking Boundaries',
+    description: 'Breaking Boundaries SIG',
+    members: getAllMembersForSig(projectData, 'Breaking Boundaries'),
+    abbreviation: 'BB',
+    slack_channel: 'sig-breaking-boundaries',
     sig_head: 'Haoqi Zhang',
   },
   // {
