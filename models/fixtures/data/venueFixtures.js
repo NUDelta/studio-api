@@ -32,9 +32,9 @@ export const sigMeetingData = [
   {
     name: 'Breaking Boundaries SIG Meeting',
     description: 'Weekly SIG meeting for Breaking Boundaries SIG',
-    day_of_week: 'Friday',
-    start_time: '15:00:00',
-    end_time: '16:00:00',
+    day_of_week: 'Wednesday',
+    start_time: '12:00:00',
+    end_time: '13:00:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(projectData, 'Breaking Boundaries'),
     projects: ['Experiential Travel', 'Breaking the Jump'],
@@ -79,8 +79,8 @@ export const sigMeetingData = [
     name: 'Regulation-Informed Practice SIG Meeting',
     description: 'Weekly SIG meeting for Regulation-Informed Practice SIG',
     day_of_week: 'Wednesday',
-    start_time: '14:00:00',
-    end_time: '15:00:00',
+    start_time: '15:00:00',
+    end_time: '16:00:00',
     timezone: 'America/Chicago',
     attendees: getAllMembersForSig(projectData, 'Regulation-Informed Practice'),
     projects: [

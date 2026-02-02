@@ -76,7 +76,7 @@ export const projectData = [
   {
     name: 'PATH',
     sig_name: 'Human Learning',
-    students: ['Sarah Carley', 'Henry Lee'],
+    students: ['Sarah Carley', 'Henry Lee', 'Jessica Sun'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
@@ -160,7 +160,7 @@ export const projectData = [
   {
     name: 'CAP Notes and Practice Agents',
     sig_name: 'Regulation-Informed Practice',
-    students: ['Kevin Mei', 'Diego Perez-Aguilar'],
+    students: ['Diego Perez-Aguilar'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
