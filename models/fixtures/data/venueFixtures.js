@@ -78,7 +78,7 @@ export const sigMeetingData = [
   {
     name: 'Regulation-Informed Practice SIG Meeting',
     description: 'Weekly SIG meeting for Regulation-Informed Practice SIG',
-    day_of_week: 'Wednesday',
+    day_of_week: 'Friday',
     start_time: '15:00:00',
     end_time: '16:00:00',
     timezone: 'America/Chicago',
