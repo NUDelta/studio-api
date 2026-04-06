@@ -7,15 +7,15 @@ export const sigSocialStructuresData = [
     description: 'Human Learning SIG',
     members: getAllMembersForSig(projectData, 'Human Learning'),
     abbreviation: 'HL',
-    slack_channel: 'sig-human-learning',
+    slack_channel: 'sig-human-learning', // sig-human-learning
     sig_head: 'Haoqi Zhang',
   },
   {
-    name: 'Regulation-Informed Practice',
-    description: 'Regulation-Informed Practice SIG',
-    members: getAllMembersForSig(projectData, 'Regulation-Informed Practice'),
-    abbreviation: 'RIP',
-    slack_channel: 'sig-rip',
+    name: 'Between Selves',
+    description: 'Between Selves SIG',
+    members: getAllMembersForSig(projectData, 'Between Selves'),
+    abbreviation: 'BS',
+    slack_channel: 'sig-between-selves',
     sig_head: 'Haoqi Zhang',
   },
   {
@@ -23,7 +23,7 @@ export const sigSocialStructuresData = [
     description: 'Experiential Computing SIG',
     members: getAllMembersForSig(projectData, 'Experiential Computing'),
     abbreviation: 'EC',
-    slack_channel: 'sig-human-ai-tools',
+    slack_channel: 'sig-experiential-computing',
     sig_head: 'Haoqi Zhang',
   },
   {
@@ -34,15 +34,7 @@ export const sigSocialStructuresData = [
       'LLMs for Transforming World Views'
     ),
     abbreviation: 'TWV',
-    slack_channel: 'sig-experiential-computing',
-    sig_head: 'Haoqi Zhang',
-  },
-  {
-    name: 'Breaking Boundaries',
-    description: 'Breaking Boundaries SIG',
-    members: getAllMembersForSig(projectData, 'Breaking Boundaries'),
-    abbreviation: 'BB',
-    slack_channel: 'sig-breaking-boundaries',
+    slack_channel: 'sig-llm-new-worldview',
     sig_head: 'Haoqi Zhang',
   },
   // {
