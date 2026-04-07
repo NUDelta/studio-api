@@ -42,7 +42,7 @@ export const projectData = [
   {
     name: 'Experiential Computing Platform',
     sig_name: 'Experiential Computing',
-    students: ['Elara Liu', 'Alan Kanne'],
+    students: ['Elara Liu'],
     sig_head: 'Haoqi Zhang',
     faculty_mentor: 'Haoqi Zhang',
     sprint_log:
