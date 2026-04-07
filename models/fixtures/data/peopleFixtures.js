@@ -85,7 +85,7 @@ export const nonPhdStudentData = [
   {
     name: 'Ray Sun',
     email: 'raysun@u.northwestern.edu',
-    slack_id: 'U0AKG1W7E5T', // placeholder, update with actual
+    slack_id: 'U0AKG1W7E5T',
     sig_member: 'Between Selves',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
@@ -152,16 +152,6 @@ export const nonPhdStudentData = [
     name: 'Elara Liu',
     email: 'ZhuoranLiu2026@u.northwestern.edu',
     slack_id: 'U083Q1WAPK4',
-    sig_member: 'Experiential Computing',
-    sig_head: 'Haoqi Zhang',
-    individual_progress_map: '',
-    mid_quarter_check_in: '',
-    eoq_self_assessment: '',
-  },
-  {
-    name: 'Alan Kanne',
-    email: 'alankanne2027@u.northwestern.edu',
-    slack_id: 'U0A0WRU5A02',
     sig_member: 'Experiential Computing',
     sig_head: 'Haoqi Zhang',
     individual_progress_map: '',
