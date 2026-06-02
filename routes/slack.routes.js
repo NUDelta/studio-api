@@ -13,6 +13,11 @@ import {
   messagePersonWithOptions,
 } from '../controllers/communication/slack/send.js';
 import { formatPeopleForSlackMessage } from '../controllers/communication/slack/payloadGenerator.js';
+import {
+  blockHeader,
+  blockDivider,
+  blockButton,
+} from '../controllers/communication/slack/blockWrapper.js';
 
 export const slackRouter = new Router();
 
@@ -464,6 +469,174 @@ slackRouter.post('/presentOptionsToPerson', async (req, res) => {
     let msg = `Error in /slack/presentOptionsToPerson: ${error}`;
     console.error(msg);
     res.send(msg);
+  }
+});
+
+/**
+ * Sends a CAP note practice reminder to a Slack channel with an anonymous help-seek button.
+ * Body params:
+ *   practiceTitle       string  short title of the practice (e.g. "Sprint Log Reflection")
+ *   practiceDescription string  full text of the practice prompt
+ *   dueDate             string  optional due date string (defaults to "end of this week")
+ *   channelTarget       string  "all-sigs" | "all-projects" | a specific Slack channel ID/name
+ */
+slackRouter.post('/messagePracticeReminder', async (req, res) => {
+  try {
+    const practiceTitle = (req.body.practiceTitle ?? '').trim();
+    const practiceDescription = (req.body.practiceDescription ?? '').trim();
+    const dueDate = (req.body.dueDate ?? 'end of this week').trim();
+    const channelTarget = (req.body.channelTarget ?? '').trim();
+
+    if (!practiceTitle || !practiceDescription || !channelTarget) {
+      return res
+        .status(400)
+        .send('practiceTitle, practiceDescription, and channelTarget are required.');
+    }
+
+    const practiceBlocks = [
+      blockHeader('CAP Note Practice Reminder'),
+      blockDivider(),
+      {
+        type: 'section',
+        text: { type: 'mrkdwn', text: `*${practiceTitle}*` },
+      },
+      {
+        type: 'section',
+        text: { type: 'mrkdwn', text: practiceDescription },
+      },
+      {
+        type: 'section',
+        text: { type: 'mrkdwn', text: `*Due:* ${dueDate}` },
+      },
+      blockDivider(),
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: 'Stuck or need support? Use the button below to anonymously share your question with peers in *#help-seek*.',
+        },
+      },
+      blockButton('I need help with this practice', 'help-seek-trigger', practiceTitle),
+    ];
+
+    // resolve target channels + people to mention
+    let targets = [];
+    if (channelTarget === 'all-sigs') {
+      const allSigs = await SigStructure.find({}).populate('members');
+      targets = allSigs.map((sig) => ({
+        channel: sig.slack_channel,
+        people: sig.members.map((m) => ({ name: m.name, slack_id: m.slack_id })),
+      }));
+    } else if (channelTarget === 'all-projects') {
+      const allProjects = await Project.find({}).populate('students');
+      targets = allProjects.map((proj) => ({
+        channel: proj.slack_channel,
+        people: proj.students.map((s) => ({ name: s.name, slack_id: s.slack_id })),
+      }));
+    } else {
+      targets = [{ channel: channelTarget, people: [] }];
+    }
+
+    const fallbackText = `CAP Note Practice Reminder: ${practiceTitle} — due ${dueDate}.`;
+
+    const messagesToSend = targets.map(({ channel, people }) => {
+      const mentionStr =
+        people.length > 0 ? `${formatPeopleForSlackMessage(people)}\n` : '';
+      const blocks = mentionStr
+        ? [
+            { type: 'section', text: { type: 'mrkdwn', text: mentionStr } },
+            ...practiceBlocks,
+          ]
+        : practiceBlocks;
+
+      return app.client.chat.postMessage({
+        channel,
+        text: `${mentionStr}${fallbackText}`,
+        blocks,
+      });
+    });
+
+    res.json(await Promise.all(messagesToSend));
+  } catch (error) {
+    const msg = `Error in /slack/messagePracticeReminder: ${error}`;
+    console.error(msg);
+    res.send(msg);
+  }
+});
+
+/**
+ * Notifies the SIG head that an AI draft CAP note is ready for review.
+ * In development, sends to DEV_DM_SLACK_ID instead of the real SIG head.
+ * Body: { capNoteId, project, sigAbbreviation, sigDate, issueTitles: string[] }
+ */
+slackRouter.post('/notifyDraftReady', async (req, res) => {
+  try {
+    const { capNoteId, project, sigAbbreviation, sigDate, issueTitles = [] } = req.body;
+    if (!capNoteId || !project || !sigAbbreviation) {
+      return res.status(400).json({ error: 'capNoteId, project, and sigAbbreviation are required' });
+    }
+
+    const isnUrl = process.env.ISN_URL || 'http://localhost:3000';
+    const capNoteUrl = `${isnUrl}/cap-notes/${capNoteId}`;
+    const dateStr = sigDate ? new Date(sigDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+
+    // Resolve recipient: dev overrides to tester ID, prod uses real SIG head
+    let recipientSlackId;
+    if (process.env.NODE_ENV === 'development' && process.env.DEV_DM_SLACK_ID) {
+      recipientSlackId = process.env.DEV_DM_SLACK_ID;
+    } else {
+      const sig = await SigStructure.findOne({ abbreviation: sigAbbreviation }).populate('sig_head');
+      if (!sig?.sig_head?.slack_id) {
+        return res.status(404).json({ error: `No SIG head found for ${sigAbbreviation}` });
+      }
+      recipientSlackId = sig.sig_head.slack_id;
+    }
+
+    const issueLines = issueTitles.length > 0
+      ? issueTitles.map(t => `• ${t}`).join('\n')
+      : '_No issues identified_';
+
+    const blocks = [
+      blockHeader(`CAP Note Draft Ready — ${project}`),
+      blockDivider(),
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: dateStr ? `*Meeting:* ${dateStr}` : `*Project:* ${project}`
+        }
+      },
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `*Issues drafted:*\n${issueLines}`
+        }
+      },
+      blockDivider(),
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `Review, refine, and finalize the notes when ready. Once finalized, students will receive them one hour after the last save.`
+        }
+      },
+      {
+        type: 'section',
+        text: { type: 'mrkdwn', text: `<${capNoteUrl}|Open CAP Note →>` }
+      }
+    ];
+
+    await app.client.chat.postMessage({
+      channel: recipientSlackId,
+      text: `CAP Note draft ready for ${project}${dateStr ? ` (${dateStr})` : ''} — ${capNoteUrl}`,
+      blocks
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error in /slack/notifyDraftReady:', error);
+    res.status(500).json({ error: String(error) });
   }
 });
 
