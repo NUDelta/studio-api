@@ -627,15 +627,70 @@ slackRouter.post('/notifyDraftReady', async (req, res) => {
       }
     ];
 
-    await app.client.chat.postMessage({
+    const result = await app.client.chat.postMessage({
       channel: recipientSlackId,
       text: `CAP Note draft ready for ${project}${dateStr ? ` (${dateStr})` : ''} — ${capNoteUrl}`,
       blocks
     });
 
-    res.json({ success: true });
+    res.json({ success: true, ts: result.ts, channel: result.channel });
   } catch (error) {
     console.error('Error in /slack/notifyDraftReady:', error);
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+/**
+ * Updates the draft-ready DM to reflect finalized status.
+ * Body: { ts, channel, project, sigDate, issueTitles: string[] }
+ */
+slackRouter.post('/updateDraftStatus', async (req, res) => {
+  try {
+    const { ts, channel, project, sigDate, issueTitles = [] } = req.body;
+    if (!ts || !channel) {
+      return res.status(400).json({ error: 'ts and channel are required' });
+    }
+
+    const isnUrl = process.env.ISN_URL || 'http://localhost:3000';
+    const dateStr = sigDate ? new Date(sigDate).toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) : '';
+    const issueLines = issueTitles.length > 0
+      ? issueTitles.map(t => `• ${t}`).join('\n')
+      : '_No issues_';
+
+    const blocks = [
+      blockHeader(`✅ Closed — ${project}`),
+      blockDivider(),
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: dateStr ? `*Meeting:* ${dateStr}` : `*Project:* ${project}`
+        }
+      },
+      {
+        type: 'section',
+        text: { type: 'mrkdwn', text: `*Issues finalized:*\n${issueLines}` }
+      },
+      blockDivider(),
+      {
+        type: 'section',
+        text: {
+          type: 'mrkdwn',
+          text: `Notes have been finalized and will be sent to students one hour after the last save.`
+        }
+      }
+    ];
+
+    await app.client.chat.update({
+      channel,
+      ts,
+      text: `CAP Note finalized for ${project}${dateStr ? ` (${dateStr})` : ''} — sending to students soon.`,
+      blocks
+    });
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error in /slack/updateDraftStatus:', error);
     res.status(500).json({ error: String(error) });
   }
 });
