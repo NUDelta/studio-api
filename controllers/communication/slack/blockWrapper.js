@@ -129,6 +129,41 @@ export const blockStaticMultiSelect = (
 };
 
 /**
+ * Header block for a message.
+ * @param text string text to include in the header.
+ * @returns {{text: {emoji: boolean, text, type: string}, type: string}}
+ */
+export const blockHeader = (text) => ({
+  type: 'header',
+  text: { type: 'plain_text', text, emoji: true },
+});
+
+/**
+ * Divider block.
+ * @returns {{type: string}}
+ */
+export const blockDivider = () => ({ type: 'divider' });
+
+/**
+ * Actions block with a single button.
+ * @param text string label on the button.
+ * @param actionId string action identifier fired when button is clicked.
+ * @param value string value passed back in the action payload.
+ * @returns {{elements: [{text: {emoji: boolean, text, type: string}, action_id, value, type: string}], type: string}}
+ */
+export const blockButton = (text, actionId, value) => ({
+  type: 'actions',
+  elements: [
+    {
+      type: 'button',
+      text: { type: 'plain_text', text, emoji: true },
+      action_id: actionId,
+      value: value,
+    },
+  ],
+});
+
+/**
  * Block with selectable check-boxes.
  * @param descriptorText string descriptor text to help people use the dropdown menu.
  * @param options list of object that include a text, description, and value field.
